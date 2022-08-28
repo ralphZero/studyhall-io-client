@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
 
 interface Greeting {
-  message: string;
+  success: boolean;
+  result: []
 }
 
 function App() {
-  const [greeting, setGreeting] = useState<string>('');
+  const [greeting, setGreeting] = useState<Greeting>();
 
   useEffect(() => {
-    fetch('https://studyhall-io-api.web.app/')
+    fetch('https://studyhall-io-api.web.app/Feo17UUTHDRzte0spE0V5QbUivE2')
     .then((res: Response): Promise<Greeting> => res.json())
-    .then((data) => setGreeting(data.message))
+    .then((data) => console.table(data))
   }, []);
 
   return (
     <div>
-      { greeting }
+      { greeting && greeting.result }
     </div>
   );
 }
