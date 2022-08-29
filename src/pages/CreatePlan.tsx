@@ -1,8 +1,12 @@
 import React from 'react'
+import Header from '../components/Header'
 
 const CreatePlan = () => {
   return (
-    <div>CreatePlan</div>
+    <>
+      <Header />
+      <div>CreatePlan</div>
+    </>
   )
 }
 
