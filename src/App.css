@@ -13,3 +13,15 @@ body {
     justify-content: space-between;
     align-items: center;
 }
+
+.title-header {
+    padding: 0 50px;
+}
+
+.ant-modal-content, .ant-modal-header, .ant-btn {
+    border-radius: 8px;
+}
+
+.ant-picker-range {
+    width: 100%;
+}

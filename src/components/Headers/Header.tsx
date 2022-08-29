@@ -1,7 +1,7 @@
 import React from 'react'
 import { Avatar, Layout } from 'antd';
 
-import logo from '../assets/logo.svg';
+import logo from '../../assets/logo.svg';
 
 const Header = () => {
   return (
