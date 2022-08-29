@@ -7,7 +7,7 @@ import { HallResult } from "../models/result";
 import { Moment } from "moment";
 
 const CreatePlan = () => {
-  const [dataList, setDataList] = useState<Hall[]>();
+  const [dataList, setDataList] = useState<Hall[]>([]);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -15,11 +15,13 @@ const CreatePlan = () => {
       "https://studyhall-io-api.web.app/halls?uid=Feo17UUTHDRzte0spE0V5QbUivE2"
     )
       .then((res) => res.json())
-      .then((data: HallResult) => setDataList(data.result))
+      .then((data: HallResult) => setDataList(data.result as Hall[]))
       .catch(console.error);
   }, []);
 
   const onCreate = (values: Values) => {
+    setVisible(false);
+
     const start: Moment = values.timeframe.at(0) as Moment;
     const end: Moment = values.timeframe.at(1) as Moment;
 
@@ -41,7 +43,12 @@ const CreatePlan = () => {
       },
       body: JSON.stringify(hall)
     }).then(res => res.json())
-    .then(data => console.log(data));
+    .then((data: HallResult) => {
+      const hall:Hall = data.result as Hall;
+      const tempList = [...dataList, hall];
+      setDataList(tempList);
+    })
+    .catch(console.error);
   }
 
   return (
@@ -52,8 +59,8 @@ const CreatePlan = () => {
       {dataList &&
         dataList.map((data) => (
           <div key={data._id}>
-            <div hidden>{data._id}</div>
             <div>{data.title}</div>
+            <div>{data.description}</div>
             <div>{data.progress}</div>
           </div>
         ))}

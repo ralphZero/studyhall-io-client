@@ -2,6 +2,6 @@ import { Hall } from "./hall";
 
 export interface HallResult {
     success: boolean,
-    result: Hall[],
+    result: Hall[] | Hall,
     message?: string
 }
