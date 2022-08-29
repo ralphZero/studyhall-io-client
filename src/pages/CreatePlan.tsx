@@ -5,6 +5,9 @@ import CreateHallModal, { Values } from "../components/Modals/CreateHallModal";
 import { Hall } from "../models/hall";
 import { HallResult } from "../models/result";
 import { Moment } from "moment";
+import HallCard from "../components/Cards/HallCard";
+import { Col, Row } from "antd";
+import CreateHallCardBtn from "../components/Buttons/CreateHallCardBtn";
 
 const CreatePlan = () => {
   const [dataList, setDataList] = useState<Hall[]>([]);
@@ -33,37 +36,48 @@ const CreatePlan = () => {
       description: values.description,
       progress: 0,
       tasks: [],
-      dates: []
+      dates: [],
     };
 
     fetch("https://studyhall-io-api.web.app/halls", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(hall)
-    }).then(res => res.json())
-    .then((data: HallResult) => {
-      const hall:Hall = data.result as Hall;
-      const tempList = [...dataList, hall];
-      setDataList(tempList);
+      body: JSON.stringify(hall),
     })
-    .catch(console.error);
-  }
+      .then((res) => res.json())
+      .then((data: HallResult) => {
+        const hall: Hall = data.result as Hall;
+        const tempList = [...dataList, hall];
+        setDataList(tempList);
+      })
+      .catch(console.error);
+  };
 
   return (
     <>
       <Header />
       <TitleHeader />
-      <button onClick={() => setVisible(true)}>add</button>
-      {dataList &&
-        dataList.map((data) => (
-          <div key={data._id}>
-            <div>{data.title}</div>
-            <div>{data.description}</div>
-            <div>{data.progress}</div>
-          </div>
+      <Row
+        style={{ paddingInline: 50 }}
+        gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}
+      >
+        <Col span={6}>
+          <CreateHallCardBtn setVisible={setVisible} />
+        </Col>
+        {dataList.map((data) => (
+          <Col key={data._id} span={6}>
+            <HallCard
+              id={data._id as string}
+              title={data.title}
+              description={data.description}
+              progress={data.progress}
+            />
+          </Col>
         ))}
+      </Row>
+
       <CreateHallModal
         visible={visible}
         onCreate={onCreate}

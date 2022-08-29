@@ -1,8 +1,14 @@
 @import '~antd/dist/antd.css';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700;900&display=swap');
 
+:root {
+    --general-gray: #53576D;
+    --eww-green: #6F9600;
+}
+
 body {
     font-family: 'Inter', sans-serif;
+    color: var(--general-gray);
 }
 
 .ant-layout-header {
@@ -15,13 +21,58 @@ body {
 }
 
 .title-header {
-    padding: 0 50px;
+    padding: 50px 50px 100px;
+}
+
+.title-header > h1 {
+    font-weight: 900;
+    font-size: 36px;
+    letter-spacing: -2px;
+    margin: 0;
+    color: var(--general-gray);
+}
+
+.title-header > h2 {
+    font-weight: 500;
+    font-size: 16px;
+    width: 600px;
+    word-wrap: break-word;
+    color: var(--general-gray);
 }
 
 .ant-modal-content, .ant-modal-header, .ant-btn {
     border-radius: 8px;
 }
+.ant-btn-primary {
+    background-color: var(--eww-green);
+    border-color: var(--eww-green);
+}
+
+.ant-btn-primary:hover {
+    background-color: var(--eww-green);
+    border-color: var(--eww-green);
+    filter: contrast(0.8);
+}
 
 .ant-picker-range {
     width: 100%;
+}
+.ant-card { background-color: "#f9f8f9"; color: var(--general-gray);}
+.ant-card-head { 
+    border-bottom: none;
+    text-transform: uppercase;
+    font-size: 10px !important;
+    font-weight: 700;
+    color: var(--general-gray);
+}
+.ant-card-bordered {
+    border-radius: 8px;
+    border: 2px solid #f0f0f0;
+}
+
+.ant-progress-bg {
+    background-color: var(--eww-green);
+}
+.hall-card-title {
+    margin-top: 3px;
 }
