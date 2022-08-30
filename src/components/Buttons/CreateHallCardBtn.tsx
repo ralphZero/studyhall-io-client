@@ -1,4 +1,3 @@
-import { PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React from "react";
 
@@ -9,15 +8,10 @@ interface CreateHallCardBtnProps {
 const CreateHallCardBtn = ({ setVisible }: CreateHallCardBtnProps) => {
   return (
     <Button
-      style={{
-        height: "100%",
-        backgroundColor: "#F2F2F2",
-        color: "#BDBDBD",
-      }}
-      block
+      className="ant-btn-primary"
       onClick={() => setVisible(true)}
     >
-        <PlusOutlined size={46} />
+        Create new plan
     </Button>
   );
 };

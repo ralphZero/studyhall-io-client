@@ -21,7 +21,7 @@ body {
 }
 
 .title-header {
-    padding: 50px 50px 100px;
+    padding: 50px 50px 80px;
 }
 
 .title-header > h1 {
@@ -54,6 +54,12 @@ body {
     filter: contrast(0.8);
 }
 
+.ant-btn-primary:focus {
+    background-color: var(--eww-green);
+    border-color: var(--eww-green);
+    box-shadow: 0px 0px 0px 5px #6e960039;
+}
+
 .ant-picker-range {
     width: 100%;
 }
@@ -75,4 +81,8 @@ body {
 }
 .hall-card-title {
     margin-top: 3px;
+}
+
+.ant-row {
+    margin-block: 0;
 }

@@ -6,20 +6,28 @@ import { Hall } from "../models/hall";
 import { HallResult } from "../models/result";
 import { Moment } from "moment";
 import HallCard from "../components/Cards/HallCard";
-import { Col, Row } from "antd";
+import { Card, Col, Row, Skeleton } from "antd";
 import CreateHallCardBtn from "../components/Buttons/CreateHallCardBtn";
 
 const CreatePlan = () => {
   const [dataList, setDataList] = useState<Hall[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true)
     fetch(
       "https://studyhall-io-api.web.app/halls?uid=Feo17UUTHDRzte0spE0V5QbUivE2"
     )
       .then((res) => res.json())
-      .then((data: HallResult) => setDataList(data.result as Hall[]))
-      .catch(console.error);
+      .then((data: HallResult) => {
+        setDataList(data.result as Hall[]);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.error(err);
+      });
   }, []);
 
   const onCreate = (values: Values) => {
@@ -58,25 +66,38 @@ const CreatePlan = () => {
   return (
     <>
       <Header />
-      <TitleHeader />
-      <Row
-        style={{ paddingInline: 50 }}
-        gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}
-      >
-        <Col span={6}>
-          <CreateHallCardBtn setVisible={setVisible} />
-        </Col>
-        {dataList.map((data) => (
-          <Col key={data._id} span={6}>
-            <HallCard
-              id={data._id as string}
-              title={data.title}
-              description={data.description}
-              progress={data.progress}
-            />
-          </Col>
-        ))}
-      </Row>
+      <TitleHeader>
+        <CreateHallCardBtn setVisible={setVisible} />
+      </TitleHeader>
+      <div>
+        <Row
+          style={{ paddingInline: 50 }}
+          gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}
+        >
+          {
+            isLoading ? Array.from(Array(8).keys()).map((item: number) => (
+              <Col span={6} key={item}>
+                <Card style={{ width: "100%" }} loading={isLoading}>
+                  <div>
+
+                  <Skeleton active />
+                  </div>
+                </Card>
+              </Col>
+            )) :
+            dataList.map((data) => (
+              <Col key={data._id} span={6}>
+                <HallCard
+                  id={data._id as string}
+                  title={data.title}
+                  description={data.description}
+                  progress={data.progress}
+                />
+              </Col>
+            ))
+          }
+        </Row>
+      </div>
 
       <CreateHallModal
         visible={visible}
