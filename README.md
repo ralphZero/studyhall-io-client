@@ -1,2 +1,2 @@
-# Studyhall.io - Client App
+# hallify.app - Client App
 
