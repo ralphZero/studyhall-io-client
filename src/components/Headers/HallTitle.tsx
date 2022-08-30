@@ -22,7 +22,8 @@ const style = {
     backgroundColor: "#FAFAFA", 
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    height: "120px"
 }
 
 export default HallTitle;
