@@ -5,6 +5,7 @@ import KanbanContainer from '../components/Containers/KanbanContainer';
 import { Hall } from '../models/hall';
 import { HallResult } from '../models/result';
 import KanbanCol from '../components/Containers/KanbanCol';
+import TaskCard from '../components/Cards/TaskCard';
 
 const HallPage = () => {
   const [dataList, setDataList] = useState<Hall[]>([])
@@ -30,7 +31,7 @@ const HallPage = () => {
                   data.tasks.map((task) => {
                     if( task.dateId === date.id) {
                       return (
-                        <div key={task.id}>{task.title}</div>
+                        <TaskCard key={task.id} />
                       )
                     } else {
                       return null;

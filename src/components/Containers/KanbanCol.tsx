@@ -12,6 +12,7 @@ interface KanbanColProps {
 
 const KanbanCol = ({ title, children }: KanbanColProps) => {
   return (
+    <>
     <div className="kanban-col">
         <div className="kanban-col-header">
             <span>{ title }</span>
@@ -21,6 +22,7 @@ const KanbanCol = ({ title, children }: KanbanColProps) => {
             { children }
         </div>
     </div>
+    </>
   )
 }
 
