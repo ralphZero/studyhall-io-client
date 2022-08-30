@@ -24,7 +24,7 @@ const CreateHallModal = ({
 
   const onOk = () => {
     form.validateFields()
-    .then((values: Values )=> {
+    .then((values: Values)=> {
         form.resetFields();
         onCreate(values);
     }).catch(info => console.error("validate failed", info));

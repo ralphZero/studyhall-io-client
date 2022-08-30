@@ -68,9 +68,14 @@ body {
     border-bottom: none;
     text-transform: uppercase;
     font-size: 10px !important;
-    font-weight: 700;
-    color: var(--general-gray);
+    font-weight: 400;
+    color: gray;
 }
+.ant-card-body {
+    word-break: break-word;
+    white-space: normal;
+}
+
 .ant-card-bordered {
     border-radius: 8px;
     border: 2px solid #f0f0f0;
@@ -81,6 +86,12 @@ body {
 }
 .hall-card-title {
     margin-top: 3px;
+    word-wrap: break-word;
+}
+.task-card-title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
 }
 
 .ant-row {

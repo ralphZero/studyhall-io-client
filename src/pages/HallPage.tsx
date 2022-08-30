@@ -31,7 +31,7 @@ const HallPage = () => {
                   data.tasks.map((task) => {
                     if( task.dateId === date.id) {
                       return (
-                        <TaskCard key={task.id} />
+                        <TaskCard key={task.id} task={task} />
                       )
                     } else {
                       return null;
