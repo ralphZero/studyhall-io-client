@@ -12,12 +12,14 @@ interface CreateHallModalProps {
   visible: boolean;
   onCreate: (values: Values) => void;
   onCancel: () => void;
+  isLoading: boolean;
 }
 
 const CreateHallModal = ({
   visible,
   onCancel,
   onCreate,
+  isLoading
 }: CreateHallModalProps) => {
 
   const [form] = Form.useForm();
@@ -44,6 +46,7 @@ const CreateHallModal = ({
         onCancel={onCancel}
         cancelText="Cancel"
         okText="Create"
+        confirmLoading={isLoading}
       >
         <Form form={form} layout="vertical">
           <Form.Item
