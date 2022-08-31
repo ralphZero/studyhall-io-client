@@ -1,11 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 import { Hall } from "../models/hall";
 import { HallResult } from "../models/result";
+import { Task } from "../models/task";
 
 interface DataContextType {
   dataList: Hall[];
   isLoading: boolean;
   addDataToList: (hall: Hall) => void;
+  updateTaskFromHall: (hallId: string, task: Task) => void;
 }
 
 interface DataContextProviderProps {
@@ -15,7 +17,8 @@ interface DataContextProviderProps {
 export const DataContext = createContext<DataContextType>({
   isLoading: false,
   dataList: [],
-  addDataToList: (hall: Hall) => {}
+  addDataToList: (hall: Hall) => {},
+  updateTaskFromHall: (hallId: string, task: Task) => {}
 });
 
 const DataContextProvider = ({ children }: DataContextProviderProps) => {
@@ -34,7 +37,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        console.error("ERROR: ", err);
+        console.error("Error - Fetching halls -: ", err);
         setIsLoading(false);
       });
   }, []);
@@ -56,13 +59,42 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
         setIsLoading(false)
       })
       .catch(err => {
-        console.error(err);
+        console.error("Error - Adding hall -",err);
         setIsLoading(false);
       });
   };
 
+  const updateTaskFromHall = (hallId: string, task: Task) => {
+    setIsLoading(true);
+    fetch(`https://studyhall-io-api.web.app/halls/${hallId}/tasks`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(task)
+    }).then(res => res.json())
+    .then((data: HallResult) => {
+        const hall: Hall = data.result as Hall;
+
+        const tempList = [...dataList];
+
+        const indexOfHallToReplace = dataList.findIndex((hall) => hall._id === hallId);
+
+        tempList[indexOfHallToReplace] = hall;
+        
+        setDataList(tempList);
+        
+        setIsLoading(false);
+      }
+    )
+    .catch(err => {
+      console.error("Error - Update task -", err);
+      setIsLoading(false);
+    });
+  }
+
   return (
-    <DataContext.Provider value={{ dataList, isLoading, addDataToList }}>
+    <DataContext.Provider value={{ dataList, isLoading, addDataToList, updateTaskFromHall }}>
       {children}
     </DataContext.Provider>
   );

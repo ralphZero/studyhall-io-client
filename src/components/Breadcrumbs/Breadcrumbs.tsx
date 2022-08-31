@@ -1,13 +1,14 @@
 import { HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb } from "antd";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Breadcrumbs = () => {
   return (
     <Breadcrumb>
       <Breadcrumb.Item href="">
         <HomeOutlined />
-        <span>Study plans</span>
+        <Link to="/halls">Go back</Link>
       </Breadcrumb.Item>
       <Breadcrumb.Item>This plan</Breadcrumb.Item>
     </Breadcrumb>

@@ -1,29 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Spin } from 'antd';
 import HallTitle from '../components/Headers/HallTitle';
 import Header from '../components/Headers/Header';
 import KanbanContainer from '../components/Containers/KanbanContainer';
-import { Hall } from '../models/hall';
-import { HallResult } from '../models/result';
 import KanbanCol from '../components/Containers/KanbanCol';
 import TaskCard from '../components/Cards/TaskCard';
 import CreateTaskModal, { Values } from '../components/Modals/CreateTaskModal';
 import { Task } from '../models/task';
+import { Hall } from '../models/hall';
+import { DataContext } from '../context/DataContext';
 
 const HallPage = () => {
-  const [dataList, setDataList] = useState<Hall[]>([])
   const [visible, setVisible] = useState<boolean>(false);
   const [selectedCol, setSelectedCol] = useState<string>('');
+  const [hall, setHall] = useState<Hall>();
+
+  const { hallId } = useParams();
+
+  const { dataList, updateTaskFromHall } = useContext(DataContext);
 
   useEffect(() => {
-    fetch('https://studyhall-io-api.web.app/halls?uid=Feo17UUTHDRzte0spE0V5QbUivE2')
-    .then(res => res.json())
-    .then((data: HallResult) => setDataList(data.result as Hall[]))
-    .catch(console.error)
-  }, []);
+    const thisHall = dataList.filter((data) => data._id === hallId)[0];
+    setHall(thisHall);
+  }, [hallId, dataList]);
+
+  
 
   const onCreate = (values: Values) => {
-    setVisible(false);
-    const isComplete = false;
     const selectedDateId = selectedCol;
 
     // Create Task to send to API
@@ -31,34 +35,25 @@ const HallPage = () => {
       dateId: selectedDateId,
       label: values.label,
       task: values.task,
-      isComplete: isComplete
+      isComplete: false
     }
-
-    fetch('https://studyhall-io-api.web.app/halls/630ed4ff3309aeaf7449bb8b/tasks', {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(task)
-    }).then(res => res.json())
-    .then((data: HallResult) => console.log(data.result as Hall[]))
-    .catch(console.error);
-
+    updateTaskFromHall(hallId as string, task);
+    setVisible(false);
     setSelectedCol('');
   }
 
   return (
+    hall ?
     <>
       <Header />
       <HallTitle />
       <KanbanContainer>
       {
-        dataList.map((data) => {
-          return data.dates.map((date) => {
+          hall.dates.map((date) => {
             return (
               <KanbanCol key={date.id} id={date.id} title={date.title} selectedCol={setSelectedCol} onToggleModal={setVisible}>
                 {
-                  data.tasks.map((task) => {
+                  hall.tasks.map((task) => {
                     if( task.dateId === date.id) {
                       return (
                         <TaskCard key={task.id} task={task} />
@@ -71,12 +66,12 @@ const HallPage = () => {
               </KanbanCol>
             )
           })
-        })
       }
       </KanbanContainer>
       <CreateTaskModal visible={visible} onCancel={() => setVisible(false)} onCreate={onCreate} />
       
     </>
+    : <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}><Spin/></div>
   )
 }
 
