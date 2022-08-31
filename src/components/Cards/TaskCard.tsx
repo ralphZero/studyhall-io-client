@@ -12,11 +12,11 @@ const TaskCard = ({ task }: TaskCardProps) => {
   return (
     <Card extra={<CheckCircleFilled style={completeIcon} />} hoverable size="small" title={task.label} style={{ width: "100%", margin: "12px 0px" }}>
         <div hidden></div>
-        <p className='task-card-title'>
+        <div className='task-card-title'>
           <Space wrap>
             {task.task}
           </Space>
-        </p>
+        </div>
         {/* <Progress percent={Math.round(progress * 100)} /> */}
     </Card>
   )

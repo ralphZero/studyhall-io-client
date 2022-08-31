@@ -34,8 +34,8 @@ const HallPage = () => {
       isComplete: isComplete
     }
 
-    fetch('https://studyhall-io-api.web.app/halls/630e4e2596faca04e9278f8f/tasks', {
-      method: 'POST',
+    fetch('https://studyhall-io-api.web.app/halls/630ed4ff3309aeaf7449bb8b/tasks', {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -43,6 +43,8 @@ const HallPage = () => {
     }).then(res => res.json())
     .then((data: HallResult) => console.log(data.result as Hall[]))
     .catch(console.error);
+
+    setSelectedCol('');
   }
 
   return (
