@@ -1,11 +1,9 @@
 import { Form, Input, Modal } from "antd";
 import React from "react";
 
-interface Values {
-  title: string;
-  subject: string;
-  isComplete: false;
-  dateId: string;
+export interface Values {
+  label: string;
+  task: string;
 }
 
 interface CreateTaskModalProps {
@@ -22,11 +20,13 @@ const CreateTaskModal = ({
   const [form] = Form.useForm();
 
   const onOk = () => {
-    form.validateFields()
-    .then((values: Values)=> {
+    form
+      .validateFields()
+      .then((values: Values) => {
         form.resetFields();
         onCreate(values);
-    }).catch(info => console.error("validate failed", info));
+      })
+      .catch((info) => console.error("validate failed", info));
   };
 
   return (
@@ -40,18 +40,27 @@ const CreateTaskModal = ({
     >
       <Form form={form} layout="vertical">
         <Form.Item
-          name="title"
-          label="Title"
+          name="label"
+          label="Label"
           rules={[
             {
               required: true,
-              message: "Please input the title of collection!",
+              message: "Please add a task.",
             },
           ]}
         >
           <Input />
         </Form.Item>
-        <Form.Item name="description" label="Description">
+        <Form.Item
+          name="task"
+          label="Task"
+          rules={[
+            {
+              required: true,
+              message: "Please add a task.",
+            },
+          ]}
+        >
           <Input />
         </Form.Item>
       </Form>
