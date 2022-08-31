@@ -10,10 +10,15 @@ import CreateTaskModal, { Values } from '../components/Modals/CreateTaskModal';
 import { Task } from '../models/task';
 import { Hall } from '../models/hall';
 import { DataContext } from '../context/DataContext';
+import TaskDrawer from '../components/Drawers/TaskDrawer';
 
 const HallPage = () => {
-  const [visible, setVisible] = useState<boolean>(false);
+  const [visibleModal, setVisibleModal] = useState<boolean>(false);
+  const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
+
   const [selectedCol, setSelectedCol] = useState<string>('');
+  const [selectedTaskId, setSelectedTaskId] = useState<string>('');
+
   const [hall, setHall] = useState<Hall>();
 
   const { hallId } = useParams();
@@ -27,7 +32,7 @@ const HallPage = () => {
 
   
 
-  const onCreate = (values: Values) => {
+  const onCreateTask = (values: Values) => {
     const selectedDateId = selectedCol;
 
     // Create Task to send to API
@@ -38,8 +43,19 @@ const HallPage = () => {
       isComplete: false
     }
     updateTaskFromHall(hallId as string, task);
-    setVisible(false);
+    setVisibleModal(false);
     setSelectedCol('');
+  }
+
+  const handleCardClick = (e:any, id: string) => {
+    setSelectedTaskId(id);
+    setVisibleDrawer(true);
+  }
+
+  const onUpdateTask = () => {
+    console.log(selectedTaskId);
+    
+    setVisibleDrawer(false);
   }
 
   return (
@@ -51,12 +67,12 @@ const HallPage = () => {
       {
           hall.dates.map((date) => {
             return (
-              <KanbanCol key={date.id} id={date.id} title={date.title} selectedCol={setSelectedCol} onToggleModal={setVisible}>
+              <KanbanCol key={date.id} id={date.id} title={date.title} selectedCol={setSelectedCol} onToggleModal={setVisibleModal}>
                 {
                   hall.tasks.map((task) => {
                     if( task.dateId === date.id) {
                       return (
-                        <TaskCard key={task.id} task={task} />
+                        <TaskCard onClick={handleCardClick} key={task.id} task={task} />
                       )
                     } else {
                       return null;
@@ -68,7 +84,8 @@ const HallPage = () => {
           })
       }
       </KanbanContainer>
-      <CreateTaskModal visible={visible} onCancel={() => setVisible(false)} onCreate={onCreate} />
+      <CreateTaskModal visible={visibleModal} onCancel={() => setVisibleModal(false)} onCreate={onCreateTask} />
+      <TaskDrawer visible={visibleDrawer} onClose={onUpdateTask} />
       
     </>
     : <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}><Spin/></div>
