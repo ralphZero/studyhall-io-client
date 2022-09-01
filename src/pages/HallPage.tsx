@@ -40,7 +40,8 @@ const HallPage = () => {
       dateId: selectedDateId,
       label: values.label,
       task: values.task,
-      isComplete: false
+      isComplete: false,
+      subtasks: []
     }
     createTaskInHall(hallId as string, task);
     setVisibleModal(false);
@@ -49,6 +50,8 @@ const HallPage = () => {
 
   const onUpdateTask = (values: Task) => {
     // do stuff
+    console.log(values);
+    
     updateTaskInHall(hallId as string, values);
     setSelectedTask(undefined);
     setVisibleDrawer(false);

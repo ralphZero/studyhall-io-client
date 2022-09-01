@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Button, Checkbox, Drawer, Form, Input, Space, Spin } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Task } from "../../models/task";
+import Subtasks from "../Form/Subtasks";
 
 // -------
 //  adding notes in future
@@ -86,6 +87,7 @@ const TaskDrawer = ({ visible, onClose, onUpdate, task }: TaskDrawerProps) => {
                 placeholder="Task here"
               />
             </Form.Item>
+            <Subtasks />
           </Form>
         </>
       ) : (

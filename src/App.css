@@ -97,3 +97,7 @@ body {
 .ant-row {
     margin-block: 0;
 }
+
+#subtask-group > .ant-space-item:nth-child(2){
+    flex-grow: 1;
+}
