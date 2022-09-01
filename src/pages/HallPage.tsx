@@ -10,14 +10,14 @@ import CreateTaskModal, { Values } from '../components/Modals/CreateTaskModal';
 import { Task } from '../models/task';
 import { Hall } from '../models/hall';
 import { DataContext } from '../context/DataContext';
-import TaskDrawer from '../components/Drawers/TaskDrawer';
+import TaskDrawer, { TaskDrawerValues } from '../components/Drawers/TaskDrawer';
 
 const HallPage = () => {
   const [visibleModal, setVisibleModal] = useState<boolean>(false);
   const [visibleDrawer, setVisibleDrawer] = useState<boolean>(false);
 
   const [selectedCol, setSelectedCol] = useState<string>('');
-  const [selectedTaskId, setSelectedTaskId] = useState<string>('');
+  const [selectedTask, setSelectedTask] = useState<Task>();
 
   const [hall, setHall] = useState<Hall>();
 
@@ -47,15 +47,22 @@ const HallPage = () => {
     setSelectedCol('');
   }
 
-  const handleCardClick = (e:any, id: string) => {
-    setSelectedTaskId(id);
+  const onUpdateTask = (values: TaskDrawerValues) => {
+    // do stuff
+    setVisibleDrawer(false);
+  }
+
+  const handleCardClick = (e:any, task: Task) => {
+    setSelectedTask(task);
+    // console.log("Task--->", task);
+    
     setVisibleDrawer(true);
   }
 
-  const onUpdateTask = () => {
-    console.log(selectedTaskId);
-    
+  const onCloseDrawerTask = () => {
+    // console.log(selectedTask);
     setVisibleDrawer(false);
+    setSelectedTask(undefined);
   }
 
   return (
@@ -85,7 +92,7 @@ const HallPage = () => {
       }
       </KanbanContainer>
       <CreateTaskModal visible={visibleModal} onCancel={() => setVisibleModal(false)} onCreate={onCreateTask} />
-      <TaskDrawer visible={visibleDrawer} onClose={onUpdateTask} />
+      <TaskDrawer task={selectedTask} visible={visibleDrawer} onClose={onCloseDrawerTask} onUpdate={onUpdateTask} />
       
     </>
     : <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}><Spin/></div>
