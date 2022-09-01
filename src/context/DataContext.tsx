@@ -8,6 +8,7 @@ interface DataContextType {
   isLoading: boolean;
   addDataToList: (hall: Hall) => void;
   createTaskInHall: (hallId: string, task: Task) => void;
+  updateTaskInHall: (hallId: string, task: Task) => void;
 }
 
 interface DataContextProviderProps {
@@ -18,7 +19,8 @@ export const DataContext = createContext<DataContextType>({
   isLoading: false,
   dataList: [],
   addDataToList: (hall: Hall) => {},
-  createTaskInHall: (hallId: string, task: Task) => {}
+  createTaskInHall: (hallId: string, task: Task) => {},
+  updateTaskInHall: (hallId: string, task: Task) => {}
 });
 
 const DataContextProvider = ({ children }: DataContextProviderProps) => {
@@ -27,7 +29,6 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
 
   useEffect(() => {
     setIsLoading(true);
-
     fetch(
       "https://studyhall-io-api.web.app/halls?uid=Feo17UUTHDRzte0spE0V5QbUivE2"
     )
@@ -93,8 +94,32 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     });
   }
 
+  const updateTaskInHall = (hallId: string, task: Task) => {
+    setIsLoading(true);
+    fetch(`https://studyhall-io-api.web.app/halls/${hallId}/tasks/${task.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(task),
+    }).then(res => res.json())
+    .then((data: HallResult) => {
+      const hall: Hall = data.result as Hall;
+
+        const tempList = [...dataList];
+
+        const indexOfHallToReplace = dataList.findIndex((hall) => hall._id === hallId);
+
+        tempList[indexOfHallToReplace] = hall;
+        
+        setDataList(tempList);
+        
+        setIsLoading(false);
+    });
+  }
+
   return (
-    <DataContext.Provider value={{ dataList, isLoading, addDataToList, createTaskInHall }}>
+    <DataContext.Provider value={{ dataList, isLoading, addDataToList, createTaskInHall, updateTaskInHall }}>
       {children}
     </DataContext.Provider>
   );

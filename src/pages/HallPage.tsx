@@ -23,7 +23,7 @@ const HallPage = () => {
 
   const { hallId } = useParams();
 
-  const { dataList, createTaskInHall } = useContext(DataContext);
+  const { dataList, createTaskInHall, updateTaskInHall } = useContext(DataContext);
 
   useEffect(() => {
     const thisHall = dataList.filter((data) => data._id === hallId)[0];
@@ -49,7 +49,7 @@ const HallPage = () => {
 
   const onUpdateTask = (values: Task) => {
     // do stuff
-    console.log("values-->", values);
+    updateTaskInHall(hallId as string, values);
     setSelectedTask(undefined);
     setVisibleDrawer(false);
   }
