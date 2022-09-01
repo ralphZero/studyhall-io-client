@@ -87,7 +87,7 @@ const TaskDrawer = ({ visible, onClose, onUpdate, task }: TaskDrawerProps) => {
                 placeholder="Task here"
               />
             </Form.Item>
-            <Subtasks />
+            <Subtasks initialValues={task.subtasks} />
           </Form>
         </>
       ) : (

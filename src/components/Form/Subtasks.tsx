@@ -2,10 +2,14 @@ import React from "react";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Space } from "antd";
 import { v4 as uuid } from 'uuid';
+import { Subtask } from "../../models/subtask";
 
-const Subtasks = () => {
+interface SubtasksProps {
+  initialValues: Subtask[]
+}
+const Subtasks = ({ initialValues }: SubtasksProps) => {
   return (
-    <Form.List name="subtasks">
+    <Form.List name="subtasks" initialValue={initialValues}>
       {(fields, { add, remove }) => (
         <>
           {fields.map(({ key, name, ...restField }) => (
