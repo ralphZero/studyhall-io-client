@@ -1,23 +1,16 @@
 import React, { useEffect } from "react";
-import { Button, Checkbox, Drawer, Form, Input, Space } from "antd";
+import { Button, Checkbox, Drawer, Form, Input, Space, Spin } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Task } from "../../models/task";
 
 // -------
 //  adding notes in future
 // -----
-
 interface TaskDrawerProps {
   visible: boolean;
   onClose: () => void;
-  onUpdate: (values: TaskDrawerValues) => void;
+  onUpdate: (values: Task) => void;
   task: Task | undefined;
-}
-
-export interface TaskDrawerValues {
-  label: string,
-  task: string,
-  completed: boolean
 }
 
 const TaskDrawer = ({ visible, onClose, onUpdate, task }: TaskDrawerProps) => {
@@ -29,16 +22,16 @@ const TaskDrawer = ({ visible, onClose, onUpdate, task }: TaskDrawerProps) => {
   
   const onOk = () => {
     form.validateFields()
-    .then((values: TaskDrawerValues) => {
+    .then((values: Task) => {
+      onUpdate({...values, id: task?.id as string, dateId: task?.dateId as string});
       form.resetFields();
-      onUpdate(values);
     })
     .catch(console.error)
   };
 
   const handleClose = () => {
-    form.resetFields();
     onClose();
+    form.resetFields();
   }
 
   return (
@@ -63,10 +56,10 @@ const TaskDrawer = ({ visible, onClose, onUpdate, task }: TaskDrawerProps) => {
             form={form}
             layout="vertical"
             name="updateTaskForm"
-            initialValues={{ label: task.label, task: task.task }}
+            initialValues={{ label: task.label, task: task.task, isComplete: false }}
           >
-            <Form.Item name="completed" valuePropName="checked">
-              <Checkbox>Is Completed ?</Checkbox>
+            <Form.Item name="isComplete" valuePropName="checked">
+              <Checkbox>Mark as completed</Checkbox>
             </Form.Item>
             <Form.Item
             style={{ margin: 0 }}
@@ -96,7 +89,9 @@ const TaskDrawer = ({ visible, onClose, onUpdate, task }: TaskDrawerProps) => {
           </Form>
         </>
       ) : (
-        <></>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Spin />
+        </div>
       )}
     </Drawer>
   );

@@ -10,7 +10,7 @@ import CreateTaskModal, { Values } from '../components/Modals/CreateTaskModal';
 import { Task } from '../models/task';
 import { Hall } from '../models/hall';
 import { DataContext } from '../context/DataContext';
-import TaskDrawer, { TaskDrawerValues } from '../components/Drawers/TaskDrawer';
+import TaskDrawer from '../components/Drawers/TaskDrawer';
 
 const HallPage = () => {
   const [visibleModal, setVisibleModal] = useState<boolean>(false);
@@ -23,7 +23,7 @@ const HallPage = () => {
 
   const { hallId } = useParams();
 
-  const { dataList, updateTaskFromHall } = useContext(DataContext);
+  const { dataList, createTaskInHall } = useContext(DataContext);
 
   useEffect(() => {
     const thisHall = dataList.filter((data) => data._id === hallId)[0];
@@ -42,25 +42,24 @@ const HallPage = () => {
       task: values.task,
       isComplete: false
     }
-    updateTaskFromHall(hallId as string, task);
+    createTaskInHall(hallId as string, task);
     setVisibleModal(false);
     setSelectedCol('');
   }
 
-  const onUpdateTask = (values: TaskDrawerValues) => {
+  const onUpdateTask = (values: Task) => {
     // do stuff
+    console.log("values-->", values);
+    setSelectedTask(undefined);
     setVisibleDrawer(false);
   }
 
   const handleCardClick = (e:any, task: Task) => {
     setSelectedTask(task);
-    // console.log("Task--->", task);
-    
     setVisibleDrawer(true);
   }
 
   const onCloseDrawerTask = () => {
-    // console.log(selectedTask);
     setVisibleDrawer(false);
     setSelectedTask(undefined);
   }

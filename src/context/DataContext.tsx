@@ -7,7 +7,7 @@ interface DataContextType {
   dataList: Hall[];
   isLoading: boolean;
   addDataToList: (hall: Hall) => void;
-  updateTaskFromHall: (hallId: string, task: Task) => void;
+  createTaskInHall: (hallId: string, task: Task) => void;
 }
 
 interface DataContextProviderProps {
@@ -18,7 +18,7 @@ export const DataContext = createContext<DataContextType>({
   isLoading: false,
   dataList: [],
   addDataToList: (hall: Hall) => {},
-  updateTaskFromHall: (hallId: string, task: Task) => {}
+  createTaskInHall: (hallId: string, task: Task) => {}
 });
 
 const DataContextProvider = ({ children }: DataContextProviderProps) => {
@@ -64,7 +64,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
       });
   };
 
-  const updateTaskFromHall = (hallId: string, task: Task) => {
+  const createTaskInHall = (hallId: string, task: Task) => {
     setIsLoading(true);
     fetch(`https://studyhall-io-api.web.app/halls/${hallId}/tasks`, {
       method: 'PATCH',
@@ -94,7 +94,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
   }
 
   return (
-    <DataContext.Provider value={{ dataList, isLoading, addDataToList, updateTaskFromHall }}>
+    <DataContext.Provider value={{ dataList, isLoading, addDataToList, createTaskInHall }}>
       {children}
     </DataContext.Provider>
   );
