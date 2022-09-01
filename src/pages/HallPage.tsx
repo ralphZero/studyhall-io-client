@@ -68,7 +68,7 @@ const HallPage = () => {
     hall ?
     <>
       <Header />
-      <HallTitle />
+      <HallTitle title={hall.title} description={hall.description}  progress={hall.progress} />
       <KanbanContainer>
       {
           hall.dates.map((date) => {

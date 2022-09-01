@@ -56,7 +56,7 @@ const TaskDrawer = ({ visible, onClose, onUpdate, task }: TaskDrawerProps) => {
             form={form}
             layout="vertical"
             name="updateTaskForm"
-            initialValues={{ label: task.label, task: task.task, isComplete: false }}
+            initialValues={{ label: task.label, task: task.task, isComplete: task.isComplete }}
           >
             <Form.Item name="isComplete" valuePropName="checked">
               <Checkbox>Mark as completed</Checkbox>

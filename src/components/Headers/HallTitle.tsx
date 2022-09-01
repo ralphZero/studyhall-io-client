@@ -1,17 +1,22 @@
 import { Progress } from "antd";
 import React from "react";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
+interface HallTitleProps {
+  title: string,
+  description: string,
+  progress: number
+}
 
-const HallTitle = () => {
+const HallTitle = ({title, description, progress}: HallTitleProps) => {
   return (
     <>
       <div className="title-header" style={style}>
         <div>
-            <Breadcrumbs />
-            <h1 className="title-header-title" style={{ fontSize: "28px", marginTop: "5px" }}>My study plan</h1>
-            <h2 className="title-header-subtitle">Lorem Ipsum is simply dummy text.</h2>
+            <Breadcrumbs title={title} />
+            <h1 className="title-header-title" style={{ fontSize: "28px", marginTop: "5px" }}>{title}</h1>
+            <h2 className="title-header-subtitle">{description}</h2>
         </div>
-        <Progress type="circle" percent={30} width={70} />
+        <Progress type="circle" percent={Math.round(progress * 100)} width={70} />
       </div>
     </>
   );

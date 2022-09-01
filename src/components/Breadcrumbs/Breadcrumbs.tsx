@@ -1,16 +1,19 @@
+import React from "react";
 import { HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb } from "antd";
-import React from "react";
 import { Link } from "react-router-dom";
 
-const Breadcrumbs = () => {
+interface Props {
+  title: string
+}
+const Breadcrumbs = ({ title }: Props) => {
   return (
     <Breadcrumb>
-      <Breadcrumb.Item href="">
+      <Breadcrumb.Item>
         <HomeOutlined />
         <Link to="/halls">Go back</Link>
       </Breadcrumb.Item>
-      <Breadcrumb.Item>This plan</Breadcrumb.Item>
+      <Breadcrumb.Item>{title}</Breadcrumb.Item>
     </Breadcrumb>
   );
 };
