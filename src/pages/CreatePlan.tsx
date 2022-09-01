@@ -9,12 +9,9 @@ import { Card, Col, Row, Skeleton } from "antd";
 import CreateHallCardBtn from "../components/Buttons/CreateHallCardBtn";
 import { DataContext } from "../context/DataContext";
 
-
 const CreatePlan = () => {
-
   const [visible, setVisible] = useState(false);
   const { dataList, isLoading, addDataToList } = useContext(DataContext);
-
 
   const onCreate = (values: Values) => {
     const start: Moment = values.timeframe.at(0) as Moment;
@@ -32,8 +29,7 @@ const CreatePlan = () => {
     };
 
     addDataToList(hall);
-    if(!isLoading)
-      setVisible(false);
+    if (!isLoading) setVisible(false);
   };
 
   return (
@@ -44,31 +40,29 @@ const CreatePlan = () => {
       </TitleHeader>
       <div>
         <Row
-          style={{ paddingInline: 50 }}
+          style={{ paddingInline: 50, marginInline: 0 }}
           gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}
         >
-          {
-            isLoading ? Array.from(Array(8).keys()).map((item: number) => (
-              <Col span={6} key={item}>
-                <Card style={{ width: "100%" }} loading={isLoading}>
-                  <div>
-
-                  <Skeleton active />
-                  </div>
-                </Card>
-              </Col>
-            )) :
-            dataList.map((data) => (
-              <Col key={data._id} span={6}>
-                <HallCard
-                  id={data._id as string}
-                  title={data.title}
-                  description={data.description}
-                  progress={data.progress}
-                />
-              </Col>
-            ))
-          }
+          {isLoading
+            ? Array.from(Array(8).keys()).map((item: number) => (
+                <Col span={6} key={item}>
+                  <Card style={{ width: "100%" }} loading={isLoading}>
+                    <div>
+                      <Skeleton active />
+                    </div>
+                  </Card>
+                </Col>
+              ))
+            : dataList.map((data) => (
+                <Col key={data._id} span={6}>
+                  <HallCard
+                    id={data._id as string}
+                    title={data.title}
+                    description={data.description}
+                    progress={data.progress}
+                  />
+                </Col>
+              ))}
         </Row>
       </div>
 
