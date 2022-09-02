@@ -41,7 +41,10 @@ const HallPage = () => {
       label: values.label,
       task: values.task,
       isComplete: false,
-      subtasks: []
+      subtasks: [],
+      subtasksCount: 0,
+      subtasksCompletedCount: 0,
+      progress: 0
     }
     createTaskInHall(hallId as string, task);
     setVisibleModal(false);

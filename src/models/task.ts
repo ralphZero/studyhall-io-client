@@ -6,5 +6,8 @@ export interface Task {
     label: string,
     task: string,
     isComplete: boolean,
-    subtasks: Subtask[]
+    subtasks: Subtask[],
+    subtasksCount: number,
+    subtasksCompletedCount: number,
+    progress: number,
 }

@@ -24,7 +24,11 @@ const TaskDrawer = ({ visible, onClose, onUpdate, task }: TaskDrawerProps) => {
   const onOk = () => {
     form.validateFields()
     .then((values: Task) => {
-      onUpdate({...values, id: task?.id as string, dateId: task?.dateId as string});
+      const subtasks = values.subtasks;
+      const stLength = subtasks.length;
+      const stCompletedLength = subtasks.filter((subtask) => subtask.isComplete === true).length;
+      const stProgress = stCompletedLength / stLength;
+      onUpdate({...values, id: task?.id as string, dateId: task?.dateId as string, subtasksCount: stLength, subtasksCompletedCount: stCompletedLength, progress: stProgress});
       form.resetFields();
     })
     .catch(console.error)
