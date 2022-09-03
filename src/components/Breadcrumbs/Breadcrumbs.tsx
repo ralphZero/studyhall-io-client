@@ -11,7 +11,7 @@ const Breadcrumbs = ({ title }: Props) => {
     <Breadcrumb>
       <Breadcrumb.Item>
         <HomeOutlined />
-        <Link to="/halls">Go back</Link>
+        <Link to="/">Go back</Link>
       </Breadcrumb.Item>
       <Breadcrumb.Item>{title}</Breadcrumb.Item>
     </Breadcrumb>

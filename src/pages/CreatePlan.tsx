@@ -8,17 +8,20 @@ import HallCard from "../components/Cards/HallCard";
 import { Card, Col, Row, Skeleton } from "antd";
 import CreateHallCardBtn from "../components/Buttons/CreateHallCardBtn";
 import { DataContext } from "../context/DataContext";
+import { UserContext } from "../context/UserContext";
 
 const CreatePlan = () => {
   const [visible, setVisible] = useState(false);
   const { dataList, isLoading, addDataToList } = useContext(DataContext);
+
+  const { user } = useContext(UserContext);
 
   const onCreate = (values: Values) => {
     const start: Moment = values.timeframe.at(0) as Moment;
     const end: Moment = values.timeframe.at(1) as Moment;
 
     const hall: Hall = {
-      userId: "Feo17UUTHDRzte0spE0V5QbUivE2",
+      userId: `${user?.uid}`,
       startTimeStamp: start.format("YYYY-DD-MM"),
       endTimeStamp: end.format("YYYY-DD-MM"),
       title: values.title,

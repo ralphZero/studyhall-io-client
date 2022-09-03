@@ -1,7 +1,8 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import { Hall } from "../models/hall";
 import { HallResult } from "../models/result";
 import { Task } from "../models/task";
+import {UserContext} from './UserContext';
 
 interface DataContextType {
   dataList: Hall[];
@@ -26,22 +27,25 @@ export const DataContext = createContext<DataContextType>({
 const DataContextProvider = ({ children }: DataContextProviderProps) => {
   const [dataList, setDataList] = useState<Hall[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(
-      "https://studyhall-io-api.web.app/halls?uid=Feo17UUTHDRzte0spE0V5QbUivE2"
-    )
-      .then((res) => res.json())
-      .then((data: HallResult) => {
-        setDataList(data.result as Hall[]);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error - Fetching halls -: ", err);
-        setIsLoading(false);
-      });
-  }, []);
+    if(user) {
+      fetch(
+        `https://studyhall-io-api.web.app/halls?uid=${user?.uid}`
+      )
+        .then((res) => res.json())
+        .then((data: HallResult) => {
+          setDataList(data.result as Hall[]);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.error("Error - Fetching halls -: ", err);
+          setIsLoading(false);
+        });
+    }
+  }, [user]);
 
   const addDataToList = (hall: Hall) => {
     setIsLoading(true)

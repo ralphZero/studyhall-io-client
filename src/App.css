@@ -93,6 +93,9 @@ body {
     font-weight: 600;
     line-height: 24px;
 }
+.ant-popover-inner-content {
+    padding: 0;
+}
 
 .ant-row {
     margin-block: 0;
