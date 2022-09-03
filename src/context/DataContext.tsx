@@ -7,7 +7,7 @@ import {UserContext} from './UserContext';
 interface DataContextType {
   dataList: Hall[];
   isLoading: boolean;
-  addDataToList: (hall: Hall) => void;
+  addDataToList: (hall: Hall, callback: () => void) => void;
   createTaskInHall: (hallId: string, task: Task, callback: () => void) => void;
   updateTaskInHall: (hallId: string, task: Task) => void;
 }
@@ -47,7 +47,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     }
   }, [user]);
 
-  const addDataToList = (hall: Hall) => {
+  const addDataToList = (hall: Hall, callback: () => void) => {
     setIsLoading(true)
     fetch("https://studyhall-io-api.web.app/halls", {
       method: "POST",
@@ -63,6 +63,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
         setDataList(tempList);
         setIsLoading(false)
       })
+      .then(() => callback())
       .catch(err => {
         console.error("Error - Adding hall -",err);
         setIsLoading(false);

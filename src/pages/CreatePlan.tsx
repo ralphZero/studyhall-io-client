@@ -31,8 +31,9 @@ const CreatePlan = () => {
       dates: [],
     };
 
-    addDataToList(hall);
-    if (!isLoading) setVisible(false);
+    addDataToList(hall, () => {
+      setVisible(false);
+    });
   };
 
   return (
