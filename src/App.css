@@ -46,11 +46,13 @@ body {
 .ant-btn-primary {
     background-color: var(--eww-green);
     border-color: var(--eww-green);
+    color: #e0e0e0;
 }
 
 .ant-btn-primary:hover {
     background-color: var(--eww-green);
     border-color: var(--eww-green);
+    color: #e0e0e0;
     filter: contrast(0.8);
 }
 

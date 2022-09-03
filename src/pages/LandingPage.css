@@ -1,0 +1,35 @@
+.hero {
+    background: url('../assets/patterns.svg') no-repeat;
+    background-color: #061A2A;
+    background-size: contain;
+    background-position: 50%;
+    height: calc(100vh - 10rem);
+    backdrop-filter: brightness(0.6);
+
+}
+.hero-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 0;
+}
+
+.hero-h1 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 64px;
+    line-height: 75px;
+    width: 60%;
+    min-width: 350px;
+    display: flex;
+    text-align: center;
+    color: #F2F2F2;
+}
+
+.hero-h2 {
+    color: #E0E0E0;
+    width: 40%;
+    min-width: 300px;
+    text-align: center;
+}

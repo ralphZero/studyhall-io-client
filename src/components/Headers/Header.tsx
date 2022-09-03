@@ -5,8 +5,12 @@ import { FireOutlined, LoginOutlined } from "@ant-design/icons";
 
 import { UserContext } from "../../context/UserContext";
 import logo from "../../assets/logo.svg";
+import logo_dark from '../../assets/logo_darkmode.svg';
+interface Props {
+  dark?: boolean
+}
 
-const Header = () => {
+const Header = ({ dark = false }: Props) => {
   const { user, logIn, signOut } = useContext(UserContext);
 
   const content = (
@@ -21,9 +25,9 @@ const Header = () => {
   );
 
   return (
-    <Layout.Header>
+    <Layout.Header style={dark ? { backgroundColor: "transparent", borderColor: "transparent" } : {}}>
       <div>
-        <img height={32} src={logo} alt="..." />
+        <img height={32} src={dark ? logo_dark : logo} alt="..." />
       </div>
       {user ? (
         <Popover
@@ -35,7 +39,7 @@ const Header = () => {
           <Avatar src={user.photoURL as string} />
         </Popover>
       ) : (
-        <Button onClick={logIn} type="text">
+        <Button onClick={logIn} type="text" className="ant-btn-primary">
           Login
         </Button>
       )}
