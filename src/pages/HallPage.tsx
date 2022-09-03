@@ -23,7 +23,7 @@ const HallPage = () => {
 
   const { hallId } = useParams();
 
-  const { dataList, createTaskInHall, updateTaskInHall } = useContext(DataContext);
+  const { dataList, createTaskInHall, updateTaskInHall, isLoading } = useContext(DataContext);
 
   useEffect(() => {
     const thisHall = dataList.filter((data) => data._id === hallId)[0];
@@ -34,7 +34,6 @@ const HallPage = () => {
 
   const onCreateTask = (values: Values) => {
     const selectedDateId = selectedCol;
-
     // Create Task to send to API
     const task: Task = {
       dateId: selectedDateId,
@@ -46,8 +45,9 @@ const HallPage = () => {
       subtasksCompletedCount: 0,
       progress: 0
     }
-    createTaskInHall(hallId as string, task);
-    setVisibleModal(false);
+    createTaskInHall(hallId as string, task, () => {
+      setVisibleModal(false);
+    });
     setSelectedCol('');
   }
 
@@ -96,7 +96,7 @@ const HallPage = () => {
           })
       }
       </KanbanContainer>
-      <CreateTaskModal visible={visibleModal} onCancel={() => setVisibleModal(false)} onCreate={onCreateTask} />
+      <CreateTaskModal isLoading={isLoading} visible={visibleModal} onCancel={() => setVisibleModal(false)} onCreate={onCreateTask} />
       <TaskDrawer task={selectedTask} visible={visibleDrawer} onClose={onCloseDrawerTask} onUpdate={onUpdateTask} />
       
     </>

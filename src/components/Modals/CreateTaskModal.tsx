@@ -8,6 +8,7 @@ export interface Values {
 
 interface CreateTaskModalProps {
   visible: boolean;
+  isLoading: boolean;
   onCreate: (values: Values) => void;
   onCancel: () => void;
 }
@@ -16,6 +17,7 @@ const CreateTaskModal = ({
   visible,
   onCreate,
   onCancel,
+  isLoading,
 }: CreateTaskModalProps) => {
   const [form] = Form.useForm();
 
@@ -23,18 +25,20 @@ const CreateTaskModal = ({
     form
       .validateFields()
       .then((values: Values) => {
-        form.resetFields();
         onCreate(values);
+        form.resetFields();
       })
       .catch((info) => console.error("validate failed", info));
   };
 
   return (
     <Modal
+      
       title="Create a task"
       visible={visible}
       onOk={onOk}
       onCancel={onCancel}
+      confirmLoading={isLoading}
       cancelText="Cancel"
       okText="Create"
     >

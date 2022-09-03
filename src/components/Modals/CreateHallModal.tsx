@@ -1,5 +1,5 @@
 import React from "react";
-import { Moment} from 'moment';
+import { Moment } from "moment";
 import { Form, Input, Modal, DatePicker } from "antd";
 
 export interface Values {
@@ -8,33 +8,35 @@ export interface Values {
   timeframe: Moment[];
 }
 
-interface CreateHallModalProps {
+interface Props {
   visible: boolean;
   onCreate: (values: Values) => void;
   onCancel: () => void;
   isLoading: boolean;
 }
 
-const CreateHallModal = ({
-  visible,
-  onCancel,
-  onCreate,
-  isLoading
-}: CreateHallModalProps) => {
-
+const CreateHallModal = ({ visible, onCancel, onCreate, isLoading }: Props) => {
   const [form] = Form.useForm();
 
   const onOk = () => {
-    form.validateFields()
-    .then((values: Values)=> {
+    form
+      .validateFields()
+      .then((values: Values) => {
         form.resetFields();
         onCreate(values);
-    }).catch(info => console.error("validate failed", info));
+      })
+      .catch((info) => console.error("validate failed", info));
   };
 
   const { RangePicker } = DatePicker;
   const rangeConfig = {
-    rules: [{ type: 'array' as const, required: true, message: 'Please select a timeframe!' }],
+    rules: [
+      {
+        type: "array" as const,
+        required: true,
+        message: "Please select a timeframe!",
+      },
+    ],
   };
 
   return (
@@ -65,7 +67,7 @@ const CreateHallModal = ({
             <Input />
           </Form.Item>
           <Form.Item name="timeframe" label="Timeframe" {...rangeConfig}>
-            <RangePicker />
+            <RangePicker format="YYYY-DD-MM" />
           </Form.Item>
         </Form>
       </Modal>

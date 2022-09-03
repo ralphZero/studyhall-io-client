@@ -8,7 +8,7 @@ interface DataContextType {
   dataList: Hall[];
   isLoading: boolean;
   addDataToList: (hall: Hall) => void;
-  createTaskInHall: (hallId: string, task: Task) => void;
+  createTaskInHall: (hallId: string, task: Task, callback: () => void) => void;
   updateTaskInHall: (hallId: string, task: Task) => void;
 }
 
@@ -69,7 +69,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
       });
   };
 
-  const createTaskInHall = (hallId: string, task: Task) => {
+  const createTaskInHall = (hallId: string, task: Task, callback: () => void) => {
     setIsLoading(true);
     fetch(`https://studyhall-io-api.web.app/halls/${hallId}/tasks`, {
       method: 'PATCH',
@@ -88,10 +88,9 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
         tempList[indexOfHallToReplace] = hall;
         
         setDataList(tempList);
-        
         setIsLoading(false);
       }
-    )
+    ).then(() => callback())
     .catch(err => {
       console.error("Error - Update task -", err);
       setIsLoading(false);
