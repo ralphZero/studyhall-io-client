@@ -1,19 +1,17 @@
 import React from "react";
-import { HomeOutlined } from "@ant-design/icons";
 import { Breadcrumb } from "antd";
 import { Link } from "react-router-dom";
 
 interface Props {
-  title: string
+  title: string | undefined
 }
 const Breadcrumbs = ({ title }: Props) => {
   return (
     <Breadcrumb>
       <Breadcrumb.Item>
-        <HomeOutlined />
-        <Link to="/">Go back</Link>
+        <Link to="/">Home</Link>
       </Breadcrumb.Item>
-      <Breadcrumb.Item>{title}</Breadcrumb.Item>
+      {title && <Breadcrumb.Item>{title}</Breadcrumb.Item>}
     </Breadcrumb>
   );
 };

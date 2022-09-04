@@ -73,7 +73,7 @@ const HallPage = () => {
   return (
     hall ?
     <>
-      <Header />
+      <Header title={hall.title} />
       <HallTitle title={hall.title} description={hall.description}  progress={hall.progress} />
       <KanbanContainer>
       {
