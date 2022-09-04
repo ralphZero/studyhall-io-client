@@ -24,7 +24,7 @@ const KanbanCol = ({
     selectedCol(id);
   };
 
-  const colors = ["#307351","#14213d","#da2c38","#2d7dd2"];
+  const colors = ["#307351","#14213d","#2d7dd2"];
 
   const colorIndex = Math.floor(Math.random() * colors.length);
 

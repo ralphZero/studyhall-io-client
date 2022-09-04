@@ -87,9 +87,12 @@ body {
     background-color: var(--eww-green);
 }
 .hall-card-title {
-    margin-top: 3px;
     word-wrap: break-word;
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0;
 }
+
 .task-card-title {
     font-size: 24px;
     font-weight: 600;

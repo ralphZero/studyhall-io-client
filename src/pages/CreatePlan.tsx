@@ -44,7 +44,7 @@ const CreatePlan = () => {
       </TitleHeader>
       <div>
         <Row
-          style={{ paddingInline: 50, marginInline: 0 }}
+          style={{ paddingInline: 50, paddingBottom: 50, marginInline: 0 }}
           gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}
         >
           {isLoading
@@ -64,6 +64,8 @@ const CreatePlan = () => {
                     title={data.title}
                     description={data.description}
                     progress={data.progress}
+                    startDate={data.startTimeStamp}
+                    endDate={data.endTimeStamp}
                   />
                 </Col>
               ))}

@@ -20,6 +20,7 @@ const LandingPage = () => {
           </h2>
           <Button onClick={logIn} className="ant-btn-primary" style={{ paddingInline: "25px" }} size="large">Get started</Button>
         </div>
+        <div className="hero-footer">2022 &copy; hallify.app</div>
       </div>
     </>
   );
