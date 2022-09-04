@@ -9,6 +9,7 @@ interface TaskCardProps {
 }
 
 const TaskCard = ({ task, onClick }: TaskCardProps) => {
+  
   const completeIcon = task.isComplete
     ? { color: "#6F9600", display: "block" }
     : { color: "#6F9600", display: "none" };
@@ -19,7 +20,7 @@ const TaskCard = ({ task, onClick }: TaskCardProps) => {
       hoverable
       size="small"
       title={task.label}
-      style={{ width: "100%", margin: "12px 0px" }}
+      style={{ margin: "12px 8px" }}
     >
       <div className="task-card-title">
         <Space wrap>{task.task}</Space>
