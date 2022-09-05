@@ -29,6 +29,7 @@ const CreatePlan = () => {
       progress: 0,
       tasks: [],
       dates: [],
+      dateIds: []
     };
 
     addDataToList(hall, () => {
