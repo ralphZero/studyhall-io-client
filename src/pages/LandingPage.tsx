@@ -10,7 +10,7 @@ const LandingPage = () => {
   return (
     <>
       <div className="hero">
-        <Header dark/>
+        <Header dark showMenu={false}/>
         <div className="hero-group">
           <h1 className="hero-h1">
             Create the perfect study plan that works <br /> for you

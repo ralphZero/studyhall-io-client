@@ -9,9 +9,10 @@ import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 interface Props {
   dark?: boolean;
   title?: string;
+  showMenu?: boolean;
 }
 
-const Header = ({ dark = false, title }: Props) => {
+const Header = ({ dark = false, title, showMenu = true }: Props) => {
   const { user, logIn, signOut } = useContext(UserContext);
 
   const content = (
@@ -37,7 +38,7 @@ const Header = ({ dark = false, title }: Props) => {
         <div>
           <img height={32} src={dark ? logo_dark : logo} alt="..." />
         </div>
-        <Breadcrumbs title={title} />
+        {showMenu && <Breadcrumbs title={title} />}
       </Space>
       {user ? (
         <Popover
