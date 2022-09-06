@@ -6,7 +6,7 @@ import HallTitle from "../components/Headers/HallTitle";
 import Header from "../components/Headers/Header";
 import KanbanContainer from "../components/Containers/KanbanContainer";
 import KanbanCol from "../components/Containers/KanbanCol";
-import TaskCard from "../components/Cards/TaskCard";
+
 import CreateTaskModal, { Values } from "../components/Modals/CreateTaskModal";
 import { Task } from "../models/task";
 import { Hall } from "../models/hall";
@@ -31,7 +31,6 @@ const HallPage = () => {
   useEffect(() => {
     const thisHall = dataList.filter((data) => data._id === hallId)[0];
     setHall(thisHall);
-    
   }, [hallId, dataList]);
 
   const onCreateTask = (values: Values) => {
@@ -72,10 +71,12 @@ const HallPage = () => {
     setSelectedTask(undefined);
   };
 
-  const onDragEnd = (result: DropResult) => {};
+  const onDragEnd = (result: DropResult) => {
+    console.log(result.draggableId);
+  };
 
   // console.log("Hall -->",hall);
-  
+
   return hall ? (
     <>
       <Header title={hall.title} />
@@ -84,20 +85,31 @@ const HallPage = () => {
         description={hall.description}
         progress={hall.progress}
       />
-      <DragDropContext onDragEnd={onDragEnd}>
-        <KanbanContainer>
-          {
-            hall.dateIds.map(dateId => {
-              const dateColumn = hall.dates.find(column => column.id === dateId) as PlanDate;
+      <KanbanContainer>
+        <DragDropContext onDragEnd={onDragEnd}>
+          {hall.dateIds.map((dateId) => {
+            const dateColumn = hall.dates.find(
+              (column) => column.id === dateId
+            ) as PlanDate;
 
-              const tasks = dateColumn.taskIds.map(taskId => hall.tasks.find(task => task.id === taskId)) as Task[];
-              console.log("TASKS--->",tasks, dateId);
-              return <KanbanCol handleCardClick={handleCardClick} date={dateColumn} tasks={tasks} selectedCol={setSelectedCol} onToggleModal={setVisibleModal} key={dateColumn.id} />
-              // return <div key={dateId}>Hi there </div>
-            })
-          }
-        </KanbanContainer>
-      </DragDropContext>
+            const tasks = dateColumn.taskIds.map((taskId) =>
+              hall.tasks.find((task) => task.id === taskId)
+            ) as Task[];
+            // console.log("TASKS--->",tasks, dateId);
+            return (
+              <KanbanCol
+                handleCardClick={handleCardClick}
+                date={dateColumn}
+                tasks={tasks}
+                selectedCol={setSelectedCol}
+                onToggleModal={setVisibleModal}
+                key={dateColumn.id}
+              />
+            );
+            // return <div key={dateId}>Hi there </div>
+          })}
+        </DragDropContext>
+      </KanbanContainer>
 
       <CreateTaskModal
         isLoading={isLoading}

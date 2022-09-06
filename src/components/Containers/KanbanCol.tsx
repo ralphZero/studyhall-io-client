@@ -1,6 +1,4 @@
 import React from "react";
-import { PlusOutlined } from "@ant-design/icons";
-import { Button } from "antd";
 
 import "./KanbanContainer.css";
 import { PlanDate } from "../../models/plandate";
@@ -36,9 +34,9 @@ const KanbanCol = ({
         <KanbanColHeader title={date.title} handleClick={handleClick} />
         <Droppable droppableId={date.id}>
           {
-            (droppableProvided) => (
-              <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="kanban-col-container">
-                { tasks.map((task, index) => <TaskCard onClick={handleCardClick} key={task.id} task={task} />) }
+            (droppableProvided, snapshot) => (
+              <div style={{ backgroundColor: `${snapshot.isDraggingOver ? "orange": "green"}` }} ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="kanban-col-container">
+                { tasks.map((task, index) => <TaskCard onClick={handleCardClick} key={task.id} task={task} index={index} />) }
                 { droppableProvided.placeholder }
               </div>
             )
