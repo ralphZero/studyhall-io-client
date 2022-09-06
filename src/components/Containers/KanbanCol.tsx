@@ -3,47 +3,47 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 
 import "./KanbanContainer.css";
+import { PlanDate } from "../../models/plandate";
+import KanbanColHeader from "./KanbanColHeader";
+import { Droppable } from "react-beautiful-dnd";
+import { Task } from "../../models/task";
+import TaskCard from "../Cards/TaskCard";
 
 interface KanbanColProps {
-  id: string;
-  title: string;
+  date: PlanDate;
+  tasks: Task[];
   onToggleModal: (value: boolean) => void;
   selectedCol: (value: string) => void;
-  children: JSX.Element | (JSX.Element | null)[];
+  handleCardClick: (e: any, task: Task) => void;
 }
 
 const KanbanCol = ({
-  id,
-  title,
-  children,
+  date,
+  tasks,
   onToggleModal,
   selectedCol,
+  handleCardClick,
 }: KanbanColProps) => {
+
   const handleClick = () => {
     onToggleModal(true);
-    selectedCol(id);
+    selectedCol(date.id);
   };
-
-  const colors = ["#307351","#14213d","#2d7dd2"];
-
-  const colorIndex = Math.floor(Math.random() * colors.length);
 
   return (
     <>
       <div className="kanban-col">
-        <div
-          className="kanban-col-header"
-          style={{ backgroundColor: colors[colorIndex], color: "#f9f9f9f0" }}
-        >
-          <span>{title}</span>
-          <Button
-            onClick={handleClick}
-            className="kanban-col-header-btn"
-            type="text"
-            icon={<PlusOutlined style={{ color: "#f9f9f9f0" }} />}
-          />
-        </div>
-        <div className="kanban-col-container">{children}</div>
+        <KanbanColHeader title={date.title} handleClick={handleClick} />
+        <Droppable droppableId={date.id}>
+          {
+            (droppableProvided) => (
+              <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="kanban-col-container">
+                { tasks.map((task, index) => <TaskCard onClick={handleCardClick} key={task.id} task={task} />) }
+                { droppableProvided.placeholder }
+              </div>
+            )
+          }
+        </Droppable>
       </div>
     </>
   );
