@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { Hall } from "../models/hall";
+import { PlanDate } from "../models/plandate";
 import { HallResult } from "../models/result";
 import { Task } from "../models/task";
 import {UserContext} from './UserContext';
@@ -10,6 +11,7 @@ interface DataContextType {
   addDataToList: (hall: Hall, callback: () => void) => void;
   createTaskInHall: (hallId: string, task: Task, callback: () => void) => void;
   updateTaskInHall: (hallId: string, task: Task) => void;
+  updateDatesInHall: (hallId: string, dates: PlanDate[]) => void;
 }
 
 interface DataContextProviderProps {
@@ -21,7 +23,8 @@ export const DataContext = createContext<DataContextType>({
   dataList: [],
   addDataToList: (hall: Hall) => {},
   createTaskInHall: (hallId: string, task: Task) => {},
-  updateTaskInHall: (hallId: string, task: Task) => {}
+  updateTaskInHall: (hallId: string, task: Task) => {},
+  updateDatesInHall: (hallId: string, dates: PlanDate[]) => {}
 });
 
 const DataContextProvider = ({ children }: DataContextProviderProps) => {
@@ -122,8 +125,15 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     });
   }
 
+  const updateDatesInHall = (hallId: string, dates: PlanDate[]) => {
+    const tempList = [...dataList];
+    const hallIndex = tempList.findIndex((data) => data._id === hallId);
+    tempList[hallIndex].dates = dates;
+    setDataList(tempList);
+  }
+
   return (
-    <DataContext.Provider value={{ dataList, isLoading, addDataToList, createTaskInHall, updateTaskInHall }}>
+    <DataContext.Provider value={{ dataList, isLoading, addDataToList, createTaskInHall, updateTaskInHall, updateDatesInHall }}>
       {children}
     </DataContext.Provider>
   );

@@ -25,8 +25,13 @@ const HallPage = () => {
 
   const { hallId } = useParams();
 
-  const { dataList, createTaskInHall, updateTaskInHall, isLoading } =
-    useContext(DataContext);
+  const {
+    dataList,
+    createTaskInHall,
+    updateTaskInHall,
+    isLoading,
+    updateDatesInHall,
+  } = useContext(DataContext);
 
   useEffect(() => {
     const thisHall = dataList.filter((data) => data._id === hallId)[0];
@@ -72,10 +77,63 @@ const HallPage = () => {
   };
 
   const onDragEnd = (result: DropResult) => {
-    console.log(result.draggableId);
-  };
+    const { destination, source, draggableId } = result;
 
-  // console.log("Hall -->",hall);
+    if (!destination) {
+      return;
+    }
+
+    // if dragged back to where it was
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    if (hall) {
+      const start = hall.dates.find(
+        (col) => col.id === source.droppableId
+      ) as PlanDate;
+      const finish = hall.dates.find(
+        (col) => col.id === destination.droppableId
+      ) as PlanDate;
+
+      console.log("Start--->", start);
+      console.log("Finish--->", finish);
+
+      if (start === finish) {
+        const newTaskIds = Array.from(start.taskIds);
+        newTaskIds.splice(source.index, 1);
+        newTaskIds.splice(destination.index, 0, draggableId);
+
+        const colIndex = hall.dates.findIndex((col) => col.id === start.id);
+        const updatedTaskIds = (hall.dates[colIndex].taskIds = newTaskIds);
+        const dates = [...hall.dates, updatedTaskIds] as PlanDate[];
+
+        updateDatesInHall(hallId as string, dates);
+
+        return;
+      }
+
+      const startTaskIds = Array.from(start.taskIds);
+      startTaskIds.splice(source.index, 1);
+
+      const finishTaskIds = Array.from(finish.taskIds);
+      finishTaskIds.splice(destination.index, 0, draggableId);
+
+      const startIndex = hall.dates.findIndex((col) => col.id === start.id);
+      const endIndex = hall.dates.findIndex((col) => col.id === finish.id);
+
+      const dates = [
+        ...hall.dates,
+        (hall.dates[startIndex].taskIds = startTaskIds),
+        (hall.dates[endIndex].taskIds = finishTaskIds),
+      ] as PlanDate[];
+
+      updateDatesInHall(hallId as string, dates);
+    }
+  };
 
   return hall ? (
     <>
