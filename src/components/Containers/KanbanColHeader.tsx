@@ -8,20 +8,14 @@ interface Props {
 }
 
 const KanbanColHeader = ({ title, handleClick }: Props) => {
-  const colors = ["#307351", "#14213d", "#2d7dd2"];
-  const colorIndex = Math.floor(Math.random() * colors.length);
-
   return (
-    <div
-      className="kanban-col-header"
-      style={{ backgroundColor: colors[colorIndex], color: "#f9f9f9f0" }}
-    >
+    <div className="kanban-col-header">
       <span>{title}</span>
       <Button
         onClick={handleClick}
         className="kanban-col-header-btn"
         type="text"
-        icon={<PlusOutlined style={{ color: "#f9f9f9f0" }} />}
+        icon={<PlusOutlined style={{ color: "#8C8C8C" }} />}
       />
     </div>
   );

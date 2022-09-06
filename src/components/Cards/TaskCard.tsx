@@ -4,6 +4,8 @@ import { Task } from "../../models/task";
 import { CheckCircleFilled, CheckCircleOutlined } from "@ant-design/icons";
 import { Draggable } from "react-beautiful-dnd";
 
+import "./TaskCard.css";
+
 interface TaskCardProps {
   task: Task;
   index: number;
@@ -21,12 +23,13 @@ const TaskCard = ({ task, onClick, index }: TaskCardProps) => {
           {...draggableProvided.draggableProps}
           {...draggableProvided.dragHandleProps}
           ref={draggableProvided.innerRef}
+          className="taskcard"
           
-          // onClick={(e) => onClick(e, task)}
+          onClick={(e) => onClick(e, task)}
           extra={<CheckCircleFilled style={completeIcon} />}
           size="small"
           title={task.label}
-          style={{ margin: "12px 8px", borderColor: `${snapshot.isDragging ? "#2f7451" : "#FFFFFF"}`, ...draggableProvided.draggableProps.style }}
+          style={{ margin: "12px 8px", borderColor: `${snapshot.isDragging ? "#514EFF" : "transparent"}`, ...draggableProvided.draggableProps.style }}
         >
           <div className="task-card-title">
             <Space wrap>{task.task}</Space>

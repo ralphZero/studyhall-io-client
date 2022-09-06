@@ -31,7 +31,7 @@ const HallTitle = ({ title, description, progress }: HallTitleProps) => {
 
 const style = {
   padding: "15px 50px",
-  backgroundColor: "#FAFAFA",
+  backgroundColor: "#f4f6f6",
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",

@@ -22,6 +22,8 @@ body {
 
 .title-header {
     padding: 50px 50px 80px;
+    background: url("./assets/hallbar_bg.svg") no-repeat left;
+    background-size: cover;
 }
 
 .title-header-title {
@@ -93,11 +95,6 @@ body {
     margin: 0;
 }
 
-.task-card-title {
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 24px;
-}
 .ant-popover-inner-content {
     padding: 0;
 }
