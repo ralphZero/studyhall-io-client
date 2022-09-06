@@ -35,7 +35,7 @@ const KanbanCol = ({
         <Droppable droppableId={date.id}>
           {
             (droppableProvided, snapshot) => (
-              <div style={{ backgroundColor: `${snapshot.isDraggingOver ? "orange": "green"}` }} ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="kanban-col-container">
+              <div style={{ backgroundColor: `${snapshot.isDraggingOver ? "#eef0f6": "#f6f6f7"}` }} ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className="kanban-col-container">
                 { tasks.map((task, index) => <TaskCard onClick={handleCardClick} key={task.id} task={task} index={index} />) }
                 { droppableProvided.placeholder }
               </div>

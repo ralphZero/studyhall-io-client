@@ -43,4 +43,5 @@
 .kanban-col-container {
     height: 100%;
     overflow-y: overlay;
+    transition: all .3s ease;
 }

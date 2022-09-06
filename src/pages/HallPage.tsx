@@ -99,9 +99,6 @@ const HallPage = () => {
         (col) => col.id === destination.droppableId
       ) as PlanDate;
 
-      console.log("Start--->", start);
-      console.log("Finish--->", finish);
-
       if (start === finish) {
         const newTaskIds = Array.from(start.taskIds);
         newTaskIds.splice(source.index, 1);
