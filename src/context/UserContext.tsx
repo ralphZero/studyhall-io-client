@@ -6,12 +6,14 @@ import auth from "../utils/auth";
 
 interface UserContextType {
   user: User | null;
+  isLoading: boolean;
   logIn: () => void;
   signOut: () => Promise<void>;
 }
 
 export const UserContext = createContext<UserContextType>({
   user: null,
+  isLoading: false,
   logIn: () => {},
   signOut: async () => {},
 });
@@ -22,10 +24,14 @@ interface UserContextProviderProps {
 
 const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
-  // const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(setUser);
+    setIsLoading(true);
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      setUser(user);
+      setIsLoading(false);
+    });
     return () => {
         unsubscribe?.()
     }
@@ -38,7 +44,6 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
     signInWithPopup(auth, provider)
       .then((result) => {
         setUser(result.user);
-        // navigate('/');
       })
       .catch((err) => {
         console.error(err);
@@ -47,7 +52,7 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, signOut, logIn }}>
+    <UserContext.Provider value={{ user, signOut, logIn, isLoading }}>
       {children}
     </UserContext.Provider>
   );

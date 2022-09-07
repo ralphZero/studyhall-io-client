@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Spin } from "antd";
+
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import HallTitle from "../components/Headers/HallTitle";
 import Header from "../components/Headers/Header";

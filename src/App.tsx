@@ -8,18 +8,27 @@ import HallPage from "./pages/HallPage";
 import LandingPage from "./pages/LandingPage";
 
 import "./App.css";
+import LoadingScreen from "./components/skeletons/LoadingScreen";
 
 function App() {
-  const { user } = useContext(UserContext);
-  console.log({ user });
+  const { user, isLoading } = useContext(UserContext);
+
+  const setPage = (ifUserComponent: JSX.Element, noUserComponent: JSX.Element) => {
+    if(isLoading) {
+      return <LoadingScreen />
+    } else {
+      return user ? ifUserComponent : noUserComponent;
+    }
+  }
+
   return (
     <BrowserRouter>
       <DataContextProvider>
         <Routes>
-          <Route path="/" element={user ? <CreatePlan /> : <LandingPage />} />
+          <Route path="/" element={ setPage(<CreatePlan />, <LandingPage />)} />
           <Route
             path="/halls/:hallId"
-            element={user ? <HallPage /> : <LandingPage />}
+            element={ setPage(<HallPage />, <LandingPage />)}
           />
         </Routes>
       </DataContextProvider>
