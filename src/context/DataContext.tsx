@@ -163,7 +163,20 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     const hallIndex = dataList.findIndex(hall => hall._id === hallId);
     const tempList = [...dataList];
     tempList.splice(hallIndex, 1);
+    
     setDataList(tempList);
+
+    fetch(`https://studyhall-io-api.web.app/halls/${hallId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then(res => res.json())
+    .then((data: HallResult) => console.log(data))
+    .catch(err => {
+      console.error("Error - Delete hall");
+    });
   }
 
   return (
