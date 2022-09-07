@@ -22,8 +22,8 @@ const CreatePlan = () => {
 
     const hall: Hall = {
       userId: `${user?.uid}`,
-      startTimeStamp: start.format("YYYY-DD-MM"),
-      endTimeStamp: end.format("YYYY-DD-MM"),
+      startTimeStamp: start.format("YYYY-MM-DD"),
+      endTimeStamp: end.format("YYYY-MM-DD"),
       title: values.title,
       description: values.description,
       progress: 0,

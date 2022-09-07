@@ -12,6 +12,7 @@ interface DataContextType {
   createTaskInHall: (hallId: string, task: Task, callback: () => void) => void;
   updateTaskInHall: (hallId: string, task: Task) => void;
   updateDatesInHall: (hallId: string, dates: PlanDate[]) => void;
+  deleteHall: (hallId: string) => void;
 }
 
 interface DataContextProviderProps {
@@ -24,7 +25,8 @@ export const DataContext = createContext<DataContextType>({
   addDataToList: (hall: Hall) => {},
   createTaskInHall: (hallId: string, task: Task) => {},
   updateTaskInHall: (hallId: string, task: Task) => {},
-  updateDatesInHall: (hallId: string, dates: PlanDate[]) => {}
+  updateDatesInHall: (hallId: string, dates: PlanDate[]) => {},
+  deleteHall: (hallId: string) => {},
 });
 
 const DataContextProvider = ({ children }: DataContextProviderProps) => {
@@ -157,8 +159,15 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     });
   }
 
+  const deleteHall = (hallId: string) => {
+    const hallIndex = dataList.findIndex(hall => hall._id === hallId);
+    const tempList = [...dataList];
+    tempList.splice(hallIndex, 1);
+    setDataList(tempList);
+  }
+
   return (
-    <DataContext.Provider value={{ dataList, isLoading, addDataToList, createTaskInHall, updateTaskInHall, updateDatesInHall }}>
+    <DataContext.Provider value={{ dataList, isLoading, addDataToList, createTaskInHall, updateTaskInHall, updateDatesInHall, deleteHall }}>
       {children}
     </DataContext.Provider>
   );

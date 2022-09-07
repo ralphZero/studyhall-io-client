@@ -106,3 +106,7 @@ body {
 #subtask-group > .ant-space-item:nth-child(2){
     flex-grow: 1;
 }
+
+.ant-popover-inner {
+    padding: 10px;
+}

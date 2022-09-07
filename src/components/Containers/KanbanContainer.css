@@ -44,6 +44,10 @@
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.05) !important;
 }
 
+.kanban-col-header-btn:hover {
+    background-color: #F9FBFC !important;
+}
+
 .kanban-col-container {
     height: 100%;
     overflow-y: overlay;
