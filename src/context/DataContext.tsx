@@ -130,6 +130,31 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     const hallIndex = tempList.findIndex((data) => data._id === hallId);
     tempList[hallIndex].dates = dates;
     setDataList(tempList);
+    // talk to the database
+    fetch(`https://studyhall-io-api.web.app/halls/${hallId}/dates`, {
+      method: "PATCH", 
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(dates)
+    }).then(res => res.json())
+    .then((data) => {
+      const hall: Hall = data.result as Hall;
+
+        const tempList = [...dataList];
+
+        const indexOfHallToReplace = dataList.findIndex((hall) => hall._id === hallId);
+
+        tempList[indexOfHallToReplace] = hall;
+        
+        setDataList(tempList);
+        
+        setIsLoading(false);
+    })
+    .catch(err => {
+      console.error("Error - Update dates in hall -", err);
+      setIsLoading(false);
+    });
   }
 
   return (

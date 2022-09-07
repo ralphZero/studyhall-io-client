@@ -13,6 +13,7 @@ import { Hall } from "../models/hall";
 import { DataContext } from "../context/DataContext";
 import TaskDrawer from "../components/Drawers/TaskDrawer";
 import { PlanDate } from "../models/plandate";
+import HallPageSkeleton from "../components/skeletons/HallPageSkeleton";
 
 const HallPage = () => {
   const [visibleModal, setVisibleModal] = useState<boolean>(false);
@@ -180,17 +181,7 @@ const HallPage = () => {
       />
     </>
   ) : (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-        width: "100vw",
-      }}
-    >
-      <Spin />
-    </div>
+    <HallPageSkeleton title="loading" />
   );
 };
 
