@@ -1,5 +1,5 @@
 .hero {
-    background: url('../assets/patterns.svg') no-repeat;
+    background: url('../assets/patterns.svg') no-repeat top;
     background-color: #061A2A;
     background-size: contain;
     background-position: 50%;

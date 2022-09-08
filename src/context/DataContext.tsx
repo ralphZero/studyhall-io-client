@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { Hall } from "../models/hall";
+import { PlanDate } from "../models/plandate";
 import { HallResult } from "../models/result";
 import { Task } from "../models/task";
 import {UserContext} from './UserContext';
@@ -10,6 +11,8 @@ interface DataContextType {
   addDataToList: (hall: Hall, callback: () => void) => void;
   createTaskInHall: (hallId: string, task: Task, callback: () => void) => void;
   updateTaskInHall: (hallId: string, task: Task) => void;
+  updateDatesInHall: (hallId: string, dates: PlanDate[]) => void;
+  deleteHall: (hallId: string) => void;
 }
 
 interface DataContextProviderProps {
@@ -21,7 +24,9 @@ export const DataContext = createContext<DataContextType>({
   dataList: [],
   addDataToList: (hall: Hall) => {},
   createTaskInHall: (hallId: string, task: Task) => {},
-  updateTaskInHall: (hallId: string, task: Task) => {}
+  updateTaskInHall: (hallId: string, task: Task) => {},
+  updateDatesInHall: (hallId: string, dates: PlanDate[]) => {},
+  deleteHall: (hallId: string) => {},
 });
 
 const DataContextProvider = ({ children }: DataContextProviderProps) => {
@@ -122,8 +127,60 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     });
   }
 
+  const updateDatesInHall = (hallId: string, dates: PlanDate[]) => {
+    const tempList = [...dataList];
+    const hallIndex = tempList.findIndex((data) => data._id === hallId);
+    tempList[hallIndex].dates = dates;
+    setDataList(tempList);
+    // talk to the database
+    fetch(`https://studyhall-io-api.web.app/halls/${hallId}/dates`, {
+      method: "PATCH", 
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(dates)
+    }).then(res => res.json())
+    .then((data) => {
+      const hall: Hall = data.result as Hall;
+
+        const tempList = [...dataList];
+
+        const indexOfHallToReplace = dataList.findIndex((hall) => hall._id === hallId);
+
+        tempList[indexOfHallToReplace] = hall;
+        
+        setDataList(tempList);
+        
+        setIsLoading(false);
+    })
+    .catch(err => {
+      console.error("Error - Update dates in hall -", err);
+      setIsLoading(false);
+    });
+  }
+
+  const deleteHall = (hallId: string) => {
+    const hallIndex = dataList.findIndex(hall => hall._id === hallId);
+    const tempList = [...dataList];
+    tempList.splice(hallIndex, 1);
+    
+    setDataList(tempList);
+
+    fetch(`https://studyhall-io-api.web.app/halls/${hallId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then(res => res.json())
+    .then((data: HallResult) => console.log(data))
+    .catch(err => {
+      console.error("Error - Delete hall");
+    });
+  }
+
   return (
-    <DataContext.Provider value={{ dataList, isLoading, addDataToList, createTaskInHall, updateTaskInHall }}>
+    <DataContext.Provider value={{ dataList, isLoading, addDataToList, createTaskInHall, updateTaskInHall, updateDatesInHall, deleteHall }}>
       {children}
     </DataContext.Provider>
   );

@@ -67,7 +67,7 @@ const CreateHallModal = ({ visible, onCancel, onCreate, isLoading }: Props) => {
             <Input />
           </Form.Item>
           <Form.Item name="timeframe" label="Timeframe" {...rangeConfig}>
-            <RangePicker format="YYYY-DD-MM" />
+            <RangePicker format="YYYY-MM-DD" />
           </Form.Item>
         </Form>
       </Modal>

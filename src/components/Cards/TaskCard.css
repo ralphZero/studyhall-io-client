@@ -1,0 +1,19 @@
+.taskcard {
+    border: 1px dotted transparent;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 4px #F2F2F2;
+}
+
+.taskcard .ant-card-head { 
+    border-bottom: none;
+    text-transform: uppercase;
+    font-size: 10px !important;
+    font-weight: 400;
+    color: gray;
+}
+
+.task-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+}
