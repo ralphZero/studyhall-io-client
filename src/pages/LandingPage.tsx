@@ -1,26 +1,43 @@
-import { Button } from "antd";
+import { Button, Space } from "antd";
 import React, { useContext } from "react";
-import Header from "../components/Headers/Header";
 import { UserContext } from "../context/UserContext";
+
+import logo from "../assets/logo.svg";
 
 import "./LandingPage.css";
 
 const LandingPage = () => {
-  const {logIn } = useContext(UserContext);
+  const { logIn } = useContext(UserContext);
   return (
     <>
       <div className="hero">
-        <Header dark showMenu={false}/>
+        <div className="hero-login">
+          <Space direction="vertical">
+            <Space>
+              <img height={62} src={logo} alt="..." />
+            </Space>
+            <h2 className="hero-h2">
+              Hallify helps you organize and track your progress when you are
+              studying
+            </h2>
+            <Button
+              onClick={logIn}
+              className="ant-btn-primary"
+              style={{ paddingInline: "25px" }}
+              size="large"
+            >
+              Get started
+            </Button>
+          </Space>
+          <div className="hero-footer">2022 &copy; hallify.app</div>
+        </div>
+
         <div className="hero-group">
           <h1 className="hero-h1">
-            Create the perfect study plan that works <br /> for you
+            Create the perfect study plan that works for you
           </h1>
-          <h2 className="hero-h2">
-            Hallify helps you organize and track your progress when you are studying
-          </h2>
-          <Button onClick={logIn} className="ant-btn-primary" style={{ paddingInline: "25px" }} size="large">Get started</Button>
+          <div className="hero-image"></div>
         </div>
-        <div className="hero-footer">2022 &copy; hallify.app</div>
       </div>
     </>
   );

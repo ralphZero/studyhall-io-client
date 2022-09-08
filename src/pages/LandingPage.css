@@ -1,43 +1,55 @@
 .hero {
-    background: url('../assets/patterns.svg') no-repeat top;
-    background-color: #061A2A;
-    background-size: contain;
-    background-position: 50%;
     height: 100vh;
-    backdrop-filter: brightness(0.6);
+    display: flex;
+}
+.hero-login {
+    padding: 36px 36px 0;
+    width: 400px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between
+    justify-content: space-between;
 }
 .hero-group {
+    flex-grow: 1;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: 36px 0;
+    flex-direction: column;
+    padding: 36px 0 0;
+    background: url('../assets/patterns.svg') no-repeat top right;
+    background-position: 40px 0px;
+    background-color: #061A2A;
+    background-size: contain;
+}
+
+.hero-image {
+    flex-grow: 1;
+    width: 100%;
+    background: url('../assets/hero.svg') no-repeat bottom;
+    background-position: 50% 0px;
+    background-size: contain;
 }
 
 .hero-h1 {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 900;
-    font-size: 64px;
+    font-size: 48px;
     line-height: 75px;
-    width: 60%;
+    width: 40rem;
     min-width: 350px;
-    display: flex;
     text-align: center;
+    display: flex;
     color: #F2F2F2;
 }
 
 .hero-h2 {
-    color: #E0E0E0;
+    color: var(--general-text);
     width: 40%;
     min-width: 300px;
-    text-align: center;
+    margin-block: 24px;
 }
 
 .hero-footer {
-    text-align: center;
     padding-block: 20px;
     color: #e0e0e0;
 }
