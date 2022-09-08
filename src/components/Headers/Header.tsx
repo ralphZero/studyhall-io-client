@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Avatar, Button, Layout, Menu, Popover, Space } from "antd";
-import { FireOutlined, LoginOutlined } from "@ant-design/icons";
+import { LoginOutlined } from "@ant-design/icons";
 
 import { UserContext } from "../../context/UserContext";
 import logo from "../../assets/logo.svg";
@@ -17,9 +17,6 @@ const Header = ({ dark = false, title, showMenu = true }: Props) => {
 
   const content = (
     <Menu defaultSelectedKeys={["mail"]}>
-      <Menu.Item key="change" icon={<FireOutlined />}>
-        Change theme
-      </Menu.Item>
       <Menu.Item onClick={signOut} danger key="logout" icon={<LoginOutlined />}>
         Logout
       </Menu.Item>
