@@ -19,8 +19,8 @@ const TaskCard = ({ task, onClick, index }: TaskCardProps) => {
 
     const title = (
       <Space>
-        <Tag color="blue">{task.label}</Tag>
-        { task.priority === 0 ? <Tag color="green">Low</Tag> : <Tag color="red">High</Tag> }
+        <Tag style={{ borderRadius: "8px" }} color="blue">{task.label}</Tag>
+        { task.priority === 0 ? <Tag style={{ borderRadius: "8px" }} color="green">Low</Tag> : <Tag style={{ borderRadius: "8px" }} color="red">High</Tag> }
       </Space>
     )
   return (

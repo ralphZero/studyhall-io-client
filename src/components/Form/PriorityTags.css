@@ -2,10 +2,12 @@
     background-color: #f6ffec !important;
     border-color: #b8ea8f !important;
     color: #52c41a !important;
+    border-radius: 8px;
 }
 
 .priority-tag-high.ant-tag-checkable-checked {
     background-color: #fff2f0 !important;
     border-color: #ffccc6 !important;
     color: #ff4d4f !important;
+    border-radius: 8px;
 }
