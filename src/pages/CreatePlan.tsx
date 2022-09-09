@@ -45,12 +45,12 @@ const CreatePlan = () => {
       </TitleHeader>
       <div>
         <Row
-          style={{ paddingInline: 50, paddingBottom: 50, marginInline: 0 }}
+          style={{ padding: 50, marginInline: 0 }}
           gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, 16]}
         >
           {isLoading
             ? Array.from(Array(8).keys()).map((item: number) => (
-                <Col span={6} key={item}>
+                <Col span={6} sm={6} key={item}>
                   <Card style={{ width: "100%" }} loading={isLoading}>
                     <div>
                       <Skeleton active />

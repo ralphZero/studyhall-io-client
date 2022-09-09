@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Progress, Space } from "antd";
+import { Card, Progress, Space, Tag } from "antd";
 import { Task } from "../../models/task";
 import { CheckCircleFilled, CheckCircleOutlined } from "@ant-design/icons";
 import { Draggable } from "react-beautiful-dnd";
@@ -16,6 +16,13 @@ const TaskCard = ({ task, onClick, index }: TaskCardProps) => {
   const completeIcon = task.isComplete
     ? { color: "#6F9600", display: "block" }
     : { color: "#6F9600", display: "none" };
+
+    const title = (
+      <Space>
+        <Tag color="blue">{task.label}</Tag>
+        { task.priority === 0 ? <Tag color="green">Low</Tag> : <Tag color="red">High</Tag> }
+      </Space>
+    )
   return (
     <Draggable draggableId={task.id as string} index={index}>
       {(draggableProvided, snapshot) => (
@@ -24,11 +31,10 @@ const TaskCard = ({ task, onClick, index }: TaskCardProps) => {
           {...draggableProvided.dragHandleProps}
           ref={draggableProvided.innerRef}
           className="taskcard"
-          
           onClick={(e) => onClick(e, task)}
           extra={<CheckCircleFilled style={completeIcon} />}
           size="small"
-          title={task.label}
+          title={title}
           style={{ margin: "12px 8px", borderColor: `${snapshot.isDragging ? "#514EFF" : "transparent"}`, ...draggableProvided.draggableProps.style }}
         >
           <div className="task-card-title">

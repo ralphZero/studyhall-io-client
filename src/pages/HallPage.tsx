@@ -51,6 +51,7 @@ const HallPage = () => {
       subtasksCount: 0,
       subtasksCompletedCount: 0,
       progress: 0,
+      priority: 0,
     };
     createTaskInHall(hallId as string, task, () => {
       setVisibleModal(false);
@@ -59,9 +60,6 @@ const HallPage = () => {
   };
 
   const onUpdateTask = (values: Task) => {
-    // do stuff
-    console.log(values);
-
     updateTaskInHall(hallId as string, values);
     setSelectedTask(undefined);
     setVisibleDrawer(false);
@@ -151,7 +149,6 @@ const HallPage = () => {
             const tasks = dateColumn.taskIds.map((taskId) =>
               hall.tasks.find((task) => task.id === taskId)
             ) as Task[];
-            // console.log("TASKS--->",tasks, dateId);
             return (
               <KanbanCol
                 handleCardClick={handleCardClick}
@@ -162,7 +159,6 @@ const HallPage = () => {
                 key={dateColumn.id}
               />
             );
-            // return <div key={dateId}>Hi there </div>
           })}
         </DragDropContext>
       </KanbanContainer>

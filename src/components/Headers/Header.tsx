@@ -4,15 +4,13 @@ import { LoginOutlined } from "@ant-design/icons";
 
 import { UserContext } from "../../context/UserContext";
 import logo from "../../assets/logo.svg";
-import logo_dark from "../../assets/logo_darkmode.svg";
 import Breadcrumbs from "../Breadcrumbs/Breadcrumbs";
 interface Props {
-  dark?: boolean;
   title?: string;
   showMenu?: boolean;
 }
 
-const Header = ({ dark = false, title, showMenu = true }: Props) => {
+const Header = ({ title, showMenu = true }: Props) => {
   const { user, logIn, signOut } = useContext(UserContext);
 
   const content = (
@@ -24,22 +22,16 @@ const Header = ({ dark = false, title, showMenu = true }: Props) => {
   );
 
   return (
-    <Layout.Header
-      style={
-        dark
-          ? { backgroundColor: "transparent", borderColor: "transparent" }
-          : {}
-      }
-    >
+    <Layout.Header>
       <Space size={45}>
         <div>
-          <img height={32} src={dark ? logo_dark : logo} alt="..." />
+          <img height={32} src={logo} alt="..." />
         </div>
         {showMenu && <Breadcrumbs title={title} />}
       </Space>
       {user ? (
         <Popover
-          title={user.displayName}
+          title={<Space style={titleStyle}>{user.displayName}</Space>}
           content={content}
           trigger="click"
           placement="bottomRight"
@@ -54,5 +46,9 @@ const Header = ({ dark = false, title, showMenu = true }: Props) => {
     </Layout.Header>
   );
 };
+
+const titleStyle: React.CSSProperties = {
+  paddingBlock: 5
+}
 
 export default Header;

@@ -11,5 +11,5 @@ export interface Hall {
     progress: number,
     dates: PlanDate[],
     tasks: Task[],
-    dateIds: string[]
+    dateIds: string[],
 }
