@@ -31,13 +31,18 @@ const CreateTaskModal = ({
       .catch((info) => console.error("validate failed", info));
   };
 
+  const handleCancel = () => {
+    form?.resetFields();
+    onCancel();
+  }
+
   return (
     <Modal
       
       title="Create a task"
       visible={visible}
       onOk={onOk}
-      onCancel={onCancel}
+      onCancel={handleCancel}
       confirmLoading={isLoading}
       cancelText="Cancel"
       okText="Create"
@@ -53,7 +58,7 @@ const CreateTaskModal = ({
             },
           ]}
         >
-          <Input />
+          <Input placeholder="Ex: Javascript" />
         </Form.Item>
         <Form.Item
           name="task"
@@ -65,7 +70,7 @@ const CreateTaskModal = ({
             },
           ]}
         >
-          <Input />
+          <Input placeholder="Ex: Study array methods"/>
         </Form.Item>
       </Form>
     </Modal>

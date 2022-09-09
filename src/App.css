@@ -37,9 +37,14 @@ body {
 .title-header-subtitle {
     font-weight: 500;
     font-size: 16px;
-    width: 600px;
+    width: 500px;
     word-wrap: break-word;
     color: var(--general-gray);
+}
+
+.create-plan {
+    background: url("./assets/hallbar_bg.svg") repeat-y top right;
+    background-color: #f4f6f6;
 }
 
 .ant-modal-content, .ant-modal-header, .ant-btn {
@@ -107,6 +112,9 @@ body {
     flex-grow: 1;
 }
 
-.ant-popover-inner {
-    padding: 10px;
+
+.ant-input, .ant-picker {
+    background-color: #fafafa;
+    border-radius: 8px;
+    height: 45px;
 }

@@ -28,6 +28,11 @@ const CreateHallModal = ({ visible, onCancel, onCreate, isLoading }: Props) => {
       .catch((info) => console.error("validate failed", info));
   };
 
+  const handleCancel = () => {
+    form?.resetFields();
+    onCancel();
+  }
+
   const { RangePicker } = DatePicker;
   const rangeConfig = {
     rules: [
@@ -45,7 +50,7 @@ const CreateHallModal = ({ visible, onCancel, onCreate, isLoading }: Props) => {
         title="Create study plan"
         visible={visible}
         onOk={onOk}
-        onCancel={onCancel}
+        onCancel={handleCancel}
         cancelText="Cancel"
         okText="Create"
         confirmLoading={isLoading}
@@ -61,10 +66,10 @@ const CreateHallModal = ({ visible, onCancel, onCreate, isLoading }: Props) => {
               },
             ]}
           >
-            <Input />
+            <Input placeholder="Ex: Docker 101"/>
           </Form.Item>
           <Form.Item name="description" label="Description">
-            <Input />
+            <Input placeholder="Ex: Learning Docker this week"/>
           </Form.Item>
           <Form.Item name="timeframe" label="Timeframe" {...rangeConfig}>
             <RangePicker format="YYYY-MM-DD" />
