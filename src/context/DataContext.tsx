@@ -38,7 +38,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     setIsLoading(true);
     if(user) {
       fetch(
-        `https://studyhall-io-api.web.app/halls?uid=${user?.uid}`
+        `http://52.90.64.141:4043/halls?uid=${user?.uid}`
       )
         .then((res) => res.json())
         .then((data: HallResult) => {
@@ -54,7 +54,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
 
   const addDataToList = (hall: Hall, callback: () => void) => {
     setIsLoading(true)
-    fetch("https://studyhall-io-api.web.app/halls", {
+    fetch("http://52.90.64.141:4043/halls", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -77,7 +77,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
 
   const createTaskInHall = (hallId: string, task: Task, callback: () => void) => {
     setIsLoading(true);
-    fetch(`https://studyhall-io-api.web.app/halls/${hallId}/tasks`, {
+    fetch(`http://52.90.64.141:4043/halls/${hallId}/tasks`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -105,7 +105,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
 
   const updateTaskInHall = (hallId: string, task: Task) => {
     setIsLoading(true);
-    fetch(`https://studyhall-io-api.web.app/halls/${hallId}/tasks/${task.id}`, {
+    fetch(`http://52.90.64.141:4043/halls/${hallId}/tasks/${task.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -133,7 +133,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     tempList[hallIndex].dates = dates;
     setDataList(tempList);
     // talk to the database
-    fetch(`https://studyhall-io-api.web.app/halls/${hallId}/dates`, {
+    fetch(`http://52.90.64.141:4043/halls/${hallId}/dates`, {
       method: "PATCH", 
       headers: {
         "Content-Type": "application/json"
@@ -166,7 +166,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     
     setDataList(tempList);
 
-    fetch(`https://studyhall-io-api.web.app/halls/${hallId}`, {
+    fetch(`http://52.90.64.141:4043/halls/${hallId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
