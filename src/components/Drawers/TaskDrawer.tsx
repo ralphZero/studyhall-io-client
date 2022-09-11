@@ -1,9 +1,19 @@
-import React, { useEffect } from "react";
-import { Button, Checkbox, Drawer, Form, Input, Space, Spin } from "antd";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Checkbox,
+  Drawer,
+  Form,
+  Input,
+  Popconfirm,
+  Space,
+  Spin,
+} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { Task } from "../../models/task";
 import Subtasks from "../Form/Subtasks";
 import PriorityTags from "../Form/PriorityTags";
+import { Subtask } from "../../models/subtask";
 
 // -------
 //  adding notes in future
@@ -17,6 +27,7 @@ interface TaskDrawerProps {
 
 const TaskDrawer = ({ visible, onClose, onUpdate, task }: TaskDrawerProps) => {
   const [form] = Form.useForm();
+  const [openConfirm, setOpenConfirm] = useState<boolean>(false);
 
   useEffect(() => {
     form?.resetFields();
@@ -51,6 +62,27 @@ const TaskDrawer = ({ visible, onClose, onUpdate, task }: TaskDrawerProps) => {
     form.resetFields();
   };
 
+  const handleOpenChange = (newOpen: boolean) => {
+    if (!newOpen) {
+      setOpenConfirm(newOpen);
+      return;
+    }
+
+    const taskDone = form.getFieldValue("isComplete") as boolean;
+    const subtasks = form.getFieldValue("subtasks") as Subtask[];
+    const truthies = subtasks.filter(
+      (subtask) => subtask.isComplete === true
+    ).length;
+    const allSubtasksCompleted = truthies === subtasks.length;
+    const condition = allSubtasksCompleted && !taskDone ? true : false;
+
+    if (!condition) {
+      onOk();
+    } else {
+      setOpenConfirm(newOpen);
+    }
+  };
+
   return (
     <Drawer
       title="Modify task"
@@ -61,9 +93,25 @@ const TaskDrawer = ({ visible, onClose, onUpdate, task }: TaskDrawerProps) => {
       extra={
         <Space>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="primary" onClick={onOk}>
-            Save
-          </Button>
+          <Popconfirm
+            style={{ padding: "3px" }}
+            placement="bottomRight"
+            title="Do you want to mark this task as done?"
+            onConfirm={() => {
+              form.setFieldValue("isComplete", true);
+              onOk();
+            }}
+            onCancel={() => {
+              setOpenConfirm(false);
+              onOk();
+            }}
+            okText="Yes"
+            cancelText="No"
+            onVisibleChange={handleOpenChange}
+            visible={openConfirm}
+          >
+            <Button type="primary">Save</Button>
+          </Popconfirm>
         </Space>
       }
     >
@@ -80,7 +128,13 @@ const TaskDrawer = ({ visible, onClose, onUpdate, task }: TaskDrawerProps) => {
               priority: task.priority,
             }}
           >
-            <Space style={{ display: "flex", justifyContent: "space-between", paddingInline: 10 }}>
+            <Space
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                paddingInline: 10,
+              }}
+            >
               <Form.Item name="priority">
                 <PriorityTags />
               </Form.Item>
