@@ -35,29 +35,40 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    setIsLoading(true);
-    if(user) {
-      fetch(
-        `https://studyhall-io-api.web.app/halls?uid=${user?.uid}`
-      )
-        .then((res) => res.json())
-        .then((data: HallResult) => {
-          setDataList(data.result as Hall[]);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          console.error("Error - Fetching halls -: ", err);
-          setIsLoading(false);
-        });
+    const fetchData = async () => {
+      setIsLoading(true);
+      if(user) {
+        const token = await user.getIdToken();
+        fetch(
+          `https://studyhall-io-api.web.app/halls?uid=${user?.uid}`, {
+            headers: {
+              "Authorization": token
+            }
+          }
+        )
+          .then((res) => res.json())
+          .then((data: HallResult) => {
+            setDataList(data.result as Hall[]);
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            console.error("Error - Fetching halls -: ", err);
+            setIsLoading(false);
+          });
+      }
     }
+    fetchData();
   }, [user]);
 
-  const addDataToList = (hall: Hall, callback: () => void) => {
+  const addDataToList = async (hall: Hall, callback: () => void) => {
+    if(!user) return;
     setIsLoading(true)
+    const token = await user.getIdToken();
     fetch("https://studyhall-io-api.web.app/halls", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": token
       },
       body: JSON.stringify(hall),
     })
@@ -75,12 +86,15 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
       });
   };
 
-  const createTaskInHall = (hallId: string, task: Task, callback: () => void) => {
-    setIsLoading(true);
+  const createTaskInHall = async (hallId: string, task: Task, callback: () => void) => {
+    if(!user) return;
+    setIsLoading(true)
+    const token = await user.getIdToken();
     fetch(`https://studyhall-io-api.web.app/halls/${hallId}/tasks`, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": token
       },
       body: JSON.stringify(task)
     }).then(res => res.json())
@@ -103,12 +117,15 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     });
   }
 
-  const updateTaskInHall = (hallId: string, task: Task) => {
-    setIsLoading(true);
+  const updateTaskInHall = async (hallId: string, task: Task) => {
+    if(!user) return;
+    setIsLoading(true)
+    const token = await user.getIdToken();
     fetch(`https://studyhall-io-api.web.app/halls/${hallId}/tasks/${task.id}`, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": token
       },
       body: JSON.stringify(task),
     }).then(res => res.json())
@@ -127,16 +144,22 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     });
   }
 
-  const updateDatesInHall = (hallId: string, dates: PlanDate[]) => {
+  const updateDatesInHall = async (hallId: string, dates: PlanDate[]) => {
+    if(!user) return;
+    setIsLoading(true)
+    const token = await user.getIdToken();
+
     const tempList = [...dataList];
     const hallIndex = tempList.findIndex((data) => data._id === hallId);
     tempList[hallIndex].dates = dates;
     setDataList(tempList);
+
     // talk to the database
     fetch(`https://studyhall-io-api.web.app/halls/${hallId}/dates`, {
       method: "PATCH", 
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": token
       },
       body: JSON.stringify(dates)
     }).then(res => res.json())
@@ -159,7 +182,11 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     });
   }
 
-  const deleteHall = (hallId: string) => {
+  const deleteHall = async (hallId: string) => {
+    if(!user) return;
+    setIsLoading(true)
+    const token = await user.getIdToken();
+
     const hallIndex = dataList.findIndex(hall => hall._id === hallId);
     const tempList = [...dataList];
     tempList.splice(hallIndex, 1);
@@ -170,6 +197,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": token
       },
     })
     .then(res => res.json())
