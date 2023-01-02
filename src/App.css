@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import '~antd/dist/antd.css';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700;900&display=swap');
 @tailwind base;
@@ -8,6 +12,7 @@
     --general-gray: #53576D;
     --eww-green: #6F9600;
 }
+
 
 body {
     font-family: 'Inter', sans-serif;
@@ -31,7 +36,6 @@ body {
 
 .title-header-title {
     font-weight: 900;
-    font-size: 36px;
     letter-spacing: -2px;
     margin: 0;
     color: var(--general-gray);
