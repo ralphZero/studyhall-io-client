@@ -4,7 +4,7 @@ import type { DatePickerProps } from 'antd'
 import moment from 'moment'
 
 const DateFilter = () => {
-  const weekFormat = 'MM/DD'
+  const weekFormat = 'MMM DD, yyyy'
   const customWeekStartEndFormat: DatePickerProps['format'] = (value) =>
     `${moment(value).startOf('week').format(weekFormat)} ~ ${moment(value)
       .endOf('week')
