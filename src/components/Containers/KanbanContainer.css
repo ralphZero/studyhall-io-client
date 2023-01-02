@@ -3,7 +3,7 @@
     overflow-x: overlay;
     overflow-y: hidden;
     white-space: nowrap;
-    height: calc(100vh - (83px + 65px));
+    height: calc(100vh - (73.14px + 65px));
     background-color: #F9FBFC;
     padding-block: 8px;
 }

@@ -1,6 +1,8 @@
 import React from 'react'
-import { Progress } from 'antd'
+import { Button, Progress } from 'antd'
 import HallFilters from '../HallFilters'
+import { SizeType } from 'antd/lib/config-provider/SizeContext'
+import { CalendarOutlined, FilterOutlined } from '@ant-design/icons'
 interface HallTitleProps {
   title: string
   description: string

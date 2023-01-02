@@ -11,10 +11,13 @@ const DateFilter = () => {
       .format(weekFormat)}`
   return (
     <>
-      <div className='inline-flex flex-col'>
-        <span>Week</span>
-        <DatePicker size='small' picker='week' format={customWeekStartEndFormat} />
-      </div>
+      <DatePicker
+        style={{ height: '32px' }}
+        size='small'
+        picker='week'
+        format={customWeekStartEndFormat}
+        className='mr-5'
+      />
     </>
   )
 }
