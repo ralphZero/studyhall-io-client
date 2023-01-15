@@ -13,12 +13,12 @@ export const ExtractWeeks = (startTimestamp: string, endTimestamp: string) => {
 
   for (let week = 0; week <= weeksCount; week++) {
     const innerList = [];
-    innerList.push(dateToStartAt.toDate().toISOString());
+    innerList.push(dateToStartAt);
 
     let i = dateToStartAt.weekday();
 
     while (i < dateToFinishAt.weekday()) {
-      const thisDate = dateToStartAt.add(1, 'day').toDate().toISOString();
+      const thisDate = dateToStartAt.add(1, 'day');
       innerList.push(thisDate);
       i++;
     }
