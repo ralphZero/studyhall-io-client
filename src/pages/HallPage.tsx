@@ -36,7 +36,7 @@ const HallPage = () => {
     updateDatesInHall,
   } = useContext(DataContext);
 
-  const { dateFilter } = useContext(DataFilterContext);
+  const { isReady, dateFilter } = useContext(DataFilterContext);
 
   const onCreateTask = (values: Values) => {
     const selectedDateId = selectedCol;
@@ -135,7 +135,7 @@ const HallPage = () => {
     setHall(thisHall);
   }, [hallId, prepareCurrentHall]);
 
-  return hall ? (
+  return hall && isReady ? (
     <>
       <Header title={hall.title} />
       <HallTitle
