@@ -1,11 +1,11 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import moment, { Moment } from 'moment';
 import { ExtractWeeks } from '../utils/weeks-extractor';
 import { DataContext } from './DataContext';
 
 type DateFilter = {
-  weeks: string[][];
-  currentWeek: string[];
+  weeks: Moment[][];
+  currentWeek: Moment[];
   weekIndex: number;
   minDate: Moment;
   maxDate: Moment;
@@ -14,6 +14,7 @@ type DateFilter = {
 type DataFilterContextType = {
   isReady: boolean;
   dateFilter: DateFilter | undefined;
+  changeDateFilter: (value: Moment | null) => void;
 };
 
 type DataFilterContextProviderProps = {
@@ -23,6 +24,7 @@ type DataFilterContextProviderProps = {
 export const DataFilterContext = createContext<DataFilterContextType>({
   isReady: false,
   dateFilter: undefined,
+  changeDateFilter: (value: Moment | null) => {}
 });
 
 const DataFilterContextProvider = ({
@@ -53,8 +55,21 @@ const DataFilterContextProvider = ({
     }
   }, [currentHall]);
 
+  const changeDateFilter = (value: Moment | null) => {
+    if (value) {
+        const weekIndex = dateFilter.weeks.findIndex(
+            (weekList) => weekList[0].isoWeek() === value.isoWeek()
+        );
+        const currentWeek = dateFilter.weeks[weekIndex];
+        
+        if (weekIndex !== -1) {
+            setDateFilter({...dateFilter, weekIndex, currentWeek})
+        }
+    }
+  }
+
   return (
-    <DataFilterContext.Provider value={{ isReady, dateFilter }}>
+    <DataFilterContext.Provider value={{ isReady, dateFilter, changeDateFilter }}>
       {children}
     </DataFilterContext.Provider>
   );
