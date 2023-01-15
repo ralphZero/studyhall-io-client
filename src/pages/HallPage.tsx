@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import moment from 'moment';
 import { useParams } from 'react-router-dom';
 
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
@@ -14,6 +15,7 @@ import { DataContext } from '../context/DataContext';
 import TaskDrawer from '../components/Drawers/TaskDrawer';
 import { PlanDate } from '../models/plandate';
 import HallPageSkeleton from '../components/skeletons/HallPageSkeleton';
+import { DataFilterContext } from '../context/DataFilterContext';
 
 const HallPage = () => {
   const [visibleModal, setVisibleModal] = useState<boolean>(false);
@@ -33,6 +35,8 @@ const HallPage = () => {
     isLoading,
     updateDatesInHall,
   } = useContext(DataContext);
+
+  const { dateFilter } = useContext(DataFilterContext);
 
   const onCreateTask = (values: Values) => {
     const selectedDateId = selectedCol;
@@ -146,15 +150,15 @@ const HallPage = () => {
               (column) => column.id === dateId
             ) as PlanDate;
 
-            // const firstDate = moment(currentWeek[0]);
+            const firstDate = dateFilter?.currentWeek[0];
 
-            // const lastDate = moment(currentWeek[currentWeek.length - 1]);
+            const lastDate = dateFilter?.currentWeek[dateFilter.currentWeek.length - 1];
 
-            // const thisDate = moment(dateColumn.date);
+            const thisDate = moment(dateColumn.date);
 
-            // if (!thisDate.isBetween(firstDate, lastDate, 'week', '[]')) {
-            //   return null;
-            // }
+            if (!thisDate.isBetween(firstDate, lastDate, 'week', '[]')) {
+              return null;
+            }
 
             const tasks = dateColumn.taskIds.map((taskId) =>
               hall.tasks.find((task) => task.id === taskId)
