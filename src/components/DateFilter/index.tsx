@@ -1,19 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { DatePicker } from 'antd';
 import type { DatePickerProps } from 'antd';
 import moment, { Moment } from 'moment';
-import { DataFilterContext } from '../../context/DataFilterContext';
 
 type DateFilterProps = {
-  onChange?: (value: moment.Moment | null, dateString: string) => void;
+  onChange: (value: moment.Moment | null, dateString: string) => void;
   value?: Moment;
   minDate: Moment;
   maxDate: Moment;
+  isReady: boolean;
 };
 
-const DateFilter = ({ value, onChange, minDate, maxDate }: DateFilterProps) => {
-
-  const { isReady } = useContext(DataFilterContext);
+const DateFilter = ({ value, onChange, minDate, maxDate, isReady }: DateFilterProps) => {
 
   const weekFormat = 'MMM DD, yyyy';
   const customWeekStartEndFormat: DatePickerProps['format'] = (value) =>
@@ -36,10 +34,10 @@ const DateFilter = ({ value, onChange, minDate, maxDate }: DateFilterProps) => {
         bordered={false}
         disabled={!isReady}
         placeholder={isReady ? 'Select week' : 'Loading...'}
-        onChange={(value, dateString) => console.log(value?.toISOString(), dateString)}
+        onChange={onChange}
         value={value}
         disabledDate={disabledDate}
-        clearIcon={<></>}
+        clearIcon={null}
         allowClear={false}
       />
     </>
