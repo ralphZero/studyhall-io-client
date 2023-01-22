@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import type { MenuProps } from "antd";
 import { Avatar, Button, Layout, Menu, Popover, Space } from "antd";
 import { LoginOutlined } from "@ant-design/icons";
 
@@ -13,12 +14,18 @@ interface Props {
 const Header = ({ title, showMenu = true }: Props) => {
   const { user, logIn, signOut } = useContext(UserContext);
 
+  const menuItems: MenuProps['items'] = [
+    {
+      label: 'Logout',
+      key: 'logout',
+      icon: <LoginOutlined />,
+      className: 'text-red-500',
+      onClick: signOut,
+    }
+  ];
+
   const content = (
-    <Menu defaultSelectedKeys={["mail"]}>
-      <Menu.Item onClick={signOut} danger key="logout" icon={<LoginOutlined />}>
-        Logout
-      </Menu.Item>
-    </Menu>
+    <Menu defaultSelectedKeys={["mail"]} items={menuItems} />
   );
 
   return (

@@ -5,6 +5,7 @@ import { UserContext } from "../context/UserContext";
 import logo from "../assets/logo.svg";
 
 import "./LandingPage.css";
+import moment from "moment";
 
 const LandingPage = () => {
   const { logIn } = useContext(UserContext);
@@ -29,7 +30,7 @@ const LandingPage = () => {
               Get started
             </Button>
           </Space>
-          <div className="hero-footer">2022 &copy; hallify.app</div>
+          <div className="hero-footer">{moment().weekYear()} &copy; hallify.app</div>
         </div>
 
         <div className="hero-group">
