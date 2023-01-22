@@ -1,41 +1,24 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { FilterOutlined } from '@ant-design/icons';
-import { Button, Card, Divider, Popover, Switch } from 'antd';
-import DateFilter from '../DateFilter';
+import { Button, Popover, Space } from 'antd';
+// import DateFilter from '../DateFilter';
 import FilterGroup from '../FilterGroup';
-import { DataFilterContext } from '../../context/DataFilterContext';
-import moment, { Moment } from 'moment';
+// import { DataFilterContext } from '../../context/DataFilterContext';
+// import moment, { Moment } from 'moment';
 
 const HallFilters = () => {
-  const { isReady, dateFilter, changeDateFilter } =
-    useContext(DataFilterContext);
+  // const { isReady, dateFilter, changeDateFilter } =
+  //   useContext(DataFilterContext);
 
-  const currentDay = isReady ? moment(dateFilter?.currentWeek[0]) : undefined;
-  const handleOnDateChanged = (
-    value: moment.Moment | null,
-    dateString: string
-  ) => {
-    value && changeDateFilter(value);
-  };
+  // const currentDay = isReady ? moment(dateFilter?.currentWeek[0]) : undefined;
+  // const handleOnDateChanged = (
+  //   value: moment.Moment | null,
+  //   dateString: string
+  // ) => {
+  //   value && changeDateFilter(value);
+  // };
 
-  const content = (
-    <Card title='Apply filter' bordered={false} style={{ width: 300 }}>
-      <Switch
-        checkedChildren='By week'
-        unCheckedChildren='All'
-        defaultChecked
-      />
-      <DateFilter
-        value={currentDay}
-        minDate={dateFilter?.minDate as Moment}
-        maxDate={dateFilter?.maxDate as Moment}
-        isReady={isReady}
-        onChange={handleOnDateChanged}
-      />
-      <Divider />
-      <p>WIP</p>
-    </Card>
-  );
+  const content = <Space className='p-3 w-72'>🚧🦺🚧 -Under construction- 🚧🦺🚧</Space>;
 
   return (
     <FilterGroup>
