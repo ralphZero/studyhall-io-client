@@ -7,7 +7,7 @@
 
 .kanban-panel {
     width: 100%;
-    height: calc(100vh - (73.14px + 65px + 58px));
+    height: calc(100vh - (73.14px + 65px + 58px + 0.5rem));
     overflow-x: overlay;
     overflow-y: hidden;
     white-space: nowrap;
