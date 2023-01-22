@@ -10,7 +10,7 @@ interface HallTitleProps {
 const HallTitle = ({ title, description, progress }: HallTitleProps) => {
   return (
     <>
-      <div className='px-12 flex justify-between items-center'>
+      <div className='px-12 flex justify-between items-center bg-gray-50'>
         <div className='flex gap-5 items-center'>
           <Progress
             type='circle'
