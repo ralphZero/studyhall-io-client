@@ -16,6 +16,9 @@ import TaskDrawer from '../components/Drawers/TaskDrawer';
 import { PlanDate } from '../models/plandate';
 import HallPageSkeleton from '../components/skeletons/HallPageSkeleton';
 import { DataFilterContext } from '../context/DataFilterContext';
+import { Collapse } from 'antd';
+
+const { Panel } = Collapse;
 
 const HallPage = () => {
   const [visibleModal, setVisibleModal] = useState<boolean>(false);
@@ -143,39 +146,72 @@ const HallPage = () => {
         description={hall.description}
         progress={hall.progress}
       />
-      <KanbanContainer>
-        <DragDropContext onDragEnd={onDragEnd}>
-          {hall.dateIds.map((dateId) => {
-            const dateColumn = hall.dates.find(
-              (column) => column.id === dateId
-            ) as PlanDate;
+      <div className='kanban-container py-2 px-12 overflow-x-hidden overflow-y-auto whitespace-nowrap'>
+        <KanbanContainer>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <>
+              {dateFilter &&
+                dateFilter?.weeks.map((currentWeek, index) => {
+                  const isNotLastElement: boolean =
+                    index !== dateFilter.weeks.length - 1;
+                  const spacing = isNotLastElement ? 'mb-2' : '';
 
-            const firstDate = dateFilter?.currentWeek[0];
+                  return (
+                    <Collapse
+                      key={index}
+                      collapsible='header'
+                      defaultActiveKey={[...[], index]}>
+                      <Panel
+                        className={spacing}
+                        key={index}
+                        header={`Week ${index}`}>
+                        <div className='kanban-panel'>
+                          {hall.dateIds.map((dateId) => {
+                            const dateColumn = hall.dates.find(
+                              (column) => column.id === dateId
+                            ) as PlanDate;
 
-            const lastDate = dateFilter?.currentWeek[dateFilter.currentWeek.length - 1];
+                            const firstDate = currentWeek[0];
 
-            const thisDate = moment(dateColumn.date);
+                            const lastDate =
+                              currentWeek[currentWeek.length - 1];
 
-            if (!thisDate.isBetween(firstDate, lastDate, 'week', '[]')) {
-              return null;
-            }
+                            const thisDate = moment(dateColumn.date);
 
-            const tasks = dateColumn.taskIds.map((taskId) =>
-              hall.tasks.find((task) => task.id === taskId)
-            ) as Task[];
-            return (
-              <KanbanCol
-                handleCardClick={handleCardClick}
-                date={dateColumn}
-                tasks={tasks}
-                selectedCol={setSelectedCol}
-                onToggleModal={setVisibleModal}
-                key={dateColumn.id}
-              />
-            );
-          })}
-        </DragDropContext>
-      </KanbanContainer>
+                            if (
+                              !thisDate.isBetween(
+                                firstDate,
+                                lastDate,
+                                'week',
+                                '[]'
+                              )
+                            ) {
+                              return null;
+                            }
+
+                            const tasks = dateColumn.taskIds.map((taskId) =>
+                              hall.tasks.find((task) => task.id === taskId)
+                            ) as Task[];
+                            return (
+                              <KanbanCol
+                                handleCardClick={handleCardClick}
+                                date={dateColumn}
+                                tasks={tasks}
+                                selectedCol={setSelectedCol}
+                                onToggleModal={setVisibleModal}
+                                key={dateColumn.id}
+                              />
+                            );
+                          })}
+                        </div>
+                      </Panel>
+                    </Collapse>
+                  );
+                })}
+            </>
+          </DragDropContext>
+        </KanbanContainer>
+      </div>
 
       <CreateTaskModal
         isLoading={isLoading}

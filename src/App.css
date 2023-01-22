@@ -125,3 +125,7 @@ body {
     border-radius: 8px;
     height: 45px;
 }
+
+.ant-collapse-content-box {
+    padding: 0 !important;
+}
