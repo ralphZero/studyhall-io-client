@@ -1,7 +1,7 @@
 .kanban-container {
     width: 100%;
     /* height: calc(100vh - (73.14px + 65px + 16px)); */
-    background-color: #F9FBFC;
+    /* background-color: #F9FBFC; */
     border-radius: 24px;
 }
 

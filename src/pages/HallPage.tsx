@@ -140,12 +140,14 @@ const HallPage = () => {
 
   return hall && isReady ? (
     <>
+    <header className='p-0 m-0 sticky top-0 z-50'>
       <Header title={hall.title} />
       <HallTitle
         title={hall.title}
         description={hall.description}
         progress={hall.progress}
       />
+    </header>
       <div className='kanban-container py-2 px-12 overflow-x-hidden overflow-y-auto whitespace-nowrap'>
         <KanbanContainer>
           <DragDropContext onDragEnd={onDragEnd}>
