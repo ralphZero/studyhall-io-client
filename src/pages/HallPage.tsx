@@ -156,6 +156,14 @@ const HallPage = () => {
                     index !== dateFilter.weeks.length - 1;
                   const spacing = isNotLastElement ? 'mb-2' : '';
 
+                  const firstDate = index === 0 ? dateFilter.minDate : currentWeek[0].clone().startOf('week');
+                  const lastDate = currentWeek[currentWeek.length - 1];
+
+                  const weekFormat = 'MMM DD, yyyy';
+                  const weekInfo = `${firstDate.format(
+                    weekFormat
+                  )} ---> ${lastDate.format(weekFormat)}`;
+
                   return (
                     <Collapse
                       key={index}
@@ -164,7 +172,7 @@ const HallPage = () => {
                       <Panel
                         className={spacing}
                         key={index}
-                        header={`Week ${index}`}>
+                        header={`Week ${index + 1}: ${weekInfo}`}>
                         <div className='kanban-panel'>
                           {hall.dateIds.map((dateId) => {
                             const dateColumn = hall.dates.find(
