@@ -7,7 +7,9 @@ import {UserContext} from './UserContext';
 
 interface DataContextType {
   dataList: Hall[];
+  currentHall: Hall;
   isLoading: boolean;
+  prepareCurrentHall: (hallId: string) => Hall | undefined;
   addDataToList: (hall: Hall, callback: () => void) => void;
   createTaskInHall: (hallId: string, task: Task, callback: () => void) => void;
   updateTaskInHall: (hallId: string, task: Task) => void;
@@ -21,7 +23,9 @@ interface DataContextProviderProps {
 
 export const DataContext = createContext<DataContextType>({
   isLoading: false,
+  currentHall: {} as Hall,
   dataList: [],
+  prepareCurrentHall: (hallId: string) => {return {} as Hall},
   addDataToList: (hall: Hall) => {},
   createTaskInHall: (hallId: string, task: Task) => {},
   updateTaskInHall: (hallId: string, task: Task) => {},
@@ -31,6 +35,7 @@ export const DataContext = createContext<DataContextType>({
 
 const DataContextProvider = ({ children }: DataContextProviderProps) => {
   const [dataList, setDataList] = useState<Hall[]>([]);
+  const [currentHall, setCurrentHall] = useState<Hall>({} as Hall);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { user } = useContext(UserContext);
 
@@ -59,6 +64,14 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
     }
     fetchData();
   }, [user]);
+
+  const prepareCurrentHall = (hallId: string) => {
+    const hall: Hall = dataList.filter((data) => data._id === hallId)[0];
+    if (hall) {
+      setCurrentHall(hall);
+      return hall;
+    }
+  };
 
   const addDataToList = async (hall: Hall, callback: () => void) => {
     if(!user) return;
@@ -208,7 +221,7 @@ const DataContextProvider = ({ children }: DataContextProviderProps) => {
   }
 
   return (
-    <DataContext.Provider value={{ dataList, isLoading, addDataToList, createTaskInHall, updateTaskInHall, updateDatesInHall, deleteHall }}>
+    <DataContext.Provider value={{ dataList, isLoading, addDataToList, createTaskInHall, updateTaskInHall, updateDatesInHall, deleteHall, prepareCurrentHall, currentHall}}>
       {children}
     </DataContext.Provider>
   );

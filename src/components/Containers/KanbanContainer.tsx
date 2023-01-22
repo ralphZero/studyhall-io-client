@@ -7,7 +7,7 @@ interface KanbanContainerProps {
 
 const KanbanContainer = ({ children }: KanbanContainerProps) => {
   return (
-    <div className="kanban-container">
+    <div className="">
         { children }
     </div>
   )
