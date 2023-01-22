@@ -1,15 +1,20 @@
 import moment from 'moment';
 
 export const ExtractWeeks = (startTimestamp: string, endTimestamp: string) => {
+  const formattedDate = (dateString: string) => dateString + 'T12:00:00.000Z';
 
-  const startDate = moment(startTimestamp).set('hour', 11);
-  const endDate = moment(endTimestamp).set('hour', 11);
-  const weeksCount = moment.duration(endDate.diff(startDate)).weeks();
+  const startDate = moment(formattedDate(startTimestamp));
+  const endDate = moment(formattedDate(endTimestamp));
+
+  const firstDateOfStartWeek = moment(startDate.toISOString()).startOf('week');
+  const firstDateOfEndWeek = moment(endDate.toISOString()).startOf('week');
+
+  const weeksCount = firstDateOfEndWeek.diff(firstDateOfStartWeek, 'weeks');
 
   let dateList = [];
 
   let dateToStartAt = startDate;
-  let dateToFinishAt = startDate.clone().endOf('week').set('hour', 11);
+  let dateToFinishAt = startDate.clone().endOf('week');
 
   for (let week = 0; week <= weeksCount; week++) {
     const innerList = [];

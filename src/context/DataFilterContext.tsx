@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import moment, { Moment } from 'moment';
 import { ExtractWeeks } from '../utils/weeks-extractor';
 import { DataContext } from './DataContext';
