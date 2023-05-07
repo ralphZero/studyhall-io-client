@@ -1,0 +1,55 @@
+.hero {
+  height: 100vh;
+  display: flex;
+}
+.hero-login {
+  padding: 36px 36px 0;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hero-group {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 36px 0 0;
+  background: url('../../assets/patterns.svg') no-repeat top right;
+  background-position: 40px 0px;
+  background-color: #061a2a;
+  background-size: contain;
+}
+
+.hero-image {
+  flex-grow: 1;
+  width: 100%;
+  background: url('../../assets/hero.svg') no-repeat bottom;
+  background-position: 50% 0px;
+  background-size: contain;
+}
+
+.hero-h1 {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 75px;
+  width: 40rem;
+  min-width: 350px;
+  text-align: center;
+  display: flex;
+  color: #f2f2f2;
+}
+
+.hero-h2 {
+  color: var(--general-text);
+  width: 40%;
+  min-width: 300px;
+  margin-block: 24px;
+}
+
+.hero-footer {
+  padding-block: 20px;
+  color: #e0e0e0;
+}

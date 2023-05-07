@@ -1,0 +1,13 @@
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0 8px 0;
+}
+
+.side-nav {
+  flex: 0 0 52px !important;
+  min-width: 52px !important;
+  max-width: 52px !important;
+  width: 52px !important;
+}
