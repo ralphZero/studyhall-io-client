@@ -15,7 +15,7 @@ const LandingPage = () => {
         <div className='hero-login'>
           <Space direction='vertical'>
             <Space>
-              <img height={62} src={logo.displayName} alt='...' />
+              <img height={62} src={logo} alt='...' />
             </Space>
             <h2 className='hero-h2'>
               Hallify helps you organize and track your progress when you are
