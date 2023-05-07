@@ -9,123 +9,132 @@
 @tailwind utilities;
 
 :root {
-    --general-gray: #53576D;
-    --eww-green: #6F9600;
+  --general-gray: #53576d;
+  --eww-green: #6f9600;
+  --primary-black: #0f111e;
+  --accent-primary: #2e86fa;
+  --accent-secondary: #ffd348;
+  --text-light: #8c8e9d;
+  --selected-text-light: #fafafc;
 }
 
-
 body {
-    font-family: 'Inter', sans-serif;
-    color: var(--general-gray);
+  font-family: 'Inter', sans-serif;
+  color: var(--general-gray);
 }
 
 .ant-layout-header {
-    background: #ffffff;
-    border-bottom: 1px solid #d9d9d9;
-    height: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid #d9d9d9;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title-header {
-    padding: 50px 50px 80px;
-    background: url("./assets/hallbar_bg.svg") no-repeat left;
-    background-size: cover;
+  padding: 50px 50px 80px;
+  background: url('./assets/hallbar_bg.svg') no-repeat left;
+  background-size: cover;
 }
 
 .title-header-title {
-    font-weight: 900;
-    letter-spacing: -2px;
-    margin: 0;
-    color: var(--general-gray);
+  font-weight: 900;
+  letter-spacing: -2px;
+  margin: 0;
+  color: var(--general-gray);
 }
 
 .title-header-subtitle {
-    font-weight: 500;
-    font-size: 16px;
-    width: 500px;
-    word-wrap: break-word;
-    color: var(--general-gray);
+  font-weight: 500;
+  font-size: 16px;
+  width: 500px;
+  word-wrap: break-word;
+  color: var(--general-gray);
 }
 
 .create-plan {
-    background: url("./assets/hallbar_bg.svg") repeat-y top right;
-    background-color: #f4f6f6;
+  background: url('./assets/hallbar_bg.svg') repeat-y top right;
+  background-color: #f4f6f6;
 }
 
-.ant-modal-content, .ant-modal-header, .ant-btn {
-    border-radius: 8px;
+.ant-modal-content,
+.ant-modal-header,
+.ant-btn {
+  border-radius: 8px;
 }
 .ant-btn-primary {
-    background-color: var(--eww-green);
-    border-color: var(--eww-green);
-    color: #e0e0e0;
+  background-color: var(--eww-green);
+  border-color: var(--eww-green);
+  color: #e0e0e0;
 }
 
 .ant-btn-primary:hover {
-    background-color: var(--eww-green);
-    border-color: var(--eww-green);
-    color: #e0e0e0;
-    filter: contrast(0.8);
+  background-color: var(--eww-green);
+  border-color: var(--eww-green);
+  color: #e0e0e0;
+  filter: contrast(0.8);
 }
 
 .ant-btn-primary:focus {
-    background-color: var(--eww-green);
-    border-color: var(--eww-green);
-    box-shadow: 0px 0px 0px 5px #6e960039;
+  background-color: var(--eww-green);
+  border-color: var(--eww-green);
+  box-shadow: 0px 0px 0px 5px #6e960039;
 }
 
 .ant-picker-range {
-    width: 100%;
+  width: 100%;
 }
-.ant-card { background-color: "#f9f8f9"; color: var(--general-gray);}
-.ant-card-head { 
-    border-bottom: none;
-    text-transform: uppercase;
-    font-size: 10px !important;
-    font-weight: 400;
-    color: gray;
+.ant-card {
+  background-color: '#f9f8f9';
+  color: var(--general-gray);
+}
+.ant-card-head {
+  border-bottom: none;
+  text-transform: uppercase;
+  font-size: 10px !important;
+  font-weight: 400;
+  color: gray;
 }
 .ant-card-body {
-    word-break: break-word;
-    white-space: normal;
+  word-break: break-word;
+  white-space: normal;
 }
 
 .ant-card-bordered {
-    border-radius: 8px;
-    border: 2px solid #f0f0f0;
+  border-radius: 8px;
+  border: 2px solid #f0f0f0;
 }
 
 .ant-progress-bg {
-    background-color: var(--eww-green);
+  background-color: var(--eww-green);
 }
 .hall-card-title {
-    word-wrap: break-word;
-    font-weight: 700;
-    font-size: 18px;
-    margin: 0;
+  word-wrap: break-word;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0;
 }
 
 .ant-popover-inner-content {
-    padding: 0;
+  padding: 0;
 }
 
 .ant-row {
-    margin-block: 0;
+  margin-block: 0;
 }
 
-#subtask-group > .ant-space-item:nth-child(2){
-    flex-grow: 1;
+#subtask-group > .ant-space-item:nth-child(2) {
+  flex-grow: 1;
 }
 
-
-.ant-input, .ant-picker {
-    background-color: #fafafa;
-    border-radius: 8px;
-    height: 45px;
+.ant-input,
+.ant-picker {
+  background-color: #fafafa;
+  border-radius: 8px;
+  height: 45px;
 }
 
 .ant-collapse-content-box {
-    padding: 0 !important;
+  padding: 0 !important;
 }

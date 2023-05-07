@@ -10,4 +10,18 @@
   min-width: 52px !important;
   max-width: 52px !important;
   width: 52px !important;
+  background-color: var(--primary-black);
+}
+
+.side-nav .ant-layout-sider-children {
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebar-top-menu .ant-menu-item-selected {
+  background-color: transparent !important;
+}
+
+#sidebar-top-menu .ant-menu-item-selected .ant-menu-item-icon {
+  color: var(--accent-secondary);
 }
