@@ -30,7 +30,7 @@ const Header = ({ title, showMenu = true }: Props) => {
     <Layout.Header>
       <Space size={45}>
         <div>
-          <img height={32} src={logo.displayName} alt='...' />
+          <img height={32} src={logo} alt='...' />
         </div>
         {showMenu && <Breadcrumbs title={title} />}
       </Space>
