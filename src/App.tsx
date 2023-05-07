@@ -31,11 +31,12 @@ function App() {
       <DataContextProvider>
         <DataFilterContextProvider>
           <Routes>
-            <Route path='/' element={setPage(<Main />, <LandingPage />)} />
+            <Route path='/app' element={setPage(<Main />, <LandingPage />)} />
             <Route
-              path='/halls/:hallId'
+              path='/app/halls/:hallId'
               element={setPage(<HallPage />, <LandingPage />)}
             />
+            <Route path='*' element={<Main />} />
           </Routes>
         </DataFilterContextProvider>
       </DataContextProvider>
