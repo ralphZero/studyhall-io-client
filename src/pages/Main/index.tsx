@@ -1,12 +1,38 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import SideNav from '../../components/SideNav';
 import { Layout } from 'antd';
 
-const Main = () => {
+import LoadingScreen from '../../components/skeletons/LoadingScreen';
+import { UserContext } from '../../context/UserContext';
+import { Route, Routes } from 'react-router-dom';
+import CreatePlan from '../CreatePlan';
+import Login from '../Login';
+import HallPage from '../HallPage';
+
+interface MainProps {
+  children?: JSX.Element | JSX.Element[];
+}
+
+const Main = (props: MainProps) => {
+  const { user, isLoading } = useContext(UserContext);
+
+  const setPage = (ifUserComponent: JSX.Element) => {
+    if (isLoading) {
+      return <LoadingScreen />;
+    } else {
+      return user ? ifUserComponent : <Login />;
+    }
+  };
+
   return (
     <Layout className='min-h-screen'>
       <SideNav />
-      <Layout id='main-container'></Layout>
+      <Layout id='main-container'>
+        <Routes>
+          <Route path='/' element={setPage(<CreatePlan />)} />
+          <Route path='/halls/:hallId' element={setPage(<HallPage />)} />
+        </Routes>
+      </Layout>
     </Layout>
   );
 };
