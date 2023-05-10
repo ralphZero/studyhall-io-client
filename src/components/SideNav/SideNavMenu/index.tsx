@@ -26,7 +26,9 @@ const SideNavMenu = (props: SideNavMenuProps) => {
           <Tooltip title='Plans' placement='right'>
             <NavLink to='/app'>
               <Button
-                className={`flex flex-col justify-center ${setActive('app')}`}
+                className={`flex flex-col justify-center ${setActive(
+                  'app' || 'halls'
+                )}`}
                 type='link'>
                 <PlanIcon />
               </Button>

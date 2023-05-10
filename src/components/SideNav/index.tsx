@@ -14,9 +14,10 @@ const SideNav = () => {
     const regex = /^\/([^/]+)/;
     const match = regex.exec(url);
 
-    let firstRoute = '';
+    let firstRoute = 'app';
     if (match && match[1]) {
       firstRoute = match[1];
+      console.log(firstRoute);
     }
     return firstRoute;
   }, [location]);
