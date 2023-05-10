@@ -12,6 +12,7 @@ import Dashboard from '../Dashboard';
 import Info from '../Info';
 import Notification from '../Notification';
 import Settings from '../Settings';
+import Plan from '../Plan';
 
 interface MainProps {
   children?: JSX.Element | JSX.Element[];
@@ -33,7 +34,7 @@ const Main = (props: MainProps) => {
       <SideNav />
       <Layout id='main-container'>
         <Routes>
-          <Route path='/' element={setPage(<CreatePlan />)} />
+          <Route path='/' element={setPage(<Plan />)} />
           <Route path='/halls/:hallId' element={setPage(<HallPage />)} />
           <Route path='/dashboard' element={setPage(<Dashboard />)} />
           <Route path='/info' element={setPage(<Info />)} />

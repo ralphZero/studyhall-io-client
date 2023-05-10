@@ -17,7 +17,6 @@ const SideNav = () => {
     let firstRoute = 'app';
     if (match && match[1]) {
       firstRoute = match[1];
-      console.log(firstRoute);
     }
     return firstRoute;
   }, [location]);
