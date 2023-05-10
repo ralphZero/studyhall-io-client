@@ -5,7 +5,6 @@ import { Layout } from 'antd';
 import LoadingScreen from '../../components/skeletons/LoadingScreen';
 import { UserContext } from '../../context/UserContext';
 import { Route, Routes } from 'react-router-dom';
-import CreatePlan from '../CreatePlan';
 import Login from '../Login';
 import HallPage from '../HallPage';
 import Dashboard from '../Dashboard';
