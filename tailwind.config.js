@@ -14,6 +14,7 @@ module.exports = {
       },
       textLight: '#8c8e9d',
       selectedTextLight: '#fafafc',
+      divider: '#3d3f49'
     }
   },
   plugins: [],
