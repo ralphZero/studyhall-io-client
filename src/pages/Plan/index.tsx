@@ -1,12 +1,16 @@
 import React from 'react';
-import HallifyLogo from '../../components/Headers/HallifyLogo';
+import { Button } from 'antd';
+import UniversalSider from '../../components/UniversalSider';
 
 const Plan = () => {
   return (
     <div className='min-h-screen flex'>
-      <aside className='w-[168px] bg-primaryBlack'>
-        <HallifyLogo />
-      </aside>
+      <UniversalSider>
+        <Button className='bg-accent-primary w-full mt-3' type='primary'>
+          New study plan
+        </Button>
+      </UniversalSider>
+      <section className='grow'></section>
     </div>
   );
 };
