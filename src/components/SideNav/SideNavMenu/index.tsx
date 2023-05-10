@@ -35,7 +35,7 @@ const SideNavMenu = (props: SideNavMenuProps) => {
         </li>
         <li className='flex justify-center items-center'>
           <Tooltip title='Dashboard' placement='right'>
-            <NavLink to='/dashboard'>
+            <NavLink to='/app/dashboard'>
               <Button
                 className={`flex flex-col justify-center ${setActive(
                   'dashboard'
@@ -48,7 +48,7 @@ const SideNavMenu = (props: SideNavMenuProps) => {
         </li>
         <li className='flex justify-center items-center'>
           <Tooltip title='Info' placement='right'>
-            <NavLink to='/info'>
+            <NavLink to='/app/info'>
               <Button
                 className={`flex flex-col justify-center ${setActive('info')}`}
                 type='link'>
@@ -61,7 +61,7 @@ const SideNavMenu = (props: SideNavMenuProps) => {
       <ul className='list-none p-0 m-0 flex flex-col gap-3'>
         <li className='flex justify-center items-center'>
           <Tooltip title='Notifications' placement='right'>
-            <NavLink to='/notifications'>
+            <NavLink to='/app/notification'>
               <Button
                 className={`flex flex-col justify-center ${setActive(
                   'notifications'
@@ -74,7 +74,7 @@ const SideNavMenu = (props: SideNavMenuProps) => {
         </li>
         <li className='flex justify-center items-center'>
           <Tooltip title='Settings' placement='right'>
-            <NavLink to='/settings'>
+            <NavLink to='/app/settings'>
               <Button
                 className={`flex flex-col justify-center ${setActive(
                   'settings'

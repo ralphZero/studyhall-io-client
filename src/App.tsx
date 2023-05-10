@@ -15,7 +15,7 @@ function App() {
         <DataFilterContextProvider>
           <Routes>
             <Route path='/' element={<LandingPage />} />
-            <Route path='/app' element={<Main />} />
+            <Route path='/app/*' element={<Main />} />
           </Routes>
         </DataFilterContextProvider>
       </DataContextProvider>

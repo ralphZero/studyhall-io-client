@@ -8,6 +8,10 @@ import { Route, Routes } from 'react-router-dom';
 import CreatePlan from '../CreatePlan';
 import Login from '../Login';
 import HallPage from '../HallPage';
+import Dashboard from '../Dashboard';
+import Info from '../Info';
+import Notification from '../Notification';
+import Settings from '../Settings';
 
 interface MainProps {
   children?: JSX.Element | JSX.Element[];
@@ -31,6 +35,10 @@ const Main = (props: MainProps) => {
         <Routes>
           <Route path='/' element={setPage(<CreatePlan />)} />
           <Route path='/halls/:hallId' element={setPage(<HallPage />)} />
+          <Route path='/dashboard' element={setPage(<Dashboard />)} />
+          <Route path='/info' element={setPage(<Info />)} />
+          <Route path='/notification' element={setPage(<Notification />)} />
+          <Route path='/settings' element={setPage(<Settings />)} />
         </Routes>
       </Layout>
     </Layout>
