@@ -1,5 +1,5 @@
 import React, { useContext, useCallback } from 'react';
-import { Button } from 'antd';
+import { Button, Layout } from 'antd';
 import UniversalSider from '../../components/UniversalSider';
 import { DataContext } from '../../context/DataContext';
 import { Link, useParams } from 'react-router-dom';
@@ -33,7 +33,9 @@ const Plan = () => {
         </Button>
         {isLoading ? <div className='text-white'>Loading...</div> : planItems}
       </UniversalSider>
-      <section className='grow'>{buildPage()}</section>
+      <Layout.Content className='grow min-h-screen overflow-x-hidden'>
+        {buildPage()}
+      </Layout.Content>
     </div>
   );
 };

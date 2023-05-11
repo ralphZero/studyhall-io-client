@@ -7,7 +7,7 @@ interface UniversalSiderProps {
 
 const UniversalSider = ({ children }: UniversalSiderProps) => {
   return (
-    <aside className='w-[168px] bg-primaryBlack'>
+    <aside className='w-[168px] min-w-[168px] bg-primaryBlack'>
       <HallifyLogo />
       <div className='px-2'>{children}</div>
     </aside>

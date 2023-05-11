@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 const HallifyLogo = () => {
   return (
-    <NavLink to='/app'>
+    <NavLink to='/app/plan'>
       <div className='py-[12px] px-2 border-0 border-b border-divider border-solid'>
         <img src={hallifyLogo} alt='Hallify' />
       </div>
