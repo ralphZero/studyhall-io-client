@@ -2,7 +2,7 @@ import React from 'react';
 import HallifyLogo from '../Headers/HallifyLogo';
 
 interface UniversalSiderProps {
-  children: JSX.Element[] | JSX.Element;
+  children: any;
 }
 
 const UniversalSider = ({ children }: UniversalSiderProps) => {

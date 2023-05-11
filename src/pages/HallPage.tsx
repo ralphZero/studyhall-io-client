@@ -29,7 +29,7 @@ const HallPage = () => {
 
   const [hall, setHall] = useState<Hall>();
 
-  const { hallId } = useParams();
+  const hallId = useParams()['*'];
 
   const {
     prepareCurrentHall,
@@ -140,14 +140,14 @@ const HallPage = () => {
 
   return hall && isReady ? (
     <>
-    <header className='p-0 m-0 sticky top-0 z-50'>
-      <Header title={hall.title} />
-      <HallTitle
-        title={hall.title}
-        description={hall.description}
-        progress={hall.progress}
-      />
-    </header>
+      <header className='p-0 m-0 sticky top-0 z-50'>
+        <Header title={hall.title} />
+        <HallTitle
+          title={hall.title}
+          description={hall.description}
+          progress={hall.progress}
+        />
+      </header>
       <div className='kanban-container py-2 px-12 overflow-x-hidden overflow-y-auto whitespace-nowrap'>
         <KanbanContainer>
           <DragDropContext onDragEnd={onDragEnd}>
@@ -158,7 +158,10 @@ const HallPage = () => {
                     index !== dateFilter.weeks.length - 1;
                   const spacing = isNotLastElement ? 'mb-2' : '';
 
-                  const firstDate = index === 0 ? dateFilter.minDate : currentWeek[0].clone().startOf('week');
+                  const firstDate =
+                    index === 0
+                      ? dateFilter.minDate
+                      : currentWeek[0].clone().startOf('week');
                   const lastDate = currentWeek[currentWeek.length - 1];
 
                   const weekFormat = 'MMM DD, yyyy';

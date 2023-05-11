@@ -19,8 +19,7 @@ const Main = (props: MainProps) => {
       <SideNav />
       <Layout id='main-container'>
         <Routes>
-          <Route path='/' element={<Plan />} />
-          <Route path='/halls/:hallId' element={<HallPage />} />
+          <Route path='/plan/*' element={<Plan />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/info' element={<Info />} />
           <Route path='/notification' element={<Notification />} />
