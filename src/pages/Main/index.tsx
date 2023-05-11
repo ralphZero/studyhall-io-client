@@ -15,7 +15,7 @@ interface MainProps {
 
 const Main = (props: MainProps) => {
   return (
-    <Layout className='min-h-screen'>
+    <Layout hasSider className='min-h-screen'>
       <SideNav />
       <Layout id='main-container'>
         <Routes>
