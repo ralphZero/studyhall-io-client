@@ -1,7 +1,6 @@
 import React from 'react';
 import SideNav from '../../components/SideNav';
 import { Layout } from 'antd';
-import HallPage from '../HallPage';
 import Dashboard from '../Dashboard';
 import Info from '../Info';
 import Notification from '../Notification';

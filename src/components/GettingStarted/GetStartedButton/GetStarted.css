@@ -1,0 +1,6 @@
+.getstartedbtn > span {
+  color: var(--accent-primary);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: underline;
+}

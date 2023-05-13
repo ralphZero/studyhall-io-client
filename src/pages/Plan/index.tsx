@@ -4,7 +4,7 @@ import UniversalSider from '../../components/UniversalSider';
 import { DataContext } from '../../context/DataContext';
 import { Link, useParams } from 'react-router-dom';
 import HallPage from '../HallPage';
-import Login from '../Login';
+import GettingStarted from './GettingStarted';
 
 const Plan = () => {
   const { isLoading, dataList } = useContext(DataContext);
@@ -21,7 +21,7 @@ const Plan = () => {
   ));
 
   const buildPage = useCallback(
-    () => (hallId ? <HallPage /> : <Login />),
+    () => (hallId ? <HallPage /> : <GettingStarted />),
     [hallId]
   );
 
