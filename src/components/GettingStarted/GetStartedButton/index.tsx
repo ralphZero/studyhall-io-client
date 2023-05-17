@@ -8,7 +8,10 @@ interface GetStartedButtonProps {
 
 const GetStartedButton = ({ onClick }: GetStartedButtonProps) => {
   return (
-    <Button className='getstartedbtn' onClick={onClick} type='link'>
+    <Button
+      className='getstartedbtn font-sans tracking-tight'
+      onClick={onClick}
+      type='link'>
       get started
     </Button>
   );
