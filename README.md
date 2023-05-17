@@ -2,12 +2,24 @@
 
 ## Table of Contents
 1. [Overview](#Overview)
-1. [Product Spec](#Product-Spec)
-1. [Wireframes](#Wireframes)
+2. [v2-WIP](#V2-WIP)
+3. [Product Spec](#Product-Spec)
+4. [Wireframes](#Wireframes)
 
 ## Overview
 ### Description
 Hallify helps you organize and track your progress when you are studying
+
+
+## V2-WIP
+Currently working on v2
+
+Improvements🔥:
+- Improved UI/UX based on user feedback
+- Integration with learning platform (Udemy)
+- Redux integration
+
+![v2-hallpage](https://github.com/ralphZero/studyhall-io-client/assets/40446586/1e5c79af-b527-4466-889b-2c3526a059b2)
 
 ## Product Spec
 
