@@ -6,14 +6,13 @@ import SideNavMenu from './SideNavMenu';
 import { useLocation } from 'react-router-dom';
 import './SizeNav.css';
 import { UserContext } from '../../context/UserContext';
-import { log } from 'console';
 
 const SideNav = () => {
   const location = useLocation();
 
   const currentRoute = useMemo(() => {
     const url = location.pathname;
-    const regex = /^\/([^/]+)/;
+    const regex = /^\/app\/([^/]+)/;
     const match = regex.exec(url);
 
     let firstRoute = 'plan';

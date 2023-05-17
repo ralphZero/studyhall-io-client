@@ -21,7 +21,7 @@ const Main = (props: MainProps) => {
           <Route path='/plan/*' element={<Plan />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/info' element={<Info />} />
-          <Route path='/notification' element={<Notification />} />
+          <Route path='/notifications' element={<Notification />} />
           <Route path='/settings' element={<Settings />} />
           <Route path='*' element={<Plan />} />
         </Routes>
