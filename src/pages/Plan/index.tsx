@@ -5,16 +5,16 @@ import { DataContext } from '../../context/DataContext';
 import { Link, useParams } from 'react-router-dom';
 import HallPage from '../HallPage';
 import GettingStarted from './GettingStarted';
+import { RightSquareOutlined } from '@ant-design/icons';
 
 const Plan = () => {
   const { isLoading, dataList } = useContext(DataContext);
   const hallId = useParams()['*'];
 
   const planItems = dataList.map((hall) => (
-    <Link to={`${hall._id}`}>
-      <div
-        key={hall._id}
-        className='text-[#ffffff] hover:text-accent-secondary my-2'>
+    <Link key={hall._id} to={`${hall._id}`}>
+      <div className='text-textLight hover:text-selectedTextLight my-2 truncate'>
+        <RightSquareOutlined className='mr-1' />
         {hall.title}
       </div>
     </Link>
@@ -28,7 +28,7 @@ const Plan = () => {
   return (
     <div className='min-h-screen flex'>
       <UniversalSider>
-        <Button className='bg-accent-primary w-full mt-3' type='primary'>
+        <Button className='bg-accent-primary w-full my-3' type='primary'>
           New study plan
         </Button>
         {isLoading ? <div className='text-white'>Loading...</div> : planItems}

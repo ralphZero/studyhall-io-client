@@ -24,7 +24,6 @@ const SideNav = () => {
   }, [location]);
 
   const { user, isLoading } = useContext(UserContext);
-  console.log(user?.photoURL);
 
   return (
     <>
