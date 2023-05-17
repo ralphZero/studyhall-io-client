@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Layout, Space } from 'antd';
 
 import SideNavMenu from './SideNavMenu';
-import './SizeNav.css';
 import { useLocation } from 'react-router-dom';
+import './SizeNav.css';
+import { UserContext } from '../../context/UserContext';
+import { log } from 'console';
 
 const SideNav = () => {
   const location = useLocation();
@@ -21,11 +23,18 @@ const SideNav = () => {
     return firstRoute;
   }, [location]);
 
+  const { user, isLoading } = useContext(UserContext);
+  console.log(user?.photoURL);
+
   return (
     <>
       <Layout.Sider className='side-nav' trigger={null} collapsed={true}>
         <Space className='avatar-container'>
-          <Avatar icon={<UserOutlined />} />
+          {isLoading ? (
+            <Avatar icon={<UserOutlined />} />
+          ) : (
+            <Avatar src={<img src={user?.photoURL as string} alt='avatar' />} />
+          )}
         </Space>
         <SideNavMenu currentRoute={currentRoute} />
       </Layout.Sider>
