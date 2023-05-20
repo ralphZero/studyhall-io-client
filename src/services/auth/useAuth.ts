@@ -1,18 +1,21 @@
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
+import { useEffect, useCallback } from 'react';
+import {
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+} from 'firebase/auth';
 import auth from '../../utils/auth';
 import { setCredentials, setAuthReady } from '../../features/auth/authSlice';
 import { User } from '../../features/auth/interfaces';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
-export const useAuth = () => {
+export const useFirebaseAuth = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setAuthReady({ isReady: false }));
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      dispatch(setAuthReady({ isReady: true }));
-
+  const prepareUserResponse = useCallback(
+    async (currentUser: any) => {
       let token: string | null = null;
       let user: User | null = null;
 
@@ -32,10 +35,40 @@ export const useAuth = () => {
           token,
         })
       );
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    dispatch(setAuthReady({ isReady: false }));
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      dispatch(setAuthReady({ isReady: true }));
+      prepareUserResponse(currentUser);
     });
 
     return () => {
       unsubscribe?.();
     };
-  }, [dispatch]);
+  }, [dispatch, prepareUserResponse]);
+
+  const signOut = () => {
+    auth.signOut();
+    prepareUserResponse(null);
+  };
+
+  const logIn = () => {
+    const provider = new GoogleAuthProvider();
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        prepareUserResponse(result.user);
+      })
+      .catch((err) => {
+        prepareUserResponse(null);
+      });
+  };
+
+  const { user, isReady } = useSelector((store: RootState) => store.auth);
+
+  return { user, isReady, signOut, logIn };
 };
