@@ -12,7 +12,7 @@ export const globalUiSlice = createSlice({
   name: 'globalUi',
   initialState,
   reducers: {
-    updateCurrentPage: (state, action) => {
+    updateCurrentPage: (state: GlobalUIState, action) => {
       state.currentPage = action.payload;
     },
   },
