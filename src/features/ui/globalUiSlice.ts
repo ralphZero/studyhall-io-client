@@ -9,7 +9,7 @@ const initialState: GlobalUIState = {
 };
 
 export const globalUiSlice = createSlice({
-  name: 'globalUi',
+  name: 'ui',
   initialState,
   reducers: {
     updateCurrentPage: (state: GlobalUIState, action) => {
