@@ -30,7 +30,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "cross-env NODE_ENV=development craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject"
@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
+    "cross-env": "^7.0.3",
     "postcss": "^8.4.20",
     "postcss-preset-env": "^7.8.3",
     "prettier": "^2.8.2",
