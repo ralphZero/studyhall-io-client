@@ -9,7 +9,7 @@ export const hallifyApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
       if (token) {
-        headers.set('authorization', token);
+        headers.set('Authorization', token);
       }
     },
   }),
