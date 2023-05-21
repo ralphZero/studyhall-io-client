@@ -9,7 +9,7 @@ import { useFirebaseAuth } from '../../services/auth/useAuth';
 
 const SideNav = () => {
   const location = useLocation();
-  const { isReady, user } = useFirebaseAuth();
+  const { isReady, user, signOut } = useFirebaseAuth();
 
   const currentRoute = useMemo(() => {
     const url = location.pathname;
@@ -30,7 +30,10 @@ const SideNav = () => {
           {!isReady ? (
             <Avatar icon={<UserOutlined />} />
           ) : (
-            <Avatar src={<img src={user?.photoUrl as string} alt='avatar' />} />
+            <Avatar
+              onClick={() => signOut()}
+              src={<img src={user?.photoUrl as string} alt='avatar' />}
+            />
           )}
         </Space>
         <SideNavMenu currentRoute={currentRoute} />
