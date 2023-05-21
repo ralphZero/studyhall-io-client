@@ -1,14 +1,15 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Layout, Space } from 'antd';
 
 import SideNavMenu from './SideNavMenu';
 import { useLocation } from 'react-router-dom';
 import './SizeNav.css';
-import { UserContext } from '../../context/UserContext';
+import { useFirebaseAuth } from '../../services/auth/useAuth';
 
 const SideNav = () => {
   const location = useLocation();
+  const { isReady, user } = useFirebaseAuth();
 
   const currentRoute = useMemo(() => {
     const url = location.pathname;
@@ -22,16 +23,14 @@ const SideNav = () => {
     return firstRoute;
   }, [location]);
 
-  const { user, isLoading } = useContext(UserContext);
-
   return (
     <>
       <Layout.Sider className='side-nav' trigger={null} collapsed={true}>
         <Space className='avatar-container'>
-          {isLoading ? (
+          {!isReady ? (
             <Avatar icon={<UserOutlined />} />
           ) : (
-            <Avatar src={<img src={user?.photoURL as string} alt='avatar' />} />
+            <Avatar src={<img src={user?.photoUrl as string} alt='avatar' />} />
           )}
         </Space>
         <SideNavMenu currentRoute={currentRoute} />

@@ -1,18 +1,19 @@
 import { useDispatch } from 'react-redux';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
 } from 'firebase/auth';
 import auth from '../../utils/auth';
-import { setCredentials, setAuthReady } from '../../features/auth/authSlice';
+import { setAuthReady, setCredentials } from '../../features/auth/authSlice';
 import { User } from '../../features/auth/interfaces';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 
 export const useFirebaseAuth = () => {
   const dispatch = useDispatch();
+  const [isReady, setIsReady] = useState(false);
 
   const prepareUserResponse = useCallback(
     async (currentUser: any) => {
@@ -40,9 +41,10 @@ export const useFirebaseAuth = () => {
   );
 
   useEffect(() => {
-    dispatch(setAuthReady({ isReady: false }));
+    setIsReady(false);
+    dispatch(setAuthReady({ isReady: true }));
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      dispatch(setAuthReady({ isReady: true }));
+      setIsReady(true);
       prepareUserResponse(currentUser);
     });
 
@@ -68,7 +70,7 @@ export const useFirebaseAuth = () => {
       });
   };
 
-  const { user, isReady } = useSelector((store: RootState) => store.auth);
+  const { user } = useSelector((store: RootState) => store.auth);
 
   return { user, isReady, signOut, logIn };
 };
