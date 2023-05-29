@@ -1,0 +1,7 @@
+#progress-indicator .ant-progress-inner {
+  background-color: var(--divider-dark) !important;
+}
+
+#progress-indicator .ant-progress-inner .ant-progress-bg {
+  background-color: #219653 !important;
+}

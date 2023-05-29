@@ -4,9 +4,12 @@
 
 @import '~antd/dist/antd.css';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700;900&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@layer components {
+  .global-header-style {
+    @apply flex items-center px-2 border-0 border-b border-divider border-solid h-14;
+  }
+}
 
 :root {
   --general-gray: #53576d;
@@ -17,6 +20,7 @@
   --text-light: #8c8e9d;
   --selected-text-light: #fafafc;
   --divider-gray: #3d3f49;
+  --divider-dark: #dfdfdf;
 }
 
 body {
