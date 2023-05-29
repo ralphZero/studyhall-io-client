@@ -13,6 +13,7 @@ module.exports = {
       }
     },
     colors: {
+      ...defaultTheme.theme?.colors,
       general: '#53576D',
       primaryBlack: '#0f111e',
       accent: {
@@ -22,7 +23,9 @@ module.exports = {
       textLight: '#8c8e9d',
       selectedTextLight: '#fafafc',
       divider: '#3d3f49',
+      dividerDark: '#DFDFDF',
       powderBlue: '#e1eff8',
+      hallifyWhite: '#EEF0F4'
     }
   },
   plugins: [],
