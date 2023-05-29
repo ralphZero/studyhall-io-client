@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react';
 import { Button, Layout } from 'antd';
 import UniversalSider from '../../components/UniversalSider';
-// import { DataContext } from '../../context/DataContext';
 import { Link, useParams } from 'react-router-dom';
-import HallPage from '../HallPage';
 import GettingStarted from './GettingStarted';
 import { RightSquareOutlined } from '@ant-design/icons';
 import { useGetPlansQuery } from '../../features/api/plans/planApi';
+import PlanPage from './PlanPage';
 
 const Plan = () => {
   // const { isLoading, dataList } = useContext(DataContext);
@@ -25,7 +24,7 @@ const Plan = () => {
     ));
 
   const buildPage = useCallback(
-    () => (hallId ? <HallPage /> : <GettingStarted />),
+    () => (hallId ? <PlanPage /> : <GettingStarted />),
     [hallId]
   );
 
