@@ -1,6 +1,7 @@
 import React from 'react';
-import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
 import { Segmented } from 'antd';
+import { ReactComponent as ListIcon } from '../../../../assets/list_icon.svg';
+import { ReactComponent as BoardIcon } from '../../../../assets/board_icon.svg';
 
 import './ViewSwitcher.css';
 
@@ -13,12 +14,12 @@ const ViewSwitcher = () => {
           {
             label: 'Board view',
             value: 'board',
-            icon: <AppstoreOutlined />,
+            icon: <BoardIcon />,
           },
           {
             label: 'List view',
             value: 'list',
-            icon: <BarsOutlined />,
+            icon: <ListIcon />,
           },
         ]}
       />

@@ -13,3 +13,7 @@
 #view-switcher .ant-segmented-item-selected {
   border-radius: 4px;
 }
+
+#view-switcher .ant-segmented-item-icon > svg {
+  vertical-align: middle;
+}

@@ -15,7 +15,7 @@ const LoadingScreen = () => {
         direction='vertical'
         style={{ display: 'flex', alignItems: 'center' }}>
         <div>
-          <img height={32} src={logo.displayName} alt='...' />
+          <img height={32} src={logo} alt='...' />
         </div>
         <Spin />
       </Space>

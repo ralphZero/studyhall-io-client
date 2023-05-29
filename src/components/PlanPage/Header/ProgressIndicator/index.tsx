@@ -11,7 +11,7 @@ const ProgressIndicator = () => {
         <span className='font-medium text-sm'>75%</span>
       </div>
       <Progress
-        className='leading-[0]'
+        className='leading-[0] mb-[4px]'
         percent={30}
         size='small'
         showInfo={false}
