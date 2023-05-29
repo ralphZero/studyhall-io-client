@@ -1,24 +1,28 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Button, Layout } from 'antd';
 import UniversalSider from '../../components/UniversalSider';
-import { DataContext } from '../../context/DataContext';
+// import { DataContext } from '../../context/DataContext';
 import { Link, useParams } from 'react-router-dom';
 import HallPage from '../HallPage';
 import GettingStarted from './GettingStarted';
 import { RightSquareOutlined } from '@ant-design/icons';
+import { useGetPlansQuery } from '../../features/api/plans/planApi';
 
 const Plan = () => {
-  const { isLoading, dataList } = useContext(DataContext);
+  // const { isLoading, dataList } = useContext(DataContext);
+  const { data: plans, isLoading } = useGetPlansQuery({});
   const hallId = useParams()['*'];
 
-  const planItems = dataList.map((hall) => (
-    <Link key={hall._id} to={`${hall._id}`}>
-      <div className='text-textLight hover:text-selectedTextLight my-2 truncate'>
-        <RightSquareOutlined className='mr-1' />
-        {hall.title}
-      </div>
-    </Link>
-  ));
+  const planItems =
+    plans &&
+    plans.map((plan) => (
+      <Link key={plan._id} to={`${plan._id}`}>
+        <div className='text-textLight hover:text-selectedTextLight my-2 truncate'>
+          <RightSquareOutlined className='mr-1' />
+          {plan.title}
+        </div>
+      </Link>
+    ));
 
   const buildPage = useCallback(
     () => (hallId ? <HallPage /> : <GettingStarted />),

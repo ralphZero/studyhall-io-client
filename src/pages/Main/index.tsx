@@ -6,7 +6,7 @@ import Info from '../Info';
 import Notification from '../Notification';
 import Settings from '../Settings';
 import Plan from '../Plan';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 interface MainProps {
   children?: JSX.Element | JSX.Element[];
@@ -23,7 +23,7 @@ const Main = (props: MainProps) => {
           <Route path='/info' element={<Info />} />
           <Route path='/notifications' element={<Notification />} />
           <Route path='/settings' element={<Settings />} />
-          <Route path='*' element={<Plan />} />
+          <Route path='*' element={<Navigate to='plan/' />} />
         </Routes>
       </Layout>
     </Layout>
