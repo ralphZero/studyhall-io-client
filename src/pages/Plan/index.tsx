@@ -8,12 +8,11 @@ import { useGetPlansQuery } from '../../features/api/plans/planApi';
 import PlanPage from './PlanPage';
 
 const Plan = () => {
-  // const { isLoading, dataList } = useContext(DataContext);
-  const { data: plans, isLoading } = useGetPlansQuery({});
+  const { data: plans, isSuccess, isLoading } = useGetPlansQuery({});
   const hallId = useParams()['*'];
 
   const planItems =
-    plans &&
+    isSuccess &&
     plans.map((plan) => (
       <Link key={plan._id} to={`${plan._id}`}>
         <div className='text-textLight hover:text-selectedTextLight my-2 truncate'>
@@ -24,8 +23,8 @@ const Plan = () => {
     ));
 
   const buildPage = useCallback(
-    () => (hallId ? <PlanPage /> : <GettingStarted />),
-    [hallId]
+    () => (hallId ? <PlanPage currentPlan={plans} /> : <GettingStarted />),
+    [hallId, plans]
   );
 
   return (
