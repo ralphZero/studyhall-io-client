@@ -1,9 +1,9 @@
 import React from 'react';
-import PlanHeader from '../../../components/PlanPage/Header';
-import { Plan } from '../../../models/v2/plan';
+import PlanHeader from '../../../../components/PlanPage/Header';
+import { Plan } from '../../../../models/v2/plan';
 
 interface IPlanPage {
-  currentPlan: Plan[] | undefined;
+  currentPlan: Plan;
 }
 const PlanPage = ({ currentPlan }: IPlanPage) => {
   return (

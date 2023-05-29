@@ -1,5 +1,5 @@
 import React from 'react';
-import GetStartedButton from '../../../components/GettingStarted/GetStartedButton';
+import GetStartedButton from '../../../../components/GettingStarted/GetStartedButton';
 
 const GettingStarted = () => {
   return (

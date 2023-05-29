@@ -2,14 +2,32 @@ import React, { useCallback } from 'react';
 import { Button, Layout } from 'antd';
 import UniversalSider from '../../components/UniversalSider';
 import { Link, useParams } from 'react-router-dom';
-import GettingStarted from './GettingStarted';
+import GettingStarted from './components/GettingStarted';
 import { RightSquareOutlined } from '@ant-design/icons';
 import { useGetPlansQuery } from '../../features/api/plans/planApi';
-import PlanPage from './PlanPage';
+import PlanPage from './components/PlanPage';
+import { preparePlanPage } from './helpers/preparePlanPage';
 
 const Plan = () => {
-  const { data: plans, isSuccess, isLoading } = useGetPlansQuery({});
+  const { data: plans, isSuccess, isLoading, isError } = useGetPlansQuery({});
   const hallId = useParams()['*'];
+
+  const buildPage = useCallback(
+    () =>
+      hallId ? (
+        preparePlanPage({
+          plans,
+          hallId,
+          isLoading,
+          isError,
+          isSuccess,
+          onSuccess: (plan) => <PlanPage currentPlan={plan} />,
+        })
+      ) : (
+        <GettingStarted />
+      ),
+    [hallId, isError, isLoading, isSuccess, plans]
+  );
 
   const planItems =
     isSuccess &&
@@ -21,11 +39,6 @@ const Plan = () => {
         </div>
       </Link>
     ));
-
-  const buildPage = useCallback(
-    () => (hallId ? <PlanPage currentPlan={plans} /> : <GettingStarted />),
-    [hallId, plans]
-  );
 
   return (
     <div className='min-h-screen flex'>
