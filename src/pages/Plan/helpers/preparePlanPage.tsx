@@ -4,7 +4,7 @@ import ErrorPlanPage from '../../../components/PlanPage/ErrorPage';
 import { Plan } from '../../../models/v2/plan';
 
 interface IPreparePlanPage {
-  hallId: string;
+  planId: string;
   plans: Plan[] | undefined;
   isSuccess: boolean;
   isLoading: boolean;
@@ -17,12 +17,12 @@ export const preparePlanPage = ({
   isLoading,
   isSuccess,
   onSuccess,
-  hallId,
+  planId,
 }: IPreparePlanPage): JSX.Element => {
   if (isLoading) {
     return <LoadingSkeleton />;
   } else if (isSuccess && !!plans) {
-    const index = plans.findIndex((plan) => plan._id === hallId);
+    const index = plans.findIndex((plan) => plan._id === planId);
     if (index !== -1) {
       return onSuccess(plans[index]);
     } else {

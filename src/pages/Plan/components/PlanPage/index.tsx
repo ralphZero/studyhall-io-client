@@ -8,7 +8,7 @@ interface IPlanPage {
 const PlanPage = ({ currentPlan }: IPlanPage) => {
   return (
     <div className='min-h-screen flex bg-hallifyWhite'>
-      <PlanHeader />
+      <PlanHeader plan={currentPlan} />
     </div>
   );
 };

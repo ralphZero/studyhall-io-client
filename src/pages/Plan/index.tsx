@@ -1,44 +1,70 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { Button, Layout } from 'antd';
 import UniversalSider from '../../components/UniversalSider';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import GettingStarted from './components/GettingStarted';
 import { RightSquareOutlined } from '@ant-design/icons';
 import { useGetPlansQuery } from '../../features/api/plans/planApi';
 import PlanPage from './components/PlanPage';
 import { preparePlanPage } from './helpers/preparePlanPage';
+import { useDispatch } from 'react-redux';
+import { updateActivePlanId } from '../../features/ui/globalUiSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 const Plan = () => {
   const { data: plans, isSuccess, isLoading, isError } = useGetPlansQuery({});
-  const hallId = useParams()['*'];
+  const pageQuery = useParams()['*'];
+  const dispatch = useDispatch();
+  const { activePlanId } = useSelector((state: RootState) => state.ui);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!pageQuery && activePlanId) {
+      navigate(`${activePlanId}`, { replace: true });
+    }
+  }, [activePlanId, navigate, pageQuery]);
+
+  const planId = useMemo<string>(() => {
+    if (activePlanId) return activePlanId;
+    return pageQuery as string;
+  }, [activePlanId, pageQuery]);
 
   const buildPage = useCallback(
     () =>
-      hallId ? (
+      planId ? (
         preparePlanPage({
           plans,
-          hallId,
+          planId,
           isLoading,
           isError,
           isSuccess,
-          onSuccess: (plan) => <PlanPage currentPlan={plan} />,
+          onSuccess: (plan) => {
+            dispatch(updateActivePlanId(plan._id));
+            return <PlanPage currentPlan={plan} />;
+          },
         })
       ) : (
         <GettingStarted />
       ),
-    [hallId, isError, isLoading, isSuccess, plans]
+    [dispatch, planId, isError, isLoading, isSuccess, plans]
   );
 
   const planItems =
     isSuccess &&
-    plans.map((plan) => (
-      <Link key={plan._id} to={`${plan._id}`}>
-        <div className='text-textLight hover:text-selectedTextLight my-2 truncate'>
-          <RightSquareOutlined className='mr-1' />
-          {plan.title}
-        </div>
-      </Link>
-    ));
+    plans.map((plan) => {
+      const active =
+        activePlanId === plan._id ? 'text-selectedTextLight' : 'text-textLight';
+      return (
+        <Link key={plan._id} to={`${plan._id}`}>
+          <div
+            className={`${active} hover:text-selectedTextLight my-2 truncate`}>
+            <RightSquareOutlined className='mr-1' />
+            {plan.title}
+          </div>
+        </Link>
+      );
+    });
 
   return (
     <div className='min-h-screen flex'>

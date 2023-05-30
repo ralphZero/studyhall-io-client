@@ -1,22 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface GlobalUIState {
-  currentPage: string;
+  activePlanId: string;
 }
 
 const initialState: GlobalUIState = {
-  currentPage: '',
+  activePlanId: '',
 };
 
 export const globalUiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
-    updateCurrentPage: (state: GlobalUIState, action) => {
-      state.currentPage = action.payload;
+    updateActivePlanId: (
+      state: GlobalUIState,
+      action: PayloadAction<string>
+    ) => {
+      state.activePlanId = action.payload;
     },
   },
 });
 
 export default globalUiSlice.reducer;
-export const { updateCurrentPage } = globalUiSlice.actions;
+export const { updateActivePlanId } = globalUiSlice.actions;
