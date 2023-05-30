@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Layout } from 'antd';
 import UniversalSider from '../../components/UniversalSider';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -15,20 +15,29 @@ import { RootState } from '../../store/store';
 const Plan = () => {
   const { data: plans, isSuccess, isLoading, isError } = useGetPlansQuery({});
   const pageQuery = useParams()['*'];
-  const dispatch = useDispatch();
-  const { activePlanId } = useSelector((state: RootState) => state.ui);
+
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const { activePlanId } = useSelector((state: RootState) => state.ui);
+
+  const planId = pageQuery;
+
+  useEffect(() => {
+    if (isSuccess) {
+      const index = plans.findIndex((plan) => plan._id === pageQuery);
+      if (index !== -1) {
+        dispatch(updateActivePlanId(plans[index]._id));
+      }
+    }
+  }, [pageQuery, plans, isSuccess, dispatch]);
 
   useEffect(() => {
     if (!pageQuery && activePlanId) {
       navigate(`${activePlanId}`, { replace: true });
     }
   }, [activePlanId, navigate, pageQuery]);
-
-  const planId = useMemo<string>(() => {
-    if (activePlanId) return activePlanId;
-    return pageQuery as string;
-  }, [activePlanId, pageQuery]);
 
   const buildPage = useCallback(
     () =>
@@ -40,14 +49,13 @@ const Plan = () => {
           isError,
           isSuccess,
           onSuccess: (plan) => {
-            dispatch(updateActivePlanId(plan._id));
             return <PlanPage currentPlan={plan} />;
           },
         })
       ) : (
         <GettingStarted />
       ),
-    [dispatch, planId, isError, isLoading, isSuccess, plans]
+    [isError, isLoading, isSuccess, planId, plans]
   );
 
   const planItems =
