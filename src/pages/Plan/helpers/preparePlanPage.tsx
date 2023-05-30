@@ -10,6 +10,7 @@ interface IPreparePlanPage {
   isLoading: boolean;
   isError: boolean;
   onSuccess: (plan: Plan) => JSX.Element;
+  onPlanNotFound: () => JSX.Element;
 }
 
 export const preparePlanPage = ({
@@ -17,6 +18,7 @@ export const preparePlanPage = ({
   isLoading,
   isSuccess,
   onSuccess,
+  onPlanNotFound,
   planId,
 }: IPreparePlanPage): JSX.Element => {
   if (isLoading) {
@@ -26,7 +28,7 @@ export const preparePlanPage = ({
     if (index !== -1) {
       return onSuccess(plans[index]);
     } else {
-      return <ErrorPlanPage />;
+      return onPlanNotFound();
     }
   } else {
     return <ErrorPlanPage />;

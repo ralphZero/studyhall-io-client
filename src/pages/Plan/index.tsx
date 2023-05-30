@@ -42,20 +42,17 @@ const Plan = () => {
 
   const buildPage = useCallback(
     () =>
-      planId ? (
-        preparePlanPage({
-          plans,
-          planId,
-          isLoading,
-          isError,
-          isSuccess,
-          onSuccess: (plan) => {
-            return <PlanPage currentPlan={plan} />;
-          },
-        })
-      ) : (
-        <GettingStarted />
-      ),
+      preparePlanPage({
+        plans,
+        planId: planId as string,
+        isLoading,
+        isError,
+        isSuccess,
+        onSuccess: (plan) => {
+          return <PlanPage currentPlan={plan} />;
+        },
+        onPlanNotFound: () => <GettingStarted />,
+      }),
     [isError, isLoading, isSuccess, planId, plans]
   );
 
