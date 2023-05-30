@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Button, Layout } from 'antd';
+import React, { useCallback, useEffect } from 'react';
 import UniversalSider from '../../components/UniversalSider';
-import { Link, useNavigate, useParams } from 'react-router-dom';
 import GettingStarted from './components/GettingStarted';
+import PlanPage from './components/PlanPage';
+
+import { Button, Layout } from 'antd';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { RightSquareOutlined } from '@ant-design/icons';
 import { useGetPlansQuery } from '../../features/api/plans/planApi';
-import PlanPage from './components/PlanPage';
 import { preparePlanPage } from './helpers/preparePlanPage';
 import { useDispatch } from 'react-redux';
 import { updateActivePlanId } from '../../features/ui/globalUiSlice';
