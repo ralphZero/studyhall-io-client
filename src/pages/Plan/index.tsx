@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import UniversalSider from '../../components/UniversalSider';
-import GettingStarted from './components/GettingStarted';
-import PlanPage from './components/PlanPage';
+import GettingStarted from './GettingStarted';
+import PlanPage from './PlanPage';
 
 import { Button, Layout } from 'antd';
 import { Link, useNavigate, useParams } from 'react-router-dom';

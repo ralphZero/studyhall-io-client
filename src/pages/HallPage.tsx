@@ -173,7 +173,8 @@ const HallPage = () => {
                     <Collapse
                       key={index}
                       collapsible='header'
-                      defaultActiveKey={[...[], index]}>
+                      defaultActiveKey={[...[], index]}
+                      items={undefined}>
                       <Panel
                         className={spacing}
                         key={index}
