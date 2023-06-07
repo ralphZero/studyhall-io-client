@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 module.exports = {
   corePlugins: {
@@ -13,7 +14,7 @@ module.exports = {
       }
     },
     colors: {
-      ...defaultTheme.theme?.colors,
+      ...colors,
       general: '#53576D',
       primaryBlack: '#0f111e',
       accent: {
