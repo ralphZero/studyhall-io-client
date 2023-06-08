@@ -1,0 +1,31 @@
+.ant-collapse-header-text {
+  display: inline-block !important;
+  flex: none !important;
+  margin-inline: 0 !important;
+}
+
+.ant-collapse-header-text {
+  background-color: var(--accent-secondary) !important;
+  padding: 8px !important;
+  border-radius: 8px !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 14px !important;
+}
+
+.ant-collapse-header {
+  align-items: center !important;
+}
+
+.expandIcon {
+  transition: all 300ms ease-in-out;
+  transform: rotate(90deg) !important;
+}
+
+.expandIconActive {
+  transition: all 300ms ease-in-out;
+  transform: rotate(0deg) !important;
+}
+
+.ant-collapse-content-box {
+  min-height: 500px !important;
+}

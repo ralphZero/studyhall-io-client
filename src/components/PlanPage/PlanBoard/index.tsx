@@ -1,6 +1,7 @@
-import { CaretRightOutlined } from '@ant-design/icons';
-import { Collapse, CollapseProps, theme } from 'antd';
+import { Collapse, CollapseProps } from 'antd';
 import React, { CSSProperties } from 'react';
+import { ReactComponent as CollapseCaret } from '../../../assets/collapse_caret.svg';
+import './CollapseGroup.css';
 
 const PlanBoard = () => {
   const text = `
@@ -32,24 +33,25 @@ const PlanBoard = () => {
     },
   ];
 
-  const { token } = theme.useToken();
-
   const panelStyle = {
     marginBottom: 24,
-    background: token.colorFillAlter,
-    borderRadius: token.borderRadiusLG,
+    background: 'white',
+    borderRadius: 16,
     border: 'none',
   };
 
   return (
     <main className='grow mx-6 pt-2'>
       <Collapse
+        className='bg-transparent'
         bordered={false}
         defaultActiveKey={['1']}
+        expandIconPosition='end'
         expandIcon={({ isActive }) => (
-          <CaretRightOutlined rotate={isActive ? 90 : 0} />
+          <span className={isActive ? 'expandIconActive' : 'expandIcon'}>
+            <CollapseCaret height={32} width={32} />
+          </span>
         )}
-        style={{ background: token.colorBgContainer }}
         items={getItems(panelStyle)}
       />
     </main>

@@ -10,8 +10,8 @@
   min-width: 52px !important;
   max-width: 52px !important;
   width: 52px !important;
-  background-color: var(--primary-black);
-  border-right: 1px solid var(--divider-gray);
+  background-color: var(--primary-black) !important;
+  border-right: 1px solid var(--divider-gray) !important;
 }
 
 .side-nav .ant-layout-sider-children {

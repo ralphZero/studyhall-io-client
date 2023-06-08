@@ -1,8 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import 'antd/dist/reset.css';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;700;900&display=swap');
 
 @layer components {
@@ -24,13 +22,13 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  color: var(--general-gray);
+  font-family: 'Inter', sans-serif !important;
+  color: var(--general-gray) !important;
 }
 
 .ant-layout-header {
-  background: #ffffff;
-  border-bottom: 1px solid #d9d9d9;
+  background: #ffffff !important;
+  border-bottom: 1px solid #d9d9d9 !important;
   height: auto;
   display: flex;
   justify-content: space-between;
@@ -120,8 +118,4 @@ body {
   background-color: #fafafa;
   border-radius: 8px;
   height: 45px;
-}
-
-.ant-collapse-content-box {
-  padding: 0 !important;
 }
