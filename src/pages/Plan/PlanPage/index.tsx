@@ -10,7 +10,7 @@ const PlanPage = ({ currentPlan }: IPlanPage) => {
   return (
     <div className='min-h-screen flex flex-col bg-hallifyWhite'>
       <PlanHeader plan={currentPlan} />
-      <PlanBoard />
+      <PlanBoard plan={currentPlan} />
     </div>
   );
 };
