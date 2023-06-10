@@ -25,7 +25,3 @@
   transition: all 300ms ease-in-out;
   transform: rotate(0deg) !important;
 }
-
-.ant-collapse-content-box {
-  min-height: 500px !important;
-}

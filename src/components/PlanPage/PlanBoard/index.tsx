@@ -1,12 +1,12 @@
-import { Collapse, CollapseProps } from 'antd';
-import React, { CSSProperties, useCallback, useEffect, useMemo } from 'react';
+import { Collapse } from 'antd';
+import React, { useCallback, useMemo } from 'react';
 import { ReactComponent as CollapseCaret } from '../../../assets/collapse_caret.svg';
 import './CollapseGroup.css';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { Plan } from '../../../models/v2/plan';
 import { getWeeksInRange } from '../../../utils/weeks-builder';
-import { log } from 'console';
 import { WeekObject } from '../../../utils/weeks-builder';
+import PlanColumnGroup from '../PlanColumnGroup';
 
 interface IPlanBoard {
   plan: Plan;
@@ -40,8 +40,13 @@ const PlanBoard = (props: IPlanBoard) => {
     if (weeksData) {
       return weeksData.map((week) => ({
         key: week.startDate,
-        label: week.formattedDateRange,
-        children: <p>{[...week.dates]}</p>,
+        label: (
+          <span className='w-[205px] inline-block text-primaryBlack'>
+            <span className='font-sans font-semibold text-sm pr-2'>Week</span>
+            {week.formattedDateRange}
+          </span>
+        ),
+        children: <PlanColumnGroup weekdays={week.dates} />,
         style: panelStyle,
       }));
     }
@@ -51,7 +56,7 @@ const PlanBoard = (props: IPlanBoard) => {
     <DragDropContext onDragEnd={onDragEnd}>
       <main className='grow mx-6 pt-2'>
         <Collapse
-          className='bg-transparent'
+          className='bg-transparent flex flex-col'
           bordered={false}
           defaultActiveKey={['1']}
           expandIconPosition='end'
