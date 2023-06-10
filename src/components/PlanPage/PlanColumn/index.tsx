@@ -15,7 +15,17 @@ const PlanColumn = (props: IPlanColumn) => {
     <div className='w-100'>
       <PlanColumnHeader headerText={formattedDate} />
       <Droppable droppableId={weekday.toString()}>
-        {() => <div></div>}
+        {(droppableProvided, snapshot) => (
+          <div
+            ref={droppableProvided.innerRef}
+            style={{
+              borderColor: `${snapshot.isDraggingOver ? '#e0e2e9' : '#f6f6f7'}`,
+            }}
+            {...droppableProvided.droppableProps}>
+            {'tasks here'}
+            {droppableProvided.placeholder}
+          </div>
+        )}
       </Droppable>
     </div>
   );
