@@ -1,5 +1,7 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
+import PlanColumnHeader from './PlanColumnHeader';
+import moment from 'moment';
 
 interface IPlanColumn {
   weekday: number;
@@ -7,9 +9,11 @@ interface IPlanColumn {
 
 const PlanColumn = (props: IPlanColumn) => {
   const { weekday } = props;
+  const formattedDate = moment(weekday).format('ddd, MMM D');
+
   return (
     <div className='w-100'>
-      <div>header</div>
+      <PlanColumnHeader headerText={formattedDate} />
       <Droppable droppableId={weekday.toString()}>
         {() => <div></div>}
       </Droppable>

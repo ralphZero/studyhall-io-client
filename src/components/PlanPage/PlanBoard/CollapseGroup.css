@@ -25,3 +25,11 @@
   transition: all 300ms ease-in-out;
   transform: rotate(0deg) !important;
 }
+
+.ant-collapse-content-box {
+  background: linear-gradient(
+    180deg,
+    #ffffff 15.85%,
+    rgba(226, 239, 248, 0.83) 99.87%
+  );
+}

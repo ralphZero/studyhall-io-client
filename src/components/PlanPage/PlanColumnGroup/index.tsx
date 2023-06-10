@@ -15,7 +15,11 @@ const PlanColumnGroup = (props: IPlanColumnGroup) => {
     }
   }, [weekdays]);
 
-  return <div className='w-full flex grow h-[600px]'>{buildColumn()}</div>;
+  return (
+    <div className='w-full flex gap-6 grow h-[600px] overflow-x-auto'>
+      {buildColumn()}
+    </div>
+  );
 };
 
 export default PlanColumnGroup;
