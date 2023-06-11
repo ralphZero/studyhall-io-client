@@ -80,7 +80,7 @@ const Plan = () => {
         </Button>
         {isLoading ? <div className='text-white'>Loading...</div> : planItems}
       </UniversalSider>
-      <Layout.Content className='grow min-h-screen h-screen overflow-x-hidden'>
+      <Layout.Content className='grow min-h-screen h-screen overflow-hidden'>
         {buildPage()}
       </Layout.Content>
     </div>

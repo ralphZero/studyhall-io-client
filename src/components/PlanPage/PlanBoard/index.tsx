@@ -54,7 +54,7 @@ const PlanBoard = (props: IPlanBoard) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <main className='grow mx-6 pt-2'>
+      <main className='grow px-6 pt-2 overflow-auto h-[calc(100vh_-_55px)]'>
         <Collapse
           className='bg-transparent flex flex-col'
           bordered={false}

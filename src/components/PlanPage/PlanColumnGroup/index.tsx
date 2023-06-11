@@ -7,6 +7,7 @@ interface IPlanColumnGroup {
 
 const PlanColumnGroup = (props: IPlanColumnGroup) => {
   const { weekdays } = props;
+
   const buildColumn = useCallback(() => {
     if (weekdays) {
       return weekdays.map((weekday, index) => {
@@ -16,7 +17,7 @@ const PlanColumnGroup = (props: IPlanColumnGroup) => {
   }, [weekdays]);
 
   return (
-    <div className='w-full flex gap-6 grow h-[600px] overflow-x-auto'>
+    <div className='w-full flex grow h-[600px] overflow-hidden overflow-x-auto'>
       {buildColumn()}
     </div>
   );
