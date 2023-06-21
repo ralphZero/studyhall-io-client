@@ -3,17 +3,19 @@ import { Droppable } from 'react-beautiful-dnd';
 import PlanColumnHeader from './PlanColumnHeader';
 import moment from 'moment';
 import TaskCard from '../TaskCard';
+import { Task } from '../../../models/v2/task';
 
 interface IPlanColumn {
   weekday: number;
+  tasks: Task[];
 }
 
 const PlanColumn = (props: IPlanColumn) => {
-  const { weekday } = props;
+  const { weekday, tasks } = props;
   const formattedDate = moment(weekday).format('ddd, MMM D');
 
   return (
-    <div className='mt-2 mx-4 w-[272px] flex-none flex flex-col relative'>
+    <div className='mt-2 w-[272px] flex-none flex flex-col relative'>
       <PlanColumnHeader headerText={formattedDate} />
       <Droppable droppableId={weekday.toString()}>
         {(droppableProvided, snapshot) => (
@@ -25,12 +27,17 @@ const PlanColumn = (props: IPlanColumn) => {
               borderColor: `${snapshot.isDraggingOver ? '#e0e2e9' : '#f6f6f7'}`,
               flexGrow: '1',
               overflowY: 'auto',
+              paddingInline: '1rem',
+              paddingTop: '1rem',
             }}>
-            {Array(6)
-              .fill('')
-              .map((_, index) => (
-                <TaskCard key={index} weekday={weekday} index={index} />
-              ))}
+            {tasks.map((task, index) => (
+              <TaskCard
+                task={task}
+                key={index}
+                weekday={weekday}
+                index={index}
+              />
+            ))}
             {droppableProvided.placeholder}
           </div>
         )}

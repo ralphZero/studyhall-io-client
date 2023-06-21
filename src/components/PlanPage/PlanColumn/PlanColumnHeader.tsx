@@ -10,7 +10,7 @@ const PlanColumnHeader = (props: IPlanColumnHeader) => {
   const { headerText } = props;
 
   return (
-    <div className='px-2 mb-2 py-1 bg-accent-primary text-white font-sans text-xs rounded-lg'>
+    <div className='px-2 mb-2 mx-4 py-1 bg-accent-primary text-white font-sans text-xs rounded-lg'>
       <div className='flex items-center justify-between'>
         <div>{headerText}</div>
         <div className='flex gap-2 items-center'>
