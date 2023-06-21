@@ -7,6 +7,8 @@ import { Plan } from '../../../models/v2/plan';
 import { getWeeksInRange } from '../../../utils/weeks-builder';
 import { WeekObject } from '../../../utils/weeks-builder';
 import PlanColumnGroup from '../PlanColumnGroup';
+import { useGetTasksQuery } from '../../../features/api/plans/taskApi';
+import { Task } from '../../../models/v2/task';
 
 interface IPlanBoard {
   plan: Plan;
@@ -14,6 +16,8 @@ interface IPlanBoard {
 
 const PlanBoard = (props: IPlanBoard) => {
   const { plan } = props;
+
+  const { data: tasks, isLoading } = useGetTasksQuery(plan._id);
 
   const panelStyle = useMemo(
     () => ({
@@ -25,7 +29,20 @@ const PlanBoard = (props: IPlanBoard) => {
     []
   );
 
-  const onDragEnd = (result: DropResult) => {};
+  const onDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+  };
 
   const weeksData: WeekObject[] | undefined = useMemo(() => {
     if (plan) {
@@ -46,11 +63,17 @@ const PlanBoard = (props: IPlanBoard) => {
             {week.formattedDateRange}
           </span>
         ),
-        children: <PlanColumnGroup weekdays={week.dates} />,
+        children: (
+          <PlanColumnGroup
+            tasks={tasks}
+            isLoading={isLoading}
+            weekdays={week.dates}
+          />
+        ),
         style: panelStyle,
       }));
     }
-  }, [panelStyle, weeksData]);
+  }, [panelStyle, tasks, weeksData]);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
