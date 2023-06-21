@@ -1,13 +1,16 @@
 import { Card, Progress, Tag } from 'antd';
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import { Task } from '../../../models/v2/task';
 
 interface ITaskCard {
   index: number;
   weekday: number;
+  task: Task;
 }
+
 const TaskCard = (props: ITaskCard) => {
-  const { index, weekday } = props;
+  const { index, weekday, task } = props;
   const draggableId = weekday + '_' + index;
   return (
     <Draggable draggableId={draggableId} index={index}>
@@ -32,9 +35,7 @@ const TaskCard = (props: ITaskCard) => {
                 Concept
               </Tag>
             </div>
-            <div className='text-base text-primaryBlack'>
-              Add what you'd like to work on here
-            </div>
+            <div className='text-base text-primaryBlack'>{task.title}</div>
             <Progress percent={100} size='small' />
           </div>
         </Card>
