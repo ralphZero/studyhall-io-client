@@ -1,5 +1,5 @@
 export interface Task {
-  id?: string;
+  _id?: string;
   planId: string;
   title: string;
   labels?: Label[];

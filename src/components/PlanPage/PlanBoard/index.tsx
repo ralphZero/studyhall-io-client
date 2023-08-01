@@ -8,7 +8,6 @@ import { getWeeksInRange } from '../../../utils/weeks-builder';
 import { WeekObject } from '../../../utils/weeks-builder';
 import PlanColumnGroup from '../PlanColumnGroup';
 import { useGetTasksQuery } from '../../../features/api/plans/taskApi';
-import { Task } from '../../../models/v2/task';
 
 interface IPlanBoard {
   plan: Plan;
@@ -16,8 +15,18 @@ interface IPlanBoard {
 
 const PlanBoard = (props: IPlanBoard) => {
   const { plan } = props;
+  const { taskIdObj } = plan;
 
   const { data: tasks, isLoading } = useGetTasksQuery(plan._id);
+
+  const weeksData: WeekObject[] | undefined = useMemo(() => {
+    if (plan) {
+      const { startTimestamp, endTimestamp } = plan;
+      const parsedStartTimestamp = parseInt(startTimestamp);
+      const parsedEndTimestamp = parseInt(endTimestamp);
+      return getWeeksInRange(parsedStartTimestamp, parsedEndTimestamp);
+    }
+  }, [plan]);
 
   const panelStyle = useMemo(
     () => ({
@@ -42,16 +51,32 @@ const PlanBoard = (props: IPlanBoard) => {
     ) {
       return;
     }
-  };
 
-  const weeksData: WeekObject[] | undefined = useMemo(() => {
-    if (plan) {
-      const { startTimestamp, endTimestamp } = plan;
-      const parsedStartTimestamp = parseInt(startTimestamp);
-      const parsedEndTimestamp = parseInt(endTimestamp);
-      return getWeeksInRange(parsedStartTimestamp, parsedEndTimestamp);
+    if (weeksData) {
+      let start = null;
+      let end = null;
+
+      weeksData.forEach((week) => {
+        week.dates.forEach((date) => {
+          if (date.toString() === source.droppableId) {
+            start = date.toString();
+          }
+          if (date.toString() === destination.droppableId) {
+            end = date.toString();
+          }
+        });
+      });
+
+      console.log('start', start);
+      console.log('end', end);
+      console.log('source', source.index);
+      console.log('destination', destination.index);
+      console.log('draggableId', draggableId);
+
+      if (start === end) {
+      }
     }
-  }, [plan]);
+  };
 
   const buildBoard = useCallback(() => {
     if (weeksData) {
@@ -68,12 +93,13 @@ const PlanBoard = (props: IPlanBoard) => {
             tasks={tasks}
             isLoading={isLoading}
             weekdays={week.dates}
+            taskIdObj={taskIdObj}
           />
         ),
         style: panelStyle,
       }));
     }
-  }, [panelStyle, tasks, weeksData]);
+  }, [isLoading, panelStyle, tasks, weeksData, taskIdObj]);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
