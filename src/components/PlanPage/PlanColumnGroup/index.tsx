@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import PlanColumn from '../PlanColumn';
 import { Task } from '../../../models/v2/task';
-import { areTimestampsSameDay } from '../../../utils/samedaycheck';
 import { TaskIdObj } from '../../../models/v2/taskIdObj';
 
 interface IPlanColumnGroup {
@@ -19,12 +18,18 @@ const PlanColumnGroup = (props: IPlanColumnGroup) => {
       return weekdays.map((weekday, index) => {
         const taskIds = taskIdObj[weekday.toString()] ?? [];
 
-        const thisWeeksTasks = tasks.filter((tasks) => {
-          // const parsedTaskTimestamp = Number(tasks.timestamp);
-          const taskId = tasks._id as string;
+        const thisWeeksTasks = tasks
+          .filter((task) => {
+            // const parsedTaskTimestamp = Number(tasks.timestamp);
+            const taskId = task._id as string;
 
-          return taskIds?.includes(taskId);
-        });
+            return taskIds?.includes(taskId);
+          })
+          .sort(
+            (a, b) =>
+              taskIds.indexOf(a._id as string) -
+              taskIds.indexOf(b?._id as string)
+          );
 
         return (
           <PlanColumn key={index} tasks={thisWeeksTasks} weekday={weekday} />
