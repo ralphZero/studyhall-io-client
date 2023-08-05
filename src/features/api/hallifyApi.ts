@@ -13,5 +13,6 @@ export const hallifyApi = createApi({
       }
     },
   }),
+  tagTypes: ['Plan', 'Task'],
   endpoints: () => ({}),
 });

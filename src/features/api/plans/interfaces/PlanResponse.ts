@@ -5,3 +5,9 @@ export interface PlanResponse {
   data: Plan[];
   error: any;
 }
+
+export interface PlanPatchResponse {
+  success: boolean;
+  data: any;
+  error: any;
+}
