@@ -53,8 +53,8 @@ const PlanBoard = (props: IPlanBoard) => {
     }
 
     if (weeksData) {
-      let start = null;
-      let end = null;
+      let start: string = '';
+      let end: string = '';
 
       weeksData.forEach((week) => {
         week.dates.forEach((date) => {
@@ -67,13 +67,23 @@ const PlanBoard = (props: IPlanBoard) => {
         });
       });
 
-      console.log('start', start);
-      console.log('end', end);
-      console.log('source', source.index);
-      console.log('destination', destination.index);
-      console.log('draggableId', draggableId);
-
       if (start === end) {
+        // if switch task in same column
+        const taskIds = plan.taskIdObj;
+        // TODO: add checks - if taskIds for start is undefined
+        const newTaskIds = Array.from(taskIds[start]);
+        newTaskIds.splice(source.index, 1);
+        newTaskIds.splice(destination.index, 0, draggableId);
+        plan.taskIdObj[start] = newTaskIds;
+
+        // TODO: rtk query to update taskIds - optimistic update (look this up before proceeding)
+      } else {
+        // TODO: (below)
+        // start id is diff than end id
+        // update start column taskIds list
+        // update end column taskIds list
+        // update droppable timestamp to end id (maybe not)
+        // do rtk query batch update
       }
     }
   };

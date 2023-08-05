@@ -11,7 +11,7 @@ interface ITaskCard {
 
 const TaskCard = (props: ITaskCard) => {
   const { index, weekday, task } = props;
-  const draggableId = weekday + '_' + index;
+  const draggableId = task._id as string;
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided, snapshot) => (
