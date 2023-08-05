@@ -1,5 +1,6 @@
 import { Plan } from '../../../models/v2/plan';
 import { hallifyApi } from '../hallifyApi';
+import { PlanTaskIdBody } from './interfaces/PlanBody';
 import { PlanPatchResponse, PlanResponse } from './interfaces/PlanResponse';
 
 export const planApi = hallifyApi.injectEndpoints({
@@ -17,10 +18,7 @@ export const planApi = hallifyApi.injectEndpoints({
       query: (planId) => ({ url: `plans/${planId}` }),
       providesTags: (result, err, id) => [{ type: 'Plan', id }],
     }),
-    updateTaskIdOfPlan: builder.mutation<
-      Plan,
-      Partial<Plan> & Pick<Plan, '_id'> & any
-    >({
+    updateTaskIdOfPlan: builder.mutation<PlanPatchResponse, PlanTaskIdBody>({
       query: ({ _id, ...body }) => ({
         url: `plans/${_id}`,
         method: 'PATCH',
@@ -28,7 +26,7 @@ export const planApi = hallifyApi.injectEndpoints({
       }),
       transformResponse: (response: PlanPatchResponse, meta, arg) =>
         response.data,
-      invalidatesTags: (result, error, id) => [{ type: 'Plan', id }],
+      invalidatesTags: ['Plan'],
     }),
   }),
 });

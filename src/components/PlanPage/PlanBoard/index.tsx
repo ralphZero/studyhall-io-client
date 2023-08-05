@@ -8,6 +8,7 @@ import { getWeeksInRange } from '../../../utils/weeks-builder';
 import { WeekObject } from '../../../utils/weeks-builder';
 import PlanColumnGroup from '../PlanColumnGroup';
 import { useGetTasksQuery } from '../../../features/api/plans/taskApi';
+import { useUpdateTaskIdOfPlanMutation } from '../../../features/api/plans/planApi';
 
 interface IPlanBoard {
   plan: Plan;
@@ -18,6 +19,7 @@ const PlanBoard = (props: IPlanBoard) => {
   const { taskIdObj } = plan;
 
   const { data: tasks, isLoading } = useGetTasksQuery(plan._id);
+  const [updateTaskIdsOfPlan] = useUpdateTaskIdOfPlanMutation();
 
   const weeksData: WeekObject[] | undefined = useMemo(() => {
     if (plan) {
@@ -53,37 +55,36 @@ const PlanBoard = (props: IPlanBoard) => {
     }
 
     if (weeksData) {
-      let start: string = '';
-      let end: string = '';
+      const start: string = source.droppableId;
+      const end: string = destination.droppableId;
 
-      weeksData.forEach((week) => {
-        week.dates.forEach((date) => {
-          if (date.toString() === source.droppableId) {
-            start = date.toString();
-          }
-          if (date.toString() === destination.droppableId) {
-            end = date.toString();
-          }
-        });
-      });
+      const taskIds = plan.taskIdObj;
 
       if (start === end) {
-        // if switch task in same column
-        const taskIds = plan.taskIdObj;
-        // TODO: add checks - if taskIds for start is undefined
-        const newTaskIds = Array.from(taskIds[start]);
+        // add checks - if taskIds for start is undefined
+        const newTaskIds = Array.from(taskIds[start] ?? []);
         newTaskIds.splice(source.index, 1);
         newTaskIds.splice(destination.index, 0, draggableId);
-        plan.taskIdObj[start] = newTaskIds;
 
-        // TODO: rtk query to update taskIds - optimistic update (look this up before proceeding)
+        // rtk query to update taskIds - optimistic update (look this up before proceeding)
+        const newTaskIdObj = { ...plan.taskIdObj };
+        newTaskIdObj[start] = newTaskIds;
+
+        updateTaskIdsOfPlan({ _id: plan._id, taskIdsObj: newTaskIdObj });
       } else {
-        // TODO: (below)
-        // start id is diff than end id
         // update start column taskIds list
+        const startTaskIds = Array.from(taskIds[start] ?? []);
+        startTaskIds.splice(source.index, 1);
         // update end column taskIds list
+        const endTaskIds = Array.from(taskIds[end] ?? []);
+        endTaskIds.splice(destination.index, 0, draggableId);
         // update droppable timestamp to end id (maybe not)
         // do rtk query batch update
+        const newTaskIdObj = { ...plan.taskIdObj };
+        newTaskIdObj[start] = startTaskIds;
+        newTaskIdObj[end] = endTaskIds;
+
+        updateTaskIdsOfPlan({ _id: plan._id, taskIdsObj: newTaskIdObj });
       }
     }
   };
