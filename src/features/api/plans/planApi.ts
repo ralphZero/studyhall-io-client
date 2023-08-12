@@ -27,10 +27,14 @@ export const planApi = hallifyApi.injectEndpoints({
       invalidatesTags: (result, error, { _id }) => [{ type: 'Plan', id: _id }],
       // React Optimistic Updates
       // https://redux-toolkit.js.org/rtk-query/usage/examples#react-optimistic-updates
-      async onQueryStarted({ _id, ...body }, { dispatch, queryFulfilled }) {
+      async onQueryStarted(planTaskIdBody, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          planApi.util.updateQueryData('getPlans', _id, (draft) => {
-            Object.assign(draft, body);
+          planApi.util.updateQueryData('getPlans', {}, (plansDraft) => {
+            const index = plansDraft.findIndex(
+              (plan) => plan._id === planTaskIdBody._id
+            );
+            const thisPlan = plansDraft[index];
+            thisPlan.taskIdObj = planTaskIdBody.taskIdsObj;
           })
         );
         try {
