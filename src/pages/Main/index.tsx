@@ -7,6 +7,7 @@ import Notification from '../Notification';
 import Settings from '../Settings';
 import Plan from '../Plan';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import ModalManager from '../../components/ModalManager';
 
 interface MainProps {
   children?: JSX.Element | JSX.Element[];
@@ -25,6 +26,7 @@ const Main = (props: MainProps) => {
           <Route path='/settings' element={<Settings />} />
           <Route path='*' element={<Navigate to='plan/' />} />
         </Routes>
+        <ModalManager />
       </Layout>
     </Layout>
   );

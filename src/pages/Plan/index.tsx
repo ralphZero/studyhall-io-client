@@ -9,9 +9,13 @@ import { RightSquareOutlined } from '@ant-design/icons';
 import { useGetPlansQuery } from '../../features/api/plans/planApi';
 import { preparePlanPage } from './helpers/preparePlanPage';
 import { useDispatch } from 'react-redux';
-import { updateActivePlanId } from '../../features/ui/globalUiSlice';
+import {
+  updateActiveModal,
+  updateActivePlanId,
+} from '../../features/ui/globalUiSlice';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import { ModalType } from '../../features/ui/ModalTypes/ModalTypes';
 
 const Plan = () => {
   const { data: plans, isSuccess, isLoading, isError } = useGetPlansQuery({});
@@ -56,6 +60,10 @@ const Plan = () => {
     [isError, isLoading, isSuccess, planId, plans]
   );
 
+  const handleNewPlan = () => {
+    dispatch(updateActiveModal({ status: true, tag: ModalType.CREATE_PLAN }));
+  };
+
   const planItems =
     isSuccess &&
     plans.map((plan) => {
@@ -75,7 +83,10 @@ const Plan = () => {
   return (
     <div className='min-h-screen flex'>
       <UniversalSider>
-        <Button className='bg-accent-primary w-full my-3' type='primary'>
+        <Button
+          onClick={handleNewPlan}
+          className='bg-accent-primary w-full my-3'
+          type='primary'>
           New study plan
         </Button>
         {isLoading ? <div className='text-white'>Loading...</div> : planItems}
