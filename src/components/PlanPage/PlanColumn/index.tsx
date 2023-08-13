@@ -13,10 +13,11 @@ interface IPlanColumn {
 const PlanColumn = (props: IPlanColumn) => {
   const { weekday, tasks } = props;
   const formattedDate = moment(weekday).format('ddd, MMM D');
+  const taskCount = tasks?.length ?? 0;
 
   return (
     <div className='mt-2 w-[272px] flex-none flex flex-col relative'>
-      <PlanColumnHeader headerText={formattedDate} />
+      <PlanColumnHeader headerText={formattedDate} taskCount={taskCount} />
       <Droppable droppableId={weekday.toString()}>
         {(droppableProvided, snapshot) => (
           <div

@@ -4,10 +4,11 @@ import React from 'react';
 
 interface IPlanColumnHeader {
   headerText: string;
+  taskCount: number;
 }
 
 const PlanColumnHeader = (props: IPlanColumnHeader) => {
-  const { headerText } = props;
+  const { headerText, taskCount = 0 } = props;
 
   return (
     <div className='px-2 mb-2 mx-4 py-1 bg-accent-primary text-white font-sans text-xs rounded-lg'>
@@ -18,7 +19,7 @@ const PlanColumnHeader = (props: IPlanColumnHeader) => {
             showZero
             color='white'
             style={{ color: '#2E86FA', fontWeight: '600' }}
-            count={5}
+            count={taskCount}
             overflowCount={50}
           />
           <Tooltip title='Add a task'>
