@@ -1,7 +1,11 @@
 import { Plan } from '../../../models/v2/plan';
 import { hallifyApi } from '../hallifyApi';
-import { PlanTaskIdBody } from './interfaces/PlanBody';
-import { PlanPatchResponse, PlanResponse } from './interfaces/PlanResponse';
+import { PlanDtoBody, PlanTaskIdBody } from './interfaces/PlanBody';
+import {
+  PlanPatchResponse,
+  PlanPostResponse,
+  PlanResponse,
+} from './interfaces/PlanResponse';
 
 export const planApi = hallifyApi.injectEndpoints({
   overrideExisting: false,
@@ -17,6 +21,14 @@ export const planApi = hallifyApi.injectEndpoints({
     getPlanById: builder.query({
       query: (planId) => ({ url: `plans/${planId}` }),
       providesTags: (result, err, id) => [{ type: 'Plan', id }],
+    }),
+    postPlan: builder.mutation<PlanPostResponse, PlanDtoBody>({
+      query: (planDto) => ({
+        url: 'plans/',
+        method: 'POST',
+        body: planDto,
+      }),
+      invalidatesTags: [{ type: 'Plan', id: 'LIST' }],
     }),
     updateTaskIdOfPlan: builder.mutation<PlanPatchResponse, PlanTaskIdBody>({
       query: ({ _id, ...body }) => ({
@@ -53,4 +65,5 @@ export const {
   useGetPlanByIdQuery,
   useGetPlansQuery,
   useUpdateTaskIdOfPlanMutation,
+  usePostPlanMutation,
 } = planApi;

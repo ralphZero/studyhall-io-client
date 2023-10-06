@@ -11,3 +11,9 @@ export interface PlanPatchResponse {
   data: any;
   error: any;
 }
+
+export interface PlanPostResponse {
+  success: boolean;
+  data: any;
+  error: any;
+}

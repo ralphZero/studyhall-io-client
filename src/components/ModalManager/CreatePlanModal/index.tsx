@@ -1,8 +1,11 @@
 import { Button, Modal } from 'antd';
 import React from 'react';
 import ModalTitle from './title';
-import CreatePlanForm from './CreatePlanForm';
+import CreatePlanForm, { Values } from './CreatePlanForm';
 import ModalDivider from './ModalDivider';
+import { Moment } from 'moment';
+import { usePostPlanMutation } from '../../../features/api/plans/planApi';
+import { PlanDtoBody } from '../../../features/api/plans/interfaces/PlanBody';
 
 interface CreatePlanModalProps {
   isOpen: boolean;
@@ -10,7 +13,20 @@ interface CreatePlanModalProps {
 }
 
 const CreatePlanModal = ({ isOpen, handleCancel }: CreatePlanModalProps) => {
-  const handleOk = () => {};
+  const [createNewPlan] = usePostPlanMutation();
+
+  const handleSubmitNewPlan = (values: Values) => {
+    const start: Moment = values.timeframe.at(0) as Moment;
+    const end: Moment = values.timeframe.at(1) as Moment;
+    const planDto: PlanDtoBody = {
+      startTimestamp: start.toDate().getTime().toString(),
+      endTimestamp: end.toDate().getTime().toString(),
+      title: values.title,
+      description: values.description,
+    };
+
+    createNewPlan(planDto);
+  };
 
   return (
     <Modal
@@ -25,11 +41,10 @@ const CreatePlanModal = ({ isOpen, handleCancel }: CreatePlanModalProps) => {
         />
       }
       open={isOpen}
-      onOk={handleOk}
       onCancel={handleCancel}
       footer={null}>
       <div className='mt-4'>
-        <CreatePlanForm />
+        <CreatePlanForm onCreate={handleSubmitNewPlan} />
       </div>
       <div className='mt-2 mb-4'>
         <ModalDivider />
