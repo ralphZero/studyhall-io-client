@@ -1,6 +1,6 @@
 import React from 'react';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { Button, Form, Input, DatePicker } from 'antd';
+import { Button, Form, Input, DatePicker, FormInstance } from 'antd';
 import { Moment } from 'moment';
 
 export interface Values {
@@ -10,18 +10,24 @@ export interface Values {
 }
 
 interface CreatePlanFormProps {
-  onCreate: (values: Values) => void;
+  onCreate: (values: Values, form: FormInstance) => void;
+  submitLoadingState: boolean;
 }
 
-const CreatePlanForm = ({ onCreate }: CreatePlanFormProps) => {
+const CreatePlanForm = ({
+  onCreate,
+  submitLoadingState,
+}: CreatePlanFormProps) => {
   const [form] = Form.useForm();
 
   const onFinish = () => {
+    if (submitLoadingState) {
+      return;
+    }
     form
       .validateFields()
       .then((values: Values) => {
-        onCreate(values);
-        form.resetFields();
+        onCreate(values, form);
       })
       .catch((info) => console.error('validate failed', info));
   };
@@ -86,8 +92,9 @@ const CreatePlanForm = ({ onCreate }: CreatePlanFormProps) => {
         <Button
           htmlType='submit'
           className='font-sans font-light w-32 h-[38px] rounded-sm'
+          loading={submitLoadingState}
           type='primary'>
-          Create
+          {submitLoadingState ? 'Creating...' : 'Create'}
         </Button>
       </Form.Item>
     </Form>

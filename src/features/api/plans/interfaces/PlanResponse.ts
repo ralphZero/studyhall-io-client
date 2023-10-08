@@ -14,6 +14,11 @@ export interface PlanPatchResponse {
 
 export interface PlanPostResponse {
   success: boolean;
-  data: any;
+  data: PlanPostResponseData;
   error: any;
+}
+
+export interface PlanPostResponseData {
+  acknowledged: boolean;
+  insertedId: string;
 }
