@@ -16,7 +16,10 @@ const PlanColumnGroup = (props: IPlanColumnGroup) => {
   const buildColumn = useCallback(() => {
     if (weekdays && !!tasks) {
       return weekdays.map((weekday, index) => {
-        const taskIds = taskIdObj[weekday.toString()] ?? [];
+        let taskIds: string | string[] = [];
+        if (taskIdObj && Object.keys(taskIdObj).length) {
+          taskIds = taskIdObj[weekday.toString()] ?? [];
+        }
 
         const thisWeeksTasks = tasks
           .filter((task) => {

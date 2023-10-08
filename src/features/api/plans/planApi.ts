@@ -12,15 +12,12 @@ export const planApi = hallifyApi.injectEndpoints({
   endpoints: (builder) => ({
     getPlans: builder.query<Plan[], {}>({
       query: () => ({ url: 'plans/' }),
-      providesTags: (result) =>
-        result
-          ? [...result.map(({ _id }) => ({ type: 'Plan' as const, _id }))]
-          : [{ type: 'Plan', id: 'LIST' }],
+      providesTags: [{ type: 'Plans', id: 'LIST' }],
       transformResponse: (response: PlanResponse, meta, arg) => response.data,
     }),
     getPlanById: builder.query({
       query: (planId) => ({ url: `plans/${planId}` }),
-      providesTags: (result, err, id) => [{ type: 'Plan', id }],
+      providesTags: (result, err, id) => [{ type: 'Plans', id }],
     }),
     postPlan: builder.mutation<PlanPostResponse, PlanDtoBody>({
       query: (planDto) => ({
@@ -28,7 +25,7 @@ export const planApi = hallifyApi.injectEndpoints({
         method: 'POST',
         body: planDto,
       }),
-      invalidatesTags: [{ type: 'Plan', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Plans', id: 'LIST' }],
     }),
     updateTaskIdOfPlan: builder.mutation<PlanPatchResponse, PlanTaskIdBody>({
       query: ({ _id, ...body }) => ({
@@ -36,7 +33,7 @@ export const planApi = hallifyApi.injectEndpoints({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: (result, error, { _id }) => [{ type: 'Plan', id: _id }],
+      invalidatesTags: (result, error, { _id }) => [{ type: 'Plans', id: _id }],
       // React Optimistic Updates
       // https://redux-toolkit.js.org/rtk-query/usage/examples#react-optimistic-updates
       async onQueryStarted(planTaskIdBody, { dispatch, queryFulfilled }) {
