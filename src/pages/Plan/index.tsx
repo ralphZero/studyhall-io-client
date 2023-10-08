@@ -72,7 +72,7 @@ const Plan = () => {
       return (
         <Link key={plan._id} to={`${plan._id}`}>
           <div
-            className={`${active} hover:text-selectedTextLight my-2 truncate`}>
+            className={`${active} hover:text-selectedTextLight hover:bg-[#0b0d17] py-3 truncate`}>
             <RightSquareOutlined className='mr-1' />
             {plan.title}
           </div>
