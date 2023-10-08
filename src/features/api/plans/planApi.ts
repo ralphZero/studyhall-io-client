@@ -12,7 +12,13 @@ export const planApi = hallifyApi.injectEndpoints({
   endpoints: (builder) => ({
     getPlans: builder.query<Plan[], {}>({
       query: () => ({ url: 'plans/' }),
-      providesTags: [{ type: 'Plans', id: 'LIST' }],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ _id }) => ({ type: 'Plans' as const, _id })),
+              { type: 'Plans', id: 'LIST' },
+            ]
+          : [{ type: 'Plans', id: 'LIST' }],
       transformResponse: (response: PlanResponse, meta, arg) => response.data,
     }),
     getPlanById: builder.query({
@@ -25,7 +31,7 @@ export const planApi = hallifyApi.injectEndpoints({
         method: 'POST',
         body: planDto,
       }),
-      invalidatesTags: [{ type: 'Plans', id: 'LIST' }],
+      invalidatesTags: (result) => [{ type: 'Plans', id: 'LIST' }],
     }),
     updateTaskIdOfPlan: builder.mutation<PlanPatchResponse, PlanTaskIdBody>({
       query: ({ _id, ...body }) => ({
