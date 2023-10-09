@@ -9,13 +9,9 @@ import { PlanDtoBody } from '../../../features/api/plans/interfaces/PlanBody';
 import { ModalType } from '../../../features/ui/ModalTypes/ModalTypes';
 import { useDispatch } from 'react-redux';
 import { updateActiveModal } from '../../../features/ui/globalUiSlice';
+import { ModalProps } from '..';
 
-interface CreatePlanModalProps {
-  isOpen: boolean;
-  handleCancel: () => void;
-}
-
-const CreatePlanModal = ({ isOpen, handleCancel }: CreatePlanModalProps) => {
+const CreatePlanModal = ({ isOpen, handleCancel }: ModalProps) => {
   const dispatch = useDispatch();
   const [createPlanLoadingState, setCreatePlanLoadingState] = useState(false);
   const [createNewPlan] = usePostPlanMutation();
@@ -56,7 +52,7 @@ const CreatePlanModal = ({ isOpen, handleCancel }: CreatePlanModalProps) => {
         />
       }
       open={isOpen}
-      onCancel={handleCancel}
+      onCancel={() => handleCancel(ModalType.CREATE_PLAN)}
       footer={null}>
       <div className='mt-4'>
         <CreatePlanForm
