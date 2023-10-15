@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import UserContextProvider from './context/UserContext';
@@ -10,9 +10,11 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <Provider store={store}>
-    <UserContextProvider>
-      <App />
-    </UserContextProvider>
-  </Provider>
+  <StrictMode>
+    <Provider store={store}>
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
+    </Provider>
+  </StrictMode>
 );
