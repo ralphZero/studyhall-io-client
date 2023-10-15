@@ -3,10 +3,20 @@ import { ModalProps } from '..';
 import { Button, Modal } from 'antd';
 import { ModalType } from '../../../features/ui/ModalTypes/ModalTypes';
 import ModalTitle from '../CreatePlanModal/title';
+import { useDeletePlanMutation } from '../../../features/api/plans/planApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 
 const DeletePlanModal = ({ isOpen, handleCancel }: ModalProps) => {
+  const { activePlanId } = useSelector((state: RootState) => state.ui);
+  const [deletePlan] = useDeletePlanMutation();
+
   const confirmDeletion = () => {
-    // deletion logic
+    // call delete action
+    deletePlan({ planId: activePlanId });
+    //  show loading ?
+    // close modal ?
+    handleCancel(ModalType.DELETE_PLAN);
   };
 
   const closeOrCancelModal = () => {

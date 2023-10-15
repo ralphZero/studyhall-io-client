@@ -11,3 +11,7 @@ export interface PlanDtoBody {
   startTimestamp: string;
   endTimestamp: string;
 }
+
+export interface PlanDeleteDto {
+  planId: string;
+}

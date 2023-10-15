@@ -1,7 +1,12 @@
 import { Plan } from '../../../models/v2/plan';
 import { hallifyApi } from '../hallifyApi';
-import { PlanDtoBody, PlanTaskIdBody } from './interfaces/PlanBody';
 import {
+  PlanDeleteDto,
+  PlanDtoBody,
+  PlanTaskIdBody,
+} from './interfaces/PlanBody';
+import {
+  PlanDeleteResponse,
   PlanPatchResponse,
   PlanPostResponse,
   PlanResponse,
@@ -32,6 +37,16 @@ export const planApi = hallifyApi.injectEndpoints({
         body: planDto,
       }),
       invalidatesTags: (result) => [{ type: 'Plans', id: 'LIST' }],
+    }),
+    deletePlan: builder.mutation<PlanDeleteResponse, PlanDeleteDto>({
+      query: (planDto) => ({
+        url: 'plans/',
+        method: 'DELETE',
+        body: planDto,
+      }),
+      invalidatesTags: (result, error, { planId }) => [
+        { type: 'Plans', id: 'LIST' },
+      ],
     }),
     updateTaskIdOfPlan: builder.mutation<PlanPatchResponse, PlanTaskIdBody>({
       query: ({ _id, ...body }) => ({
@@ -69,4 +84,5 @@ export const {
   useGetPlansQuery,
   useUpdateTaskIdOfPlanMutation,
   usePostPlanMutation,
+  useDeletePlanMutation,
 } = planApi;

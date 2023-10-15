@@ -18,7 +18,18 @@ export interface PlanPostResponse {
   error: any;
 }
 
+export interface PlanDeleteResponse {
+  success: boolean;
+  data: PlanDeleteResponseData;
+  error: any;
+}
+
 export interface PlanPostResponseData {
   acknowledged: boolean;
   insertedId: string;
+}
+
+export interface PlanDeleteResponseData {
+  acknowledged: boolean;
+  deletedCount: number;
 }
