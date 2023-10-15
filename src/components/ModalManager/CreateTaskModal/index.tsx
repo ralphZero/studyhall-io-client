@@ -3,6 +3,7 @@ import React from 'react';
 import ModalTitle from '../shared/title';
 import { ModalProps } from '..';
 import { ModalType } from '../../../features/ui/ModalTypes/ModalTypes';
+import CreateTaskForm from './CreateTaskForm';
 
 const CreateTaskModal = ({ isOpen, handleCancel }: ModalProps) => {
   return (
@@ -17,8 +18,11 @@ const CreateTaskModal = ({ isOpen, handleCancel }: ModalProps) => {
           />
         }
         open={isOpen}
-        onCancel={() => handleCancel(ModalType.CREATE_TASK)}>
-        <div>test</div>
+        onCancel={() => handleCancel(ModalType.CREATE_TASK)}
+        footer={null}>
+        <div className='mt-4'>
+          <CreateTaskForm />
+        </div>
       </Modal>
     </>
   );
