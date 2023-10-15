@@ -26,7 +26,7 @@ const DeletePlanModal = ({ isOpen, handleCancel }: ModalProps) => {
       .unwrap()
       .then(() => {
         api.success({
-          message: 'Success!',
+          message: 'Hooray!',
           description: 'Your plan has been successfuly removed.',
           placement: 'bottomRight',
         });

@@ -8,11 +8,16 @@ import { usePostPlanMutation } from '../../../features/api/plans/planApi';
 import { PlanDtoBody } from '../../../features/api/plans/interfaces/PlanBody';
 import { ModalType } from '../../../features/ui/ModalTypes/ModalTypes';
 import { useDispatch } from 'react-redux';
-import { updateActiveModal } from '../../../features/ui/globalUiSlice';
+import {
+  updateActiveModal,
+  updateActivePlanId,
+} from '../../../features/ui/globalUiSlice';
 import { ModalProps } from '..';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePlanModal = ({ isOpen, handleCancel }: ModalProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [createPlanLoadingState, setCreatePlanLoadingState] = useState(false);
   const [createNewPlan] = usePostPlanMutation();
 
@@ -30,6 +35,11 @@ const CreatePlanModal = ({ isOpen, handleCancel }: ModalProps) => {
 
     createNewPlan(planDto)
       .unwrap()
+      .then((response) => {
+        const newPlanId = response.data.insertedId;
+        dispatch(updateActivePlanId(newPlanId));
+        navigate(`${newPlanId}`, { replace: true });
+      })
       .finally(() => {
         setCreatePlanLoadingState((oldState) => !oldState);
         form.resetFields();
