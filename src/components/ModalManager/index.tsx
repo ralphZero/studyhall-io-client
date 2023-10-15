@@ -6,6 +6,7 @@ import { ModalType } from '../../features/ui/ModalTypes/ModalTypes';
 import { useDispatch } from 'react-redux';
 import { updateActiveModal } from '../../features/ui/globalUiSlice';
 import DeletePlanModal from './DeletePlanModal';
+import CreateTaskModal from './CreateTaskModal';
 
 export interface ModalProps {
   isOpen: boolean;
@@ -32,6 +33,15 @@ const ModalManager = () => {
   if (activeModal.tag === ModalType.DELETE_PLAN) {
     return (
       <DeletePlanModal
+        isOpen={activeModal.status}
+        handleCancel={handleCancel}
+      />
+    );
+  }
+
+  if (activeModal.tag === ModalType.CREATE_TASK) {
+    return (
+      <CreateTaskModal
         isOpen={activeModal.status}
         handleCancel={handleCancel}
       />

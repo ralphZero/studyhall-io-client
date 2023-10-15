@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, FormInstance, Modal } from 'antd';
-import ModalTitle from './title';
+import ModalTitle from '../shared/title';
 import CreatePlanForm, { Values } from './CreatePlanForm';
-import ModalDivider from './ModalDivider';
+import ModalDivider from '../shared/ModalDivider';
 import { Moment } from 'moment';
 import { usePostPlanMutation } from '../../../features/api/plans/planApi';
 import { PlanDtoBody } from '../../../features/api/plans/interfaces/PlanBody';

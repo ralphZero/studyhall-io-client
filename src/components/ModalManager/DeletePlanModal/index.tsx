@@ -2,7 +2,7 @@ import React from 'react';
 import { ModalProps } from '..';
 import { Button, Modal, notification } from 'antd';
 import { ModalType } from '../../../features/ui/ModalTypes/ModalTypes';
-import ModalTitle from '../CreatePlanModal/title';
+import ModalTitle from '../shared/title';
 import { useDeletePlanMutation } from '../../../features/api/plans/planApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
