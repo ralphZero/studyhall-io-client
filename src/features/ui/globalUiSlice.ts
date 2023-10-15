@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface GlobalUIState {
   activePlanId: string;
+  lastActivePlanId: string;
   activeModal: ModalState;
 }
 
@@ -12,6 +13,7 @@ interface ModalState {
 
 const initialState: GlobalUIState = {
   activePlanId: '',
+  lastActivePlanId: '',
   activeModal: {
     status: false,
   },
@@ -25,6 +27,9 @@ export const globalUiSlice = createSlice({
       state: GlobalUIState,
       action: PayloadAction<string>
     ) => {
+      if (state.activePlanId !== '' && state.activePlanId !== action.payload) {
+        state.lastActivePlanId = state.activePlanId;
+      }
       state.activePlanId = action.payload;
     },
     updateActiveModal: (

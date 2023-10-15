@@ -44,9 +44,24 @@ export const planApi = hallifyApi.injectEndpoints({
         method: 'DELETE',
         body: planDto,
       }),
-      invalidatesTags: (result, error, { planId }) => [
-        { type: 'Plans', id: 'LIST' },
-      ],
+      invalidatesTags: (result) => [{ type: 'Plans', id: 'LIST' }],
+      // React Optimistic Updates
+      // https://redux-toolkit.js.org/rtk-query/usage/examples#react-optimistic-updates
+      async onQueryStarted(planDeleteDto, { dispatch, queryFulfilled }) {
+        const deleteResult = dispatch(
+          planApi.util.updateQueryData('getPlans', {}, (plansDraft) => {
+            const index = plansDraft.findIndex(
+              (plan) => plan._id === planDeleteDto.planId
+            );
+            plansDraft.splice(index, 1);
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          deleteResult.undo();
+        }
+      },
     }),
     updateTaskIdOfPlan: builder.mutation<PlanPatchResponse, PlanTaskIdBody>({
       query: ({ _id, ...body }) => ({
