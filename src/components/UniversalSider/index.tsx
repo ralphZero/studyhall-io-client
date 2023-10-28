@@ -1,5 +1,5 @@
 import React from 'react';
-import HallifyLogo from '../Headers/HallifyLogo';
+import HallifyLogo from '../shared/header/HallifyLogo';
 
 interface UniversalSiderProps {
   children: any;

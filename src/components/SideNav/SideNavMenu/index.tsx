@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Tooltip } from 'antd';
-import PlanIcon from '../../Icons/PlanIcon';
-import DashboardIcon from '../../Icons/DashboardIcon';
-import InfoIcon from '../../Icons/InfoIcon';
-import AlertIcon from '../../Icons/AlertIcon';
-import SettingsIcon from '../../Icons/SettingsIcon';
+import PlanIcon from '../../shared/Icons/PlanIcon';
+import DashboardIcon from '../../shared/Icons/DashboardIcon';
+import InfoIcon from '../../shared/Icons/InfoIcon';
+import AlertIcon from '../../shared/Icons/AlertIcon';
+import SettingsIcon from '../../shared/Icons/SettingsIcon';
 import { NavLink } from 'react-router-dom';
 
 interface SideNavMenuProps {

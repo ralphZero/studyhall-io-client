@@ -1,5 +1,5 @@
 import React from 'react';
-import hallifyLogo from '../../assets/full_logo.svg';
+import hallifyLogo from '../../../assets/full_logo.svg';
 import { NavLink } from 'react-router-dom';
 
 const HallifyLogo = () => {
