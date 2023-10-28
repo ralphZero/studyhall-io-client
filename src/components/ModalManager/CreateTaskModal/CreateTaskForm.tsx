@@ -2,6 +2,7 @@ import { Col, Input, Row } from 'antd';
 import React from 'react';
 import PriorityControl from './PriorityControl';
 import DeadlineControl from './DeadlineControl';
+import LabelControl from './LabelControl';
 
 const CreateTaskForm = () => {
   const handlePrioritySelection = (selectedKey: string) => {
@@ -40,7 +41,9 @@ const CreateTaskForm = () => {
           <Col className='flex items-center' span={4}>
             <span className='text-general text-sm'>Labels</span>
           </Col>
-          <Col className='flex items-center'></Col>
+          <Col className='flex items-center'>
+            <LabelControl />
+          </Col>
         </Row>
       </div>
     </>

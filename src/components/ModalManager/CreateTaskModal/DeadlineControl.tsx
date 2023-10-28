@@ -24,6 +24,7 @@ const DeadlineControl = (props: DeadlineControlProps) => {
         bordered={false}
         format={dateFormat}
         onChange={handleDataChange}
+        placeholder={dayjs(new Date()).format(dateFormat)}
       />
     </>
   );
