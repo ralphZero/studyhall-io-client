@@ -3,6 +3,7 @@ import React from 'react';
 import PriorityControl from './PriorityControl';
 import DeadlineControl from './DeadlineControl';
 import LabelControl from './LabelControl';
+import DescriptionEditor from './DescriptionEditor';
 
 const CreateTaskForm = () => {
   const handlePrioritySelection = (selectedKey: string) => {
@@ -45,6 +46,10 @@ const CreateTaskForm = () => {
             <LabelControl />
           </Col>
         </Row>
+      </div>
+      <div className='mt-8'>
+        <div className='text-general text-sm'>Description</div>
+        <DescriptionEditor />
       </div>
     </>
   );
