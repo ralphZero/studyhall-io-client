@@ -1,9 +1,9 @@
-import { Col, Input, Row } from 'antd';
 import React from 'react';
+import { Col, Input, Row } from 'antd';
 import PriorityControl from './PriorityControl';
 import DeadlineControl from './DeadlineControl';
 import LabelControl from './LabelControl';
-import DescriptionEditor from './DescriptionEditor';
+import { DescriptionEditor } from './DescriptionEditor';
 
 const CreateTaskForm = () => {
   const handlePrioritySelection = (selectedKey: string) => {

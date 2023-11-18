@@ -1,0 +1,18 @@
+.ql-toolbar.ql-snow {
+  border: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+.ql-container.ql-snow {
+  border: none;
+}
+
+.ql-editor {
+  min-height: 200px;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.ql-video {
+  border-radius: 12px;
+}
