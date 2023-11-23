@@ -1,8 +1,23 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { theme, InputRef, Space, Input, Tag, Tooltip } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
+import {
+  BorderOutlined,
+  CloseCircleOutlined,
+  EditOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
+import {
+  Button,
+  Checkbox,
+  Input,
+  InputRef,
+  Space,
+  Tag,
+  Tooltip,
+  theme,
+} from 'antd';
+import './SubtaskControlStyles.css';
 
-const LabelControl = () => {
+const SubtaskControl = () => {
   const { token } = theme.useToken();
   // todo: to change
   const [tags, setTags] = useState<string[]>([]);
@@ -68,24 +83,21 @@ const LabelControl = () => {
   };
 
   const tagInputStyle: React.CSSProperties = {
-    width: 64,
+    width: 'fit-content',
+    maxWidth: 150,
     height: 22,
     marginInlineEnd: 8,
     verticalAlign: 'top',
+    fontSize: '0.75rem',
+    lineHeight: '1rem',
   };
 
   const tagPlusStyle: React.CSSProperties = {
     height: 22,
     background: token.colorBgContainer,
-    borderStyle: 'dashed',
   };
-
-  const getRandomColor = () => {
-    return colorList[Math.floor(Math.random() * colorList.length)];
-  };
-
   return (
-    <Space size={[0, 8]} wrap>
+    <Space direction='vertical' className='py-3' size={[0, 8]} wrap>
       {tags.map((tag, index) => {
         if (editInputIndex === index) {
           return (
@@ -101,24 +113,31 @@ const LabelControl = () => {
             />
           );
         }
-        const isLongTag = tag.length > 20;
+        const isLongTag = tag.length > 35;
         const tagElem = (
-          <Tag
-            color={getRandomColor()}
-            bordered={false}
-            key={tag}
-            closable={true}
-            style={{ userSelect: 'none' }}
-            onClose={() => handleClose(tag)}>
-            <span
-              onDoubleClick={(e) => {
-                setEditInputIndex(index);
-                setEditInputValue(tag);
-                e.preventDefault();
-              }}>
-              {isLongTag ? `${tag.slice(0, 20)}...` : tag}
-            </span>
-          </Tag>
+          <Space className='rounded hover:bg-selectedTextLight subtaskContainer'>
+            <Checkbox className='text-xs' key={tag} onChange={() => {}}>
+              {isLongTag ? `${tag.slice(0, 35)}...` : tag}
+            </Checkbox>
+            <Space id='subtaskModifiers'>
+              <Button
+                onClick={(e) => {
+                  setEditInputIndex(index);
+                  setEditInputValue(tag);
+                  e.preventDefault();
+                }}
+                type='text'
+                icon={<EditOutlined />}
+                size={'small'}
+              />
+              <Button
+                type='text'
+                icon={<CloseCircleOutlined />}
+                size={'small'}
+                onClick={() => handleClose(tag)}
+              />
+            </Space>
+          </Space>
         );
         return isLongTag ? (
           <Tooltip title={tag} key={tag}>
@@ -140,12 +159,17 @@ const LabelControl = () => {
           onPressEnter={handleInputConfirm}
         />
       ) : (
-        <Tag style={tagPlusStyle} icon={<PlusOutlined />} onClick={showInput}>
-          New label
+        <Tag
+          className='p-0 text-xs text-textLight cursor-pointer'
+          style={tagPlusStyle}
+          bordered={false}
+          icon={<PlusOutlined />}
+          onClick={showInput}>
+          New subtask
         </Tag>
       )}
     </Space>
   );
 };
 
-export default LabelControl;
+export default SubtaskControl;

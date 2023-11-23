@@ -1,0 +1,12 @@
+.subtaskContainer {
+  height: 14px;
+  padding: 12px 2px;
+}
+
+.subtaskContainer #subtaskModifiers {
+  display: none;
+}
+
+.subtaskContainer:hover #subtaskModifiers {
+  display: inline-flex;
+}
