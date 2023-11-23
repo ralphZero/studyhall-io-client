@@ -1,5 +1,5 @@
 import React from 'react';
-import { DatePicker } from 'antd';
+import { ConfigProvider, DatePicker } from 'antd';
 import dayjs from 'dayjs';
 
 export interface DeadlineControlProps {
@@ -19,13 +19,21 @@ const DeadlineControl = (props: DeadlineControlProps) => {
 
   return (
     <>
-      <DatePicker
-        defaultValue={dayjs(initialValue ?? new Date())}
-        bordered={true}
-        format={dateFormat}
-        onChange={handleDataChange}
-        placeholder={dayjs(new Date()).format(dateFormat)}
-      />
+      <ConfigProvider
+        theme={{
+          components: {
+            DatePicker: { fontSize: 12, paddingBlock: 0, paddingInline: 0 },
+          },
+        }}>
+        <DatePicker
+          size='small'
+          defaultValue={dayjs(initialValue ?? new Date())}
+          bordered={true}
+          format={dateFormat}
+          onChange={handleDataChange}
+          placeholder={dayjs(new Date()).format(dateFormat)}
+        />
+      </ConfigProvider>
     </>
   );
 };
