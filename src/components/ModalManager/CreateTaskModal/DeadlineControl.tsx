@@ -21,7 +21,7 @@ const DeadlineControl = (props: DeadlineControlProps) => {
     <>
       <DatePicker
         defaultValue={dayjs(initialValue ?? new Date())}
-        bordered={false}
+        bordered={true}
         format={dateFormat}
         onChange={handleDataChange}
         placeholder={dayjs(new Date()).format(dateFormat)}

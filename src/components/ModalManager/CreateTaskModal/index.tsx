@@ -34,7 +34,7 @@ const CreateTaskModal = ({ isOpen, handleCancel }: ModalProps) => {
         style={{ top: 20 }}
         title={
           <ModalTitle
-            title='Add a topic'
+            title='Add a task'
             subtitle='Create a personalized study plan that fits your unique style.'
           />
         }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, FormInstance, Modal } from 'antd';
+import { Button, ConfigProvider, FormInstance, Modal } from 'antd';
 import ModalTitle from '../shared/title';
 import CreatePlanForm, { Values } from './CreatePlanForm';
 import ModalDivider from '../shared/ModalDivider';
@@ -80,11 +80,23 @@ const CreatePlanModal = ({ isOpen, handleCancel }: ModalProps) => {
         }
       />
       <div className='flex gap-5 my-4'>
-        <Button
-          className='font-sans font-light w-32 h-[38px] rounded-sm bg-black'
-          type='primary'>
-          Udemy
-        </Button>
+        <ConfigProvider
+          theme={{
+            components: {
+              Button: {
+                colorPrimary: '#000000',
+                colorPrimaryActive: '#000000',
+                colorPrimaryHover: '#000000',
+                defaultColor: '#000000',
+              },
+            },
+          }}>
+          <Button
+            className='font-sans font-light w-32 h-[38px] rounded-sm bg-black'
+            type='primary'>
+            Udemy
+          </Button>
+        </ConfigProvider>
         <Button
           className='font-sans font-light w-32 h-[38px] rounded-sm'
           type='primary'
