@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, ConfigProvider, Dropdown, MenuProps } from 'antd';
 
 export interface PriorityControlProps {
-  onChange: (selectedKey: string) => void;
-  initialValue?: string;
+  onChange?: (value: string) => void;
+  value?: string;
 }
 
 const PriorityControl = (props: PriorityControlProps) => {
-  const { onChange, initialValue } = props;
-  const [selectedKey, setSelectedKey] = useState<string>(initialValue ?? '2');
+  const { onChange, value = '2' } = props;
 
   const items = [
     {
@@ -62,8 +61,7 @@ const PriorityControl = (props: PriorityControlProps) => {
   ];
 
   const handleSelection: MenuProps['onSelect'] = (e) => {
-    setSelectedKey(e.key);
-    onChange(e.key);
+    onChange?.(e.key);
   };
 
   return (
@@ -71,13 +69,11 @@ const PriorityControl = (props: PriorityControlProps) => {
       theme={{
         components: {
           Button: {
-            colorPrimaryHover: itemColor.find(
-              (item) => item.key === selectedKey
-            )?.textColor,
-            colorBorder: 'transparent',
-            colorText: itemColor.find((item) => item.key === selectedKey)
+            colorPrimaryHover: itemColor.find((item) => item.key === value)
               ?.textColor,
-            colorBgContainer: itemColor.find((item) => item.key === selectedKey)
+            colorBorder: 'transparent',
+            colorText: itemColor.find((item) => item.key === value)?.textColor,
+            colorBgContainer: itemColor.find((item) => item.key === value)
               ?.bgColor,
           },
         },
@@ -90,7 +86,7 @@ const PriorityControl = (props: PriorityControlProps) => {
           onSelect: handleSelection,
         }}>
         <Button type='default' style={{ borderRadius: 18 }}>
-          <span>{items.find((item) => item.key === selectedKey)?.label}</span>
+          <span>{items.find((item) => item.key === value)?.label}</span>
         </Button>
       </Dropdown>
     </ConfigProvider>

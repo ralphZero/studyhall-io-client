@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card } from 'antd';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './DescriptionEditorStyles.css';
 
-export const DescriptionEditor = () => {
-  const [editorState, setEditorState] = useState('');
+interface DescriptionEditorProps {
+  value?: string;
+  onChange?: (value: string) => void;
+}
 
+export const DescriptionEditor: React.FC<DescriptionEditorProps> = ({
+  value,
+  onChange,
+}) => {
   const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],
@@ -43,8 +49,8 @@ export const DescriptionEditor = () => {
       className='mt-3 bg-primaryWhite [&_.ant-card-body]:p-0'
       size='small'>
       <ReactQuill
-        value={editorState}
-        onChange={(value) => setEditorState(value)}
+        value={value}
+        onChange={(value) => onChange?.(value)}
         modules={modules}
         formats={formats}
       />

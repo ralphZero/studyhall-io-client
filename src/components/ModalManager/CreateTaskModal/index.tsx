@@ -6,27 +6,6 @@ import { ModalType } from '../../../features/ui/ModalTypes/ModalTypes';
 import CreateTaskForm from './CreateTaskForm';
 
 const CreateTaskModal = ({ isOpen, handleCancel }: ModalProps) => {
-  const footer = (
-    <div className='flex justify-between'>
-      <ConfigProvider
-        theme={{
-          components: {
-            Button: {
-              defaultBorderColor: '#27AE60',
-              defaultColor: '#27AE60',
-              colorPrimary: '#27AE60',
-              colorPrimaryActive: '#27AE60',
-              colorPrimaryHover: '#FFFFFF',
-            },
-          },
-        }}>
-        <Button className='font-sans hover:bg-[#27AE60]'>Mark as done</Button>
-      </ConfigProvider>
-      <Button className='bg-accent-primary font-sans w-28' type='primary'>
-        Create
-      </Button>
-    </div>
-  );
   return (
     <>
       <Modal
@@ -40,7 +19,7 @@ const CreateTaskModal = ({ isOpen, handleCancel }: ModalProps) => {
         }
         open={isOpen}
         onCancel={() => handleCancel(ModalType.CREATE_TASK)}
-        footer={footer}>
+        footer={null}>
         <div className='mt-4 flex'>
           <CreateTaskForm />
         </div>
