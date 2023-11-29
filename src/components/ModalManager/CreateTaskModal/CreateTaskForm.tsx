@@ -20,7 +20,7 @@ const CreateTaskForm = () => {
       onFinish={onFinish}>
       <div className='flex border-0 border-b border-solid border-dividerDark'>
         <div className='flex-grow pr-4 border-0 border-r border-solid border-dividerDark'>
-          <Form.Item name='title'>
+          <Form.Item name='title' rules={[{ required: true }]}>
             <Input
               className='font-sans font-bold text-lg tracking-tight'
               placeholder='Your topic title'
