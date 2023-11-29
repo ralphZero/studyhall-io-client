@@ -14,11 +14,17 @@ import {
   Tooltip,
   theme,
 } from 'antd';
+import { v4 as getRandomId } from 'uuid';
 import './SubtaskControlStyles.css';
 
+interface Subtask {
+  label: string;
+  checked: boolean;
+  id: string;
+}
 interface SubtaskControlProps {
-  value?: string[];
-  onChange?: (value: string[]) => void;
+  value?: Subtask[];
+  onChange?: (value: Subtask[]) => void;
 }
 
 const SubtaskControl: React.FC<SubtaskControlProps> = ({
@@ -27,10 +33,10 @@ const SubtaskControl: React.FC<SubtaskControlProps> = ({
 }) => {
   const { token } = theme.useToken();
   // todo: to change
-  const [tags, setTags] = useState<string[]>(value);
+  const [tags, setTags] = useState<Subtask[]>(value);
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [editInputIndex, setEditInputIndex] = useState(-1);
+  const [editInputIndex, setEditInputIndex] = useState('');
   const [editInputValue, setEditInputValue] = useState('');
   const inputRef = useRef<InputRef>(null);
   const editInputRef = useRef<InputRef>(null);
@@ -45,8 +51,8 @@ const SubtaskControl: React.FC<SubtaskControlProps> = ({
     editInputRef.current?.focus();
   }, [editInputValue]);
 
-  const handleClose = (removedTag: string) => {
-    const newTags = tags.filter((tag) => tag !== removedTag);
+  const handleClose = (removedTagId: string) => {
+    const newTags = tags.filter((tag) => tag.id !== removedTagId);
     setTags(newTags);
     onChange?.(newTags);
   };
@@ -60,9 +66,13 @@ const SubtaskControl: React.FC<SubtaskControlProps> = ({
   };
 
   const handleInputConfirm = () => {
-    if (inputValue && !tags.includes(inputValue)) {
-      setTags([...tags, inputValue]);
-      onChange?.([...tags, inputValue]);
+    if (inputValue) {
+      const newSubTask = [
+        ...tags,
+        { label: inputValue, checked: false, id: getRandomId() },
+      ];
+      setTags(newSubTask);
+      onChange?.(newSubTask);
     }
     setInputVisible(false);
     setInputValue('');
@@ -74,11 +84,20 @@ const SubtaskControl: React.FC<SubtaskControlProps> = ({
 
   const handleEditInputConfirm = () => {
     const newTags = [...tags];
-    newTags[editInputIndex] = editInputValue;
+    const index = newTags.findIndex((tag) => editInputIndex === tag.id);
+    newTags[index].label = editInputValue;
     setTags(newTags);
     onChange?.(newTags);
-    setEditInputIndex(-1);
+    setEditInputIndex('');
     setEditInputValue('');
+  };
+
+  const handleCheckboxChange = (currentTodoId: string) => {
+    const newTags = [...tags];
+    const index = newTags.findIndex((tag) => currentTodoId === tag.id);
+    newTags[index].checked = !newTags[index].checked;
+    setTags(newTags);
+    onChange?.(newTags);
   };
 
   const tagInputStyle: React.CSSProperties = {
@@ -98,11 +117,11 @@ const SubtaskControl: React.FC<SubtaskControlProps> = ({
   return (
     <Space direction='vertical' className='py-3' size={[0, 8]} wrap>
       {tags.map((tag, index) => {
-        if (editInputIndex === index) {
+        if (editInputIndex === tag.id) {
           return (
             <Input
               ref={editInputRef}
-              key={tag}
+              key={tag.id + '_edit'}
               size='small'
               style={tagInputStyle}
               value={editInputValue}
@@ -112,17 +131,23 @@ const SubtaskControl: React.FC<SubtaskControlProps> = ({
             />
           );
         }
-        const isLongTag = tag.length > 35;
+        const isLongTag = tag.label.length > 35;
         const tagElem = (
           <Space className='rounded hover:bg-selectedTextLight subtaskContainer'>
-            <Checkbox className='text-xs' key={tag} onChange={() => {}}>
-              {isLongTag ? `${tag.slice(0, 35)}...` : tag}
+            <Checkbox
+              className='text-xs'
+              key={tag.id + '_check'}
+              checked={tag.checked}
+              onChange={(e) => {
+                handleCheckboxChange(tag.id);
+              }}>
+              {isLongTag ? `${tag.label.slice(0, 35)}...` : tag.label}
             </Checkbox>
             <Space id='subtaskModifiers'>
               <Button
                 onClick={(e) => {
-                  setEditInputIndex(index);
-                  setEditInputValue(tag);
+                  setEditInputIndex(tag.id);
+                  setEditInputValue(tag.label);
                   e.preventDefault();
                 }}
                 type='text'
@@ -133,13 +158,13 @@ const SubtaskControl: React.FC<SubtaskControlProps> = ({
                 type='text'
                 icon={<CloseCircleOutlined />}
                 size={'small'}
-                onClick={() => handleClose(tag)}
+                onClick={() => handleClose(tag.id)}
               />
             </Space>
           </Space>
         );
         return isLongTag ? (
-          <Tooltip title={tag} key={tag}>
+          <Tooltip title={tag.label} key={tag.id + '_tooltip'}>
             {tagElem}
           </Tooltip>
         ) : (

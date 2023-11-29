@@ -8,8 +8,8 @@ export interface DeadlineControlProps {
 }
 
 const DeadlineControl = (props: DeadlineControlProps) => {
-  const { value = Date.now().toString(), onChange } = props;
   const dateFormat = 'ddd, D MMM YYYY';
+  const { value = dayjs(new Date()).format(dateFormat), onChange } = props;
 
   const handleDataChange = (value: dayjs.Dayjs | null, dateString: string) => {
     if (value) {
