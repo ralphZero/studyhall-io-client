@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  BorderOutlined,
   CloseCircleOutlined,
   EditOutlined,
   PlusOutlined,
@@ -17,27 +16,24 @@ import {
 } from 'antd';
 import './SubtaskControlStyles.css';
 
-const SubtaskControl = () => {
+interface SubtaskControlProps {
+  value?: string[];
+  onChange?: (value: string[]) => void;
+}
+
+const SubtaskControl: React.FC<SubtaskControlProps> = ({
+  value = [],
+  onChange,
+}) => {
   const { token } = theme.useToken();
   // todo: to change
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(value);
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [editInputIndex, setEditInputIndex] = useState(-1);
   const [editInputValue, setEditInputValue] = useState('');
   const inputRef = useRef<InputRef>(null);
   const editInputRef = useRef<InputRef>(null);
-
-  const colorList = [
-    'orange',
-    'gold',
-    'lime',
-    'green',
-    'cyan',
-    'blue',
-    'geekblue',
-    'purple',
-  ];
 
   useEffect(() => {
     if (inputVisible) {
@@ -52,6 +48,7 @@ const SubtaskControl = () => {
   const handleClose = (removedTag: string) => {
     const newTags = tags.filter((tag) => tag !== removedTag);
     setTags(newTags);
+    onChange?.(newTags);
   };
 
   const showInput = () => {
@@ -65,6 +62,7 @@ const SubtaskControl = () => {
   const handleInputConfirm = () => {
     if (inputValue && !tags.includes(inputValue)) {
       setTags([...tags, inputValue]);
+      onChange?.([...tags, inputValue]);
     }
     setInputVisible(false);
     setInputValue('');
@@ -78,6 +76,7 @@ const SubtaskControl = () => {
     const newTags = [...tags];
     newTags[editInputIndex] = editInputValue;
     setTags(newTags);
+    onChange?.(newTags);
     setEditInputIndex(-1);
     setEditInputValue('');
   };

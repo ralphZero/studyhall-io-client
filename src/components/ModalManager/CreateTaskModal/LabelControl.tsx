@@ -2,10 +2,22 @@ import { PlusOutlined } from '@ant-design/icons';
 import { theme, InputRef, Space, Input, Tag, Tooltip } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 
-const LabelControl = () => {
+interface Label {
+  color: string;
+  label: string;
+}
+interface LabelControlProps {
+  value?: Label[];
+  onChange?: (value: Label[]) => void;
+}
+
+const LabelControl: React.FC<LabelControlProps> = ({
+  value = [],
+  onChange,
+}) => {
   const { token } = theme.useToken();
   // todo: to change
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<Label[]>(value);
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [editInputIndex, setEditInputIndex] = useState(-1);
@@ -35,8 +47,9 @@ const LabelControl = () => {
   }, [editInputValue]);
 
   const handleClose = (removedTag: string) => {
-    const newTags = tags.filter((tag) => tag !== removedTag);
+    const newTags = tags.filter((tag) => tag.label !== removedTag);
     setTags(newTags);
+    onChange?.(newTags);
   };
 
   const showInput = () => {
@@ -48,8 +61,13 @@ const LabelControl = () => {
   };
 
   const handleInputConfirm = () => {
-    if (inputValue && !tags.includes(inputValue)) {
-      setTags([...tags, inputValue]);
+    if (
+      inputValue &&
+      tags.findIndex((tag) => tag.label === inputValue) === -1
+    ) {
+      const newTags = [...tags, { label: inputValue, color: getRandomColor() }];
+      setTags(newTags);
+      onChange?.(newTags);
     }
     setInputVisible(false);
     setInputValue('');
@@ -61,8 +79,9 @@ const LabelControl = () => {
 
   const handleEditInputConfirm = () => {
     const newTags = [...tags];
-    newTags[editInputIndex] = editInputValue;
+    newTags[editInputIndex].label = editInputValue;
     setTags(newTags);
+    onChange?.(newTags);
     setEditInputIndex(-1);
     setEditInputValue('');
   };
@@ -91,7 +110,7 @@ const LabelControl = () => {
           return (
             <Input
               ref={editInputRef}
-              key={tag}
+              key={tag.label}
               size='small'
               style={tagInputStyle}
               value={editInputValue}
@@ -101,27 +120,27 @@ const LabelControl = () => {
             />
           );
         }
-        const isLongTag = tag.length > 20;
+        const isLongTag = tag.label.length > 20;
         const tagElem = (
           <Tag
-            color={getRandomColor()}
+            color={tag.color}
             bordered={false}
-            key={tag}
+            key={tag.label}
             closable={true}
             style={{ userSelect: 'none' }}
-            onClose={() => handleClose(tag)}>
+            onClose={() => handleClose(tag.label)}>
             <span
               onDoubleClick={(e) => {
                 setEditInputIndex(index);
-                setEditInputValue(tag);
+                setEditInputValue(tag.label);
                 e.preventDefault();
               }}>
-              {isLongTag ? `${tag.slice(0, 20)}...` : tag}
+              {isLongTag ? `${tag.label.slice(0, 20)}...` : tag.label}
             </span>
           </Tag>
         );
         return isLongTag ? (
-          <Tooltip title={tag} key={tag}>
+          <Tooltip title={tag.label} key={tag.label}>
             {tagElem}
           </Tooltip>
         ) : (

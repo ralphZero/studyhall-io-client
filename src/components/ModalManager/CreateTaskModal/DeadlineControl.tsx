@@ -3,17 +3,17 @@ import { ConfigProvider, DatePicker } from 'antd';
 import dayjs from 'dayjs';
 
 export interface DeadlineControlProps {
-  initialValue?: number | string;
-  onDateChange: (timestamp: number) => void;
+  value?: string;
+  onChange?: (timestamp: string) => void;
 }
 
 const DeadlineControl = (props: DeadlineControlProps) => {
-  const { initialValue, onDateChange } = props;
+  const { value = Date.now().toString(), onChange } = props;
   const dateFormat = 'ddd, D MMM YYYY';
 
   const handleDataChange = (value: dayjs.Dayjs | null, dateString: string) => {
     if (value) {
-      onDateChange(value?.toDate()?.getTime());
+      onChange?.(value?.toDate()?.getTime().toString());
     }
   };
 
@@ -27,7 +27,7 @@ const DeadlineControl = (props: DeadlineControlProps) => {
         }}>
         <DatePicker
           size='small'
-          defaultValue={dayjs(initialValue ?? new Date())}
+          defaultValue={dayjs(value ?? new Date())}
           bordered={true}
           format={dateFormat}
           onChange={handleDataChange}

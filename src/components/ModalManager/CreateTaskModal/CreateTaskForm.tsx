@@ -8,13 +8,6 @@ import SubtaskControl from './SubtaskControl';
 
 const CreateTaskForm = () => {
   const [form] = Form.useForm();
-  const handlePrioritySelection = (selectedKey: string) => {
-    console.log(selectedKey);
-  };
-
-  const handleDeadlineSelection = (timestamp: number) => {
-    console.log(timestamp);
-  };
 
   const onFinish = () => {
     form.validateFields().then((formData) => console.log(formData));
@@ -42,7 +35,9 @@ const CreateTaskForm = () => {
           </div>
           <div className='mt-8'>
             <div className='text-general text-sm'>Add subtasks</div>
-            <SubtaskControl />
+            <Form.Item name='todos'>
+              <SubtaskControl />
+            </Form.Item>
           </div>
         </div>
 
@@ -58,14 +53,18 @@ const CreateTaskForm = () => {
           <Row className='w-full pb-4 border-0 border-b border-solid border-dividerDark'>
             <Col className='flex flex-col gap-2 items-start'>
               <span className='text-general text-sm'>Deadline</span>
-              <DeadlineControl onDateChange={handleDeadlineSelection} />
+              <Form.Item name='deadline'>
+                <DeadlineControl />
+              </Form.Item>
             </Col>
           </Row>
           <Row className='w-full pb-4 border-0 border-b border-solid border-dividerDark'>
             <Col className='flex flex-col gap-2 items-start'>
               <span className='text-general text-sm'>Labels</span>
               <Space wrap>
-                <LabelControl />
+                <Form.Item name='labels'>
+                  <LabelControl />
+                </Form.Item>
               </Space>
             </Col>
           </Row>
