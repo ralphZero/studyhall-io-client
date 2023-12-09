@@ -9,6 +9,7 @@ interface GlobalUIState {
 interface ModalState {
   status: boolean;
   tag?: string;
+  optionalPayload?: any;
 }
 
 const initialState: GlobalUIState = {

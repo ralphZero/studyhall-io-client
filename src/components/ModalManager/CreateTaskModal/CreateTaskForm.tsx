@@ -1,16 +1,32 @@
 import React, { FC } from 'react';
-import { Button, Col, ConfigProvider, Form, Input, Row, Space } from 'antd';
+import {
+  Button,
+  Col,
+  ConfigProvider,
+  Form,
+  FormInstance,
+  Input,
+  Row,
+  Space,
+} from 'antd';
 import PriorityControl from './PriorityControl';
 import DeadlineControl from './DeadlineControl';
 import LabelControl from './LabelControl';
 import { DescriptionEditor } from './DescriptionEditor';
 import SubtaskControl from './SubtaskControl';
+import { TaskDtoBody } from '../../../features/api/plans/interfaces/TaskBody';
 
 export interface CreateTaskFormProps {
   controlled?: boolean;
+  onCreate: (values: TaskDtoBody, form: FormInstance) => void;
+  submitLoadingState: boolean;
 }
 
-const CreateTaskForm: FC<CreateTaskFormProps> = ({ controlled = false }) => {
+const CreateTaskForm: FC<CreateTaskFormProps> = ({
+  controlled = false,
+  onCreate,
+  submitLoadingState,
+}) => {
   const [form] = Form.useForm();
 
   const initialValues = {
@@ -23,7 +39,15 @@ const CreateTaskForm: FC<CreateTaskFormProps> = ({ controlled = false }) => {
   };
 
   const onFinish = () => {
-    form.validateFields().then((formData) => console.log(formData));
+    if (submitLoadingState) {
+      return;
+    }
+    form
+      .validateFields()
+      .then((formData: TaskDtoBody) => {
+        onCreate(formData, form);
+      })
+      .catch((info) => console.error('Validate failed', info));
   };
 
   return (
