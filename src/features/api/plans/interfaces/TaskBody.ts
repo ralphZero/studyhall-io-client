@@ -3,7 +3,7 @@ import { Label, Todo } from '../../../../models/v2/task';
 export interface TaskDtoBody {
   title: string;
   labels: Label[];
-  priority: string;
+  priority: number;
   deadline: string;
   description: string;
   timestamp?: string;

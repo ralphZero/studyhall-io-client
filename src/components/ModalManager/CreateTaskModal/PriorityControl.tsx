@@ -2,8 +2,8 @@ import React from 'react';
 import { Button, ConfigProvider, Dropdown, MenuProps } from 'antd';
 
 export interface PriorityControlProps {
-  onChange?: (value: string) => void;
-  value?: string;
+  onChange?: (value: number) => void;
+  value?: number;
 }
 
 const PriorityControl = (props: PriorityControlProps) => {
@@ -61,7 +61,7 @@ const PriorityControl = (props: PriorityControlProps) => {
   ];
 
   const handleSelection: MenuProps['onSelect'] = (e) => {
-    onChange?.(e.key);
+    onChange?.(parseInt(e.key));
   };
 
   return (
@@ -69,12 +69,15 @@ const PriorityControl = (props: PriorityControlProps) => {
       theme={{
         components: {
           Button: {
-            colorPrimaryHover: itemColor.find((item) => item.key === value)
-              ?.textColor,
+            colorPrimaryHover: itemColor.find(
+              (item) => item.key === value.toString()
+            )?.textColor,
             colorBorder: 'transparent',
-            colorText: itemColor.find((item) => item.key === value)?.textColor,
-            colorBgContainer: itemColor.find((item) => item.key === value)
-              ?.bgColor,
+            colorText: itemColor.find((item) => item.key === value.toString())
+              ?.textColor,
+            colorBgContainer: itemColor.find(
+              (item) => item.key === value.toString()
+            )?.bgColor,
           },
         },
       }}>
@@ -86,7 +89,9 @@ const PriorityControl = (props: PriorityControlProps) => {
           onSelect: handleSelection,
         }}>
         <Button type='default' style={{ borderRadius: 18 }}>
-          <span>{items.find((item) => item.key === value)?.label}</span>
+          <span>
+            {items.find((item) => item.key === value.toString())?.label}
+          </span>
         </Button>
       </Dropdown>
     </ConfigProvider>

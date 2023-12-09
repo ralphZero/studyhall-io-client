@@ -33,7 +33,7 @@ const CreateTaskForm: FC<CreateTaskFormProps> = ({
     title: '',
     description: '',
     todos: [],
-    priority: '2',
+    priority: 2,
     deadline: Date.now().toString(),
     labels: [],
   };
