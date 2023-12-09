@@ -11,6 +11,7 @@ import CreateTaskModal from './CreateTaskModal';
 export interface ModalProps {
   isOpen: boolean;
   handleCancel: (tag: ModalType) => void;
+  optionalPayload?: any;
 }
 
 const ModalManager = () => {
@@ -44,6 +45,7 @@ const ModalManager = () => {
       <CreateTaskModal
         isOpen={activeModal.status}
         handleCancel={handleCancel}
+        optionalPayload={activeModal.optionalPayload}
       />
     );
   }
