@@ -7,11 +7,18 @@ interface ITaskCard {
   index: number;
   weekday: number;
   task: Task;
+  onClick: () => void;
 }
 
 const TaskCard = (props: ITaskCard) => {
-  const { index, weekday, task } = props;
+  const { index, onClick, task } = props;
   const draggableId = task._id as string;
+  // card items to show
+  const tags = task.labels?.map((tag) => (
+    <Tag key={tag.label + tag.color} bordered={false} color={tag.color}>
+      {tag.label}
+    </Tag>
+  ));
   return (
     <Draggable draggableId={draggableId} index={index}>
       {(draggableProvided, snapshot) => (
@@ -19,6 +26,7 @@ const TaskCard = (props: ITaskCard) => {
           {...draggableProvided.draggableProps}
           {...draggableProvided.dragHandleProps}
           ref={draggableProvided.innerRef}
+          onClick={onClick}
           style={{
             boxShadow: '0px 2px 25px 2px rgba(128, 138, 138, 0.28)',
             ...draggableProvided.draggableProps.style,
@@ -27,16 +35,9 @@ const TaskCard = (props: ITaskCard) => {
           bordered={false}
           className='w-full bg-white px-0 mb-4'>
           <div className='flex flex-col gap-4'>
-            <div className='flex gap-[2px]'>
-              <Tag bordered={false} color='processing'>
-                Concept
-              </Tag>
-              <Tag bordered={false} color='warning'>
-                Concept
-              </Tag>
-            </div>
+            {!!task.labels && <div className='flex gap-[2px]'>{tags}</div>}
             <div className='text-base text-primaryBlack'>{task.title}</div>
-            <Progress percent={100} size='small' />
+            <Progress percent={task.progress} size='small' />
           </div>
         </Card>
       )}

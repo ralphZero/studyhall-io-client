@@ -14,9 +14,10 @@ import { updateActiveModal } from '../../../features/ui/globalUiSlice';
 const CreateTaskModal = ({
   isOpen,
   handleCancel,
+  controlled,
   optionalPayload,
 }: ModalProps) => {
-  const currentWeekday = optionalPayload;
+  const currentWeekday = optionalPayload?.currentColumnId;
   const [notify, contextHolder] = notification.useNotification();
   const [createTaskLoadingState, setTaskPlanLoadingState] = useState(false);
   const { activePlanId } = useSelector((store: RootState) => store.ui);
@@ -71,6 +72,7 @@ const CreateTaskModal = ({
         footer={null}>
         <div className='mt-4 flex'>
           <CreateTaskForm
+            controlled={controlled}
             onCreate={handleSubmitNewTask}
             submitLoadingState={createTaskLoadingState}
           />

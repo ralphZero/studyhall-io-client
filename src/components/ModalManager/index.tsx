@@ -12,6 +12,7 @@ export interface ModalProps {
   isOpen: boolean;
   handleCancel: (tag: ModalType) => void;
   optionalPayload?: any;
+  controlled?: boolean;
 }
 
 const ModalManager = () => {
@@ -46,6 +47,17 @@ const ModalManager = () => {
         isOpen={activeModal.status}
         handleCancel={handleCancel}
         optionalPayload={activeModal.optionalPayload}
+      />
+    );
+  }
+
+  if (activeModal.tag === ModalType.CREATE_TASK) {
+    return (
+      <CreateTaskModal
+        isOpen={activeModal.status}
+        handleCancel={handleCancel}
+        optionalPayload={activeModal.optionalPayload}
+        controlled={true}
       />
     );
   }

@@ -4,6 +4,9 @@ import PlanColumnHeader from './PlanColumnHeader';
 import moment from 'moment';
 import TaskCard from '../TaskCard';
 import { Task } from '../../../models/v2/task';
+import { useDispatch } from 'react-redux';
+import { updateActiveModal } from '../../../features/ui/globalUiSlice';
+import { ModalType } from '../../../features/ui/ModalTypes/ModalTypes';
 
 interface IPlanColumn {
   weekday: number;
@@ -14,6 +17,17 @@ const PlanColumn = (props: IPlanColumn) => {
   const { weekday, tasks } = props;
   const formattedDate = moment(weekday).format('ddd, MMM D');
   const taskCount = tasks?.length ?? 0;
+  const dispatch = useDispatch();
+
+  const handleOpenEditModal = (currentColumnId: number, task: Task) => {
+    dispatch(
+      updateActiveModal({
+        status: true,
+        tag: ModalType.UPDATE_TASK,
+        optionalPayload: { currentColumnId, task },
+      })
+    );
+  };
 
   return (
     <div className='mt-2 w-[272px] flex-none flex flex-col relative'>
@@ -41,6 +55,7 @@ const PlanColumn = (props: IPlanColumn) => {
                 key={index}
                 weekday={weekday}
                 index={index}
+                onClick={() => handleOpenEditModal(weekday, task)}
               />
             ))}
             {droppableProvided.placeholder}

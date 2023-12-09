@@ -20,7 +20,7 @@ const PlanColumnHeader = (props: IPlanColumnHeader) => {
       updateActiveModal({
         status: true,
         tag: ModalType.CREATE_TASK,
-        optionalPayload: currentColumnId,
+        optionalPayload: { currentColumnId },
       })
     );
   };
