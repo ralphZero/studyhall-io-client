@@ -9,7 +9,7 @@ export interface DeadlineControlProps {
 
 const DeadlineControl = (props: DeadlineControlProps) => {
   const dateFormat = 'ddd, D MMM YYYY';
-  const { value = dayjs(new Date()).format(dateFormat), onChange } = props;
+  const { value = Date.now().toString(), onChange } = props;
 
   const handleDataChange = (value: dayjs.Dayjs | null, dateString: string) => {
     if (value) {
@@ -27,11 +27,11 @@ const DeadlineControl = (props: DeadlineControlProps) => {
         }}>
         <DatePicker
           size='small'
-          defaultValue={dayjs(value ?? new Date())}
+          defaultValue={dayjs(new Date(Number(value)) ?? new Date())}
           bordered={true}
           format={dateFormat}
           onChange={handleDataChange}
-          placeholder={dayjs(new Date()).format(dateFormat)}
+          placeholder={dayjs(Date.now()).format(dateFormat)}
         />
       </ConfigProvider>
     </>

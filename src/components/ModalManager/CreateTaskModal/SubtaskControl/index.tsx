@@ -133,7 +133,9 @@ const SubtaskControl: React.FC<SubtaskControlProps> = ({
         }
         const isLongTag = tag.label.length > 35;
         const tagElem = (
-          <Space className='rounded hover:bg-selectedTextLight subtaskContainer'>
+          <Space
+            key={tag.id + '_container'}
+            className='rounded hover:bg-selectedTextLight subtaskContainer'>
             <Checkbox
               className='text-xs'
               key={tag.id + '_check'}

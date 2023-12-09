@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Button, Col, ConfigProvider, Form, Input, Row, Space } from 'antd';
 import PriorityControl from './PriorityControl';
 import DeadlineControl from './DeadlineControl';
@@ -6,8 +6,21 @@ import LabelControl from './LabelControl';
 import { DescriptionEditor } from './DescriptionEditor';
 import SubtaskControl from './SubtaskControl';
 
-const CreateTaskForm = () => {
+export interface CreateTaskFormProps {
+  controlled?: boolean;
+}
+
+const CreateTaskForm: FC<CreateTaskFormProps> = ({ controlled = false }) => {
   const [form] = Form.useForm();
+
+  const initialValues = {
+    title: '',
+    description: '',
+    todos: [],
+    priority: '2',
+    deadline: Date.now().toString(),
+    labels: [],
+  };
 
   const onFinish = () => {
     form.validateFields().then((formData) => console.log(formData));
@@ -17,6 +30,7 @@ const CreateTaskForm = () => {
     <Form
       className='flex gap-5 flex-col w-full'
       form={form}
+      {...(!controlled && { initialValues })}
       onFinish={onFinish}>
       <div className='flex border-0 border-b border-solid border-dividerDark'>
         <div className='flex-grow pr-4 border-0 border-r border-solid border-dividerDark'>
