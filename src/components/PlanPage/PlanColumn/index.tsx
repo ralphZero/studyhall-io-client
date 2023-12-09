@@ -17,7 +17,11 @@ const PlanColumn = (props: IPlanColumn) => {
 
   return (
     <div className='mt-2 w-[272px] flex-none flex flex-col relative'>
-      <PlanColumnHeader headerText={formattedDate} taskCount={taskCount} />
+      <PlanColumnHeader
+        headerText={formattedDate}
+        taskCount={taskCount}
+        currentColumnId={weekday.toString()}
+      />
       <Droppable droppableId={weekday.toString()}>
         {(droppableProvided, snapshot) => (
           <div

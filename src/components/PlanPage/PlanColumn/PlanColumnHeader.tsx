@@ -8,14 +8,21 @@ import { ModalType } from '../../../features/ui/ModalTypes/ModalTypes';
 interface IPlanColumnHeader {
   headerText: string;
   taskCount: number;
+  currentColumnId: string;
 }
 
 const PlanColumnHeader = (props: IPlanColumnHeader) => {
-  const { headerText, taskCount = 0 } = props;
+  const { headerText, taskCount = 0, currentColumnId } = props;
   const dispatch = useDispatch();
 
   const handleOpenModal = () => {
-    dispatch(updateActiveModal({ status: true, tag: ModalType.CREATE_TASK }));
+    dispatch(
+      updateActiveModal({
+        status: true,
+        tag: ModalType.CREATE_TASK,
+        optionalPayload: currentColumnId,
+      })
+    );
   };
 
   return (
