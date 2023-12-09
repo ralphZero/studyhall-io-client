@@ -20,7 +20,7 @@ export const planApi = hallifyApi.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ _id }) => ({ type: 'Plans' as const, _id })),
+              ...result.map(({ _id }) => ({ type: 'Plans' as const, id: _id })),
               { type: 'Plans', id: 'LIST' },
             ]
           : [{ type: 'Plans', id: 'LIST' }],

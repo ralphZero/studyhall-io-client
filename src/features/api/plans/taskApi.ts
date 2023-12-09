@@ -12,7 +12,7 @@ export const taskApi = hallifyApi.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ _id }) => ({ type: 'Tasks' as const, _id })),
+              ...result.map(({ _id }) => ({ type: 'Tasks' as const, id: _id })),
               { type: 'Tasks', id: 'LIST' },
             ]
           : [{ type: 'Tasks', id: 'LIST' }],
@@ -23,7 +23,10 @@ export const taskApi = hallifyApi.injectEndpoints({
         method: 'POST',
         body: taskDto,
       }),
-      invalidatesTags: () => [{ type: 'Tasks', id: 'LIST' }],
+      invalidatesTags: (_, __, body) => [
+        { type: 'Tasks', id: 'LIST' },
+        { type: 'Plans', id: body.planId },
+      ],
     }),
   }),
 });
