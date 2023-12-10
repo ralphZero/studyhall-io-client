@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   Button,
   Col,
@@ -15,29 +15,23 @@ import LabelControl from './LabelControl';
 import { DescriptionEditor } from './DescriptionEditor';
 import SubtaskControl from './SubtaskControl';
 import { TaskDtoBody } from '../../../features/api/plans/interfaces/TaskBody';
+import { Task } from '../../../models/v2/task';
 
 export interface CreateTaskFormProps {
+  form: FormInstance;
   controlled?: boolean;
   onCreate: (values: TaskDtoBody, form: FormInstance) => void;
   submitLoadingState: boolean;
+  initialTask: Task;
 }
 
 const CreateTaskForm: FC<CreateTaskFormProps> = ({
   controlled = false,
   onCreate,
   submitLoadingState,
+  initialTask,
+  form,
 }) => {
-  const [form] = Form.useForm();
-
-  const initialValues = {
-    title: '',
-    description: '',
-    todos: [],
-    priority: 2,
-    deadline: Date.now().toString(),
-    labels: [],
-  };
-
   const onFinish = () => {
     if (submitLoadingState) {
       return;
@@ -48,6 +42,28 @@ const CreateTaskForm: FC<CreateTaskFormProps> = ({
         onCreate(formData, form);
       })
       .catch((info) => console.error('Validate failed', info));
+  };
+
+  useEffect(() => {
+    if (controlled) {
+      form.setFieldsValue({
+        title: initialTask.title,
+        description: initialTask.description,
+        todos: initialTask.todos,
+        priority: initialTask.priority,
+        deadline: initialTask.deadline,
+        labels: initialTask.labels,
+      });
+    }
+  }, [controlled, form, initialTask]);
+
+  const initialValues = {
+    title: '',
+    description: '',
+    todos: [],
+    priority: 2,
+    deadline: Date.now().toString(),
+    labels: [],
   };
 
   return (

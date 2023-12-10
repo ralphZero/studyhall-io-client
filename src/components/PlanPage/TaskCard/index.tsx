@@ -33,7 +33,7 @@ const TaskCard = (props: ITaskCard) => {
           }}
           size='small'
           bordered={false}
-          className='w-full bg-white px-0 mb-4'>
+          className='w-full bg-white px-0 mb-4 cursor-pointer'>
           <div className='flex flex-col gap-4'>
             {!!task.labels && <div className='flex gap-[2px]'>{tags}</div>}
             <div className='text-base text-primaryBlack'>{task.title}</div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormInstance, Modal, notification } from 'antd';
+import { Form, FormInstance, Modal, notification } from 'antd';
 import ModalTitle from '../shared/title';
 import { ModalProps } from '..';
 import { ModalType } from '../../../features/ui/ModalTypes/ModalTypes';
@@ -10,6 +10,7 @@ import { RootState } from '../../../store/store';
 import { usePostTaskMutation } from '../../../features/api/plans/taskApi';
 import { useDispatch } from 'react-redux';
 import { updateActiveModal } from '../../../features/ui/globalUiSlice';
+import { Task } from '../../../models/v2/task';
 
 const CreateTaskModal = ({
   isOpen,
@@ -23,6 +24,7 @@ const CreateTaskModal = ({
   const { activePlanId } = useSelector((store: RootState) => store.ui);
   const [createNewTask] = usePostTaskMutation();
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
 
   const handleSubmitNewTask = (values: TaskDtoBody, form: FormInstance) => {
     setTaskPlanLoadingState(true);
@@ -68,11 +70,19 @@ const CreateTaskModal = ({
           />
         }
         open={isOpen}
-        onCancel={() => handleCancel(ModalType.CREATE_TASK)}
+        onCancel={() =>
+          handleCancel(ModalType.CREATE_TASK, () => {
+            if (!createTaskLoadingState) {
+              form.resetFields();
+            }
+          })
+        }
         footer={null}>
         <div className='mt-4 flex'>
           <CreateTaskForm
+            form={form}
             controlled={controlled}
+            initialTask={optionalPayload?.task as Task}
             onCreate={handleSubmitNewTask}
             submitLoadingState={createTaskLoadingState}
           />

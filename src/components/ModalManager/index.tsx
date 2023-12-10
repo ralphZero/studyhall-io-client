@@ -10,7 +10,7 @@ import CreateTaskModal from './CreateTaskModal';
 
 export interface ModalProps {
   isOpen: boolean;
-  handleCancel: (tag: ModalType) => void;
+  handleCancel: (tag: ModalType, callback?: () => void) => void;
   optionalPayload?: any;
   controlled?: boolean;
 }
@@ -19,8 +19,9 @@ const ModalManager = () => {
   const { activeModal } = useSelector((state: RootState) => state.ui);
   const dispatch = useDispatch();
 
-  const handleCancel = (tag: ModalType) => {
+  const handleCancel = (tag: ModalType, callback?: () => void) => {
     dispatch(updateActiveModal({ status: false, tag }));
+    callback?.();
   };
 
   if (activeModal.tag === ModalType.CREATE_PLAN) {
@@ -51,7 +52,7 @@ const ModalManager = () => {
     );
   }
 
-  if (activeModal.tag === ModalType.CREATE_TASK) {
+  if (activeModal.tag === ModalType.UPDATE_TASK) {
     return (
       <CreateTaskModal
         isOpen={activeModal.status}
