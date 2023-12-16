@@ -13,6 +13,7 @@ interface ITaskCard {
 const TaskCard = (props: ITaskCard) => {
   const { index, onClick, task } = props;
   const draggableId = task._id as string;
+  const progress = task.progress * 100;
   // card items to show
   const tags = task.labels?.map((tag) => (
     <Tag key={tag.label + tag.color} bordered={false} color={tag.color}>
@@ -37,7 +38,7 @@ const TaskCard = (props: ITaskCard) => {
           <div className='flex flex-col gap-4'>
             {!!task.labels && <div className='flex gap-[2px]'>{tags}</div>}
             <div className='text-base text-primaryBlack'>{task.title}</div>
-            <Progress percent={task.progress} size='small' />
+            <Progress percent={progress} size='small' />
           </div>
         </Card>
       )}
