@@ -37,6 +37,12 @@ const LabelControl: React.FC<LabelControlProps> = ({
   ];
 
   useEffect(() => {
+    if (tags.length === 0 && value.length > 0) {
+      setTags(value);
+    }
+  }, [tags.length, value]);
+
+  useEffect(() => {
     if (inputVisible) {
       inputRef.current?.focus();
     }

@@ -42,6 +42,12 @@ const SubtaskControl: React.FC<SubtaskControlProps> = ({
   const editInputRef = useRef<InputRef>(null);
 
   useEffect(() => {
+    if (tags.length === 0 && value.length > 0) {
+      setTags(value);
+    }
+  }, [tags.length, value]);
+
+  useEffect(() => {
     if (inputVisible) {
       inputRef.current?.focus();
     }

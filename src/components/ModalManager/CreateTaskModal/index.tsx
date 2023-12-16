@@ -71,7 +71,7 @@ const CreateTaskModal = ({
         }
         open={isOpen}
         onCancel={() =>
-          handleCancel(ModalType.CREATE_TASK, () => {
+          handleCancel(ModalType.CREATE_TASK || ModalType.UPDATE_TASK, () => {
             if (!createTaskLoadingState) {
               form.resetFields();
             }

@@ -151,7 +151,7 @@ const CreateTaskForm: FC<CreateTaskFormProps> = ({
             className='bg-accent-primary font-sans w-28'
             loading={submitLoadingState}
             type='primary'>
-            Create
+            {controlled ? 'Update' : 'Create'}
           </Button>
         </Form.Item>
       </div>
