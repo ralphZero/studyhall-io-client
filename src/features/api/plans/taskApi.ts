@@ -28,6 +28,9 @@ export const taskApi = hallifyApi.injectEndpoints({
         { type: 'Plans', id: body.planId },
       ],
     }),
+    // updateTask: builder.mutation<TaskPostResponse, TaskDtoBody>({
+    //   query: (taskDto) => ({}),
+    // }),
   }),
 });
 
