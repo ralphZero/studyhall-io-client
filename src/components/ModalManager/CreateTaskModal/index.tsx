@@ -7,7 +7,10 @@ import CreateTaskForm from './CreateTaskForm';
 import { TaskDtoBody } from '../../../features/api/plans/interfaces/TaskBody';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
-import { usePostTaskMutation } from '../../../features/api/plans/taskApi';
+import {
+  usePostTaskMutation,
+  useUpdateTaskMutation,
+} from '../../../features/api/plans/taskApi';
 import { useDispatch } from 'react-redux';
 import { updateActiveModal } from '../../../features/ui/globalUiSlice';
 import { Task } from '../../../models/v2/task';
@@ -23,15 +26,11 @@ const CreateTaskModal = ({
   const [createTaskLoadingState, setTaskPlanLoadingState] = useState(false);
   const { activePlanId } = useSelector((store: RootState) => store.ui);
   const [createNewTask] = usePostTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
-  const handleSubmitNewTask = (values: TaskDtoBody, form: FormInstance) => {
-    setTaskPlanLoadingState(true);
-    // prepare dto
-    values.timestamp = currentWeekday;
-    values.planId = activePlanId;
-
+  const handleTaskCreation = (values: TaskDtoBody, form: FormInstance) => {
     createNewTask(values)
       .unwrap()
       .then(() => {
@@ -57,6 +56,45 @@ const CreateTaskModal = ({
       });
   };
 
+  const handleTaskModification = (values: TaskDtoBody, form: FormInstance) => {
+    updateTask(values)
+      .unwrap()
+      .then(() => {
+        notify.success({
+          message: 'Hooray!',
+          description: 'Your task has been updated.',
+          placement: 'bottomRight',
+        });
+      })
+      .catch(() => {
+        notify.error({
+          message: 'Oh no!',
+          description: 'An error has occured while updating this task.',
+          placement: 'bottomRight',
+        });
+      })
+      .finally(() => {
+        setTaskPlanLoadingState(false);
+        form.resetFields();
+        dispatch(
+          updateActiveModal({ status: false, tag: ModalType.UPDATE_TASK })
+        );
+      });
+  };
+
+  const handleSubmitNewTask = (values: TaskDtoBody, form: FormInstance) => {
+    setTaskPlanLoadingState(true);
+    // prepare dto
+    values.timestamp = currentWeekday;
+    values.planId = activePlanId;
+
+    if (controlled) {
+      handleTaskModification(values, form);
+    } else {
+      handleTaskCreation(values, form);
+    }
+  };
+
   return (
     <>
       {contextHolder}
@@ -65,8 +103,10 @@ const CreateTaskModal = ({
         style={{ top: 20 }}
         title={
           <ModalTitle
-            title='Add a task'
-            subtitle='Create a personalized study plan that fits your unique style.'
+            title={controlled ? 'Update a task' : 'Add a task'}
+            subtitle={`${
+              controlled ? 'Customize a' : 'Create a personalized'
+            } study plan that fits your unique style.`}
           />
         }
         open={isOpen}

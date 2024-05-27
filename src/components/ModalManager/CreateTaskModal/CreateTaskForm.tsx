@@ -39,6 +39,9 @@ const CreateTaskForm: FC<CreateTaskFormProps> = ({
     form
       .validateFields()
       .then((formData: TaskDtoBody) => {
+        if (controlled && initialTask?._id) {
+          formData._id = initialTask._id;
+        }
         onCreate(formData, form);
       })
       .catch((info) => console.error('Validate failed', info));
