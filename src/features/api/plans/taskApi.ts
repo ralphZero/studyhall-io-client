@@ -28,11 +28,32 @@ export const taskApi = hallifyApi.injectEndpoints({
         { type: 'Plans', id: body.planId },
       ],
     }),
-    // updateTask: builder.mutation<TaskPostResponse, TaskDtoBody>({
-    //   query: (taskDto) => ({}),
-    // }),
+    updateTask: builder.mutation<TaskPostResponse, TaskDtoBody>({
+      query: (taskDto) => ({
+        url: `plans/${taskDto.planId}/tasks`,
+        method: 'PATCH',
+        body: taskDto,
+      }),
+      invalidatesTags: (_, __, body) => {
+        if (body?._id) {
+          return [
+            { type: 'Tasks', id: body._id },
+            { type: 'Plans', id: body.planId },
+          ];
+        } else {
+          return [
+            { type: 'Tasks', id: 'LIST' },
+            { type: 'Plans', id: body.planId },
+          ];
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetTasksQuery, useLazyGetTasksQuery, usePostTaskMutation } =
-  taskApi;
+export const {
+  useGetTasksQuery,
+  useLazyGetTasksQuery,
+  usePostTaskMutation,
+  useUpdateTaskMutation,
+} = taskApi;
