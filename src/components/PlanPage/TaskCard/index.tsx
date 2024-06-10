@@ -38,7 +38,7 @@ const TaskCard = (props: ITaskCard) => {
           <div className='flex flex-col gap-4'>
             {!!task.labels && <div className='flex gap-[2px]'>{tags}</div>}
             <div className='text-base text-primaryBlack'>{task.title}</div>
-            <Progress percent={progress} size='small' />
+            <Progress percent={Math.ceil(progress)} size='small' />
           </div>
         </Card>
       )}
