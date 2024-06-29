@@ -13,10 +13,16 @@ interface ITaskCard {
 const TaskCard = (props: ITaskCard) => {
   const { index, onClick, task } = props;
   const draggableId = task._id as string;
-  const progress = task.progress * 100;
+  const progress = Math.ceil(task.progress * 100);
+  const isCompleted = task.isCompleted || task.progress === 1;
+
   // card items to show
   const tags = task.labels?.map((tag) => (
-    <Tag key={tag.label + tag.color} bordered={false} color={tag.color}>
+    <Tag
+      key={tag.label + tag.color}
+      bordered={false}
+      style={{ borderRadius: '32px', paddingInline: '12px' }}
+      color={isCompleted ? '#ffffff40' : tag.color}>
       {tag.label}
     </Tag>
   ));
@@ -29,6 +35,7 @@ const TaskCard = (props: ITaskCard) => {
           ref={draggableProvided.innerRef}
           onClick={onClick}
           style={{
+            backgroundColor: isCompleted ? '#27ae5f' : 'white',
             boxShadow: '0px 2px 25px 2px rgba(128, 138, 138, 0.28)',
             ...draggableProvided.draggableProps.style,
           }}
@@ -37,8 +44,20 @@ const TaskCard = (props: ITaskCard) => {
           className='w-full bg-white px-0 mb-4 cursor-pointer'>
           <div className='flex flex-col gap-4'>
             {!!task.labels && <div className='flex gap-[2px]'>{tags}</div>}
-            <div className='text-base text-primaryBlack'>{task.title}</div>
-            <Progress percent={Math.ceil(progress)} size='small' />
+            <div
+              className={`text-base ${
+                isCompleted ? 'text-white' : 'text-primaryBlack'
+              }`}>
+              {task.title}
+            </div>
+            {progress > 0 && (
+              <Progress
+                percent={progress}
+                size='small'
+                strokeColor={isCompleted ? '#FFFFFF' : '#27ae5f'}
+                showInfo={isCompleted ? false : true}
+              />
+            )}
           </div>
         </Card>
       )}
