@@ -18,7 +18,7 @@ import { TaskDtoBody } from '../../../features/api/plans/interfaces/TaskBody';
 import { Task } from '../../../models/v2/task';
 
 export interface CreateTaskFormProps {
-  form: FormInstance;
+  form: FormInstance<TaskDtoBody>;
   controlled?: boolean;
   onCreate: (values: TaskDtoBody, form: FormInstance) => void;
   submitLoadingState: boolean;
@@ -56,6 +56,7 @@ const CreateTaskForm: FC<CreateTaskFormProps> = ({
         priority: initialTask.priority,
         deadline: initialTask.deadline,
         labels: initialTask.labels,
+        isCompleted: initialTask.isCompleted,
       });
     }
   }, [controlled, form, initialTask]);
@@ -67,6 +68,7 @@ const CreateTaskForm: FC<CreateTaskFormProps> = ({
     priority: 2,
     deadline: Date.now().toString(),
     labels: [],
+    isCompleted: false,
   };
 
   return (
@@ -125,6 +127,9 @@ const CreateTaskForm: FC<CreateTaskFormProps> = ({
               </Space>
             </Col>
           </Row>
+          <Form.Item name='isCompleted'>
+            <Input type='hidden' />
+          </Form.Item>
         </div>
       </div>
       <div className='flex justify-between'>
@@ -136,18 +141,24 @@ const CreateTaskForm: FC<CreateTaskFormProps> = ({
                 defaultColor: '#27AE60',
                 colorPrimary: '#27AE60',
                 colorPrimaryActive: '#27AE60',
-                colorPrimaryHover: '#FFFFFF',
+                colorPrimaryHover: '#27AE60',
               },
             },
           }}>
           {controlled && (
-            <Form.Item name='markAsDone'>
+            <Form.Item>
               <Button
-                onClick={() => form.setFieldsValue({ markAsDone: true })}
+                type={initialTask?.isCompleted ? 'primary' : 'default'}
+                onClick={() =>
+                  form.setFieldsValue({
+                    isCompleted: initialTask?.isCompleted ? false : true,
+                  })
+                }
                 htmlType='submit'
-                className='font-sans hover:bg-[#27AE60]'
+                className='font-sans'
+                loading={submitLoadingState}
                 disabled={!controlled}>
-                Mark as done
+                {initialTask?.isCompleted ? 'Unmark as done' : 'Mark as done'}
               </Button>
             </Form.Item>
           )}

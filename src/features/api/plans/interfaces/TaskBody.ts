@@ -11,4 +11,5 @@ export interface TaskDtoBody {
   timestamp?: string;
   planId?: string;
   todos: Todo[];
+  isCompleted?: boolean;
 }
