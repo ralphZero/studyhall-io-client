@@ -141,11 +141,15 @@ const CreateTaskForm: FC<CreateTaskFormProps> = ({
             },
           }}>
           {controlled && (
-            <Button
-              className='font-sans hover:bg-[#27AE60]'
-              disabled={!controlled}>
-              Mark as done
-            </Button>
+            <Form.Item name='markAsDone'>
+              <Button
+                onClick={() => form.setFieldsValue({ markAsDone: true })}
+                htmlType='submit'
+                className='font-sans hover:bg-[#27AE60]'
+                disabled={!controlled}>
+                Mark as done
+              </Button>
+            </Form.Item>
           )}
         </ConfigProvider>
         <Form.Item className='m-0'>
